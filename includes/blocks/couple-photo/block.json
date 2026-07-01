@@ -1,0 +1,58 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "weddingblocks/couple-photo",
+    "title": "WB Foto Mempelai",
+    "category": "weddingblocks",
+    "icon": "format-image",
+    "description": "Menampilkan foto mempelai pria atau wanita dengan gaya bentuk melingkar atau persegi.",
+    "textdomain": "weddingblocks",
+    "attributes": {
+        "groomPhoto": {
+            "type": "string",
+            "source": "meta",
+            "meta": "weddingblocks_groom_photo"
+        },
+        "bridePhoto": {
+            "type": "string",
+            "source": "meta",
+            "meta": "weddingblocks_bride_photo"
+        },
+        "groomName": {
+            "type": "string",
+            "source": "meta",
+            "meta": "weddingblocks_groom_name"
+        },
+        "brideName": {
+            "type": "string",
+            "source": "meta",
+            "meta": "weddingblocks_bride_name"
+        },
+        "role": {
+            "type": "string",
+            "default": "groom"
+        },
+        "shape": {
+            "type": "string",
+            "default": "circle"
+        },
+        "size": {
+            "type": "number",
+            "default": 200
+        },
+        "showFrame": {
+            "type": "boolean",
+            "default": true
+        },
+        "align": {
+            "type": "string",
+            "default": "center"
+        }
+    },
+    "editorScript": "file:./index.js",
+    "render": "file:./render.php",
+    "style": [
+        "weddingblocks-frontend-style",
+        "weddingblocks-atomic-style"
+    ]
+}

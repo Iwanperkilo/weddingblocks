@@ -1,0 +1,44 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "weddingblocks/couple-parents",
+    "title": "WB Nama Orang Tua",
+    "category": "weddingblocks",
+    "icon": "groups",
+    "description": "Menampilkan nama orang tua dari mempelai pria atau wanita.",
+    "textdomain": "weddingblocks",
+    "attributes": {
+        "groomParents": {
+            "type": "string",
+            "source": "meta",
+            "meta": "weddingblocks_groom_parents"
+        },
+        "brideParents": {
+            "type": "string",
+            "source": "meta",
+            "meta": "weddingblocks_bride_parents"
+        },
+        "role": {
+            "type": "string",
+            "default": "groom"
+        },
+        "label": {
+            "type": "string",
+            "default": "Putra dari"
+        },
+        "showLabel": {
+            "type": "boolean",
+            "default": true
+        },
+        "align": {
+            "type": "string",
+            "default": "center"
+        }
+    },
+    "editorScript": "file:./index.js",
+    "render": "file:./render.php",
+    "style": [
+        "weddingblocks-frontend-style",
+        "weddingblocks-atomic-style"
+    ]
+}

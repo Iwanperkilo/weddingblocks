@@ -1,0 +1,23 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "weddingblocks/guest-name",
+    "title": "WB Nama Tamu",
+    "category": "weddingblocks",
+    "icon": "admin-users",
+    "description": "Menampilkan nama tamu undangan secara dinamis berdasarkan parameter URL.",
+    "textdomain": "weddingblocks",
+    "attributes": {
+        "prefix": {
+            "type": "string",
+            "default": "Kepada Yth. Bapak/Ibu/Saudara/i:"
+        },
+        "fallback": {
+            "type": "string",
+            "default": "Tamu Undangan"
+        }
+    },
+    "editorScript": "file:./index.js",
+    "render": "file:./render.php",
+    "style": "weddingblocks-frontend-style"
+}

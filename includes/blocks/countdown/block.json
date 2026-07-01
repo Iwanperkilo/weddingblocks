@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "weddingblocks/countdown",
+    "title": "WB Countdown",
+    "category": "weddingblocks",
+    "icon": "clock",
+    "description": "Menampilkan waktu hitung mundur menuju hari pernikahan.",
+    "textdomain": "weddingblocks",
+    "attributes": {
+        "targetDate": {
+            "type": "string",
+            "source": "meta",
+            "meta": "weddingblocks_wedding_date"
+        }
+    },
+    "editorScript": "file:./index.js",
+    "render": "file:./render.php",
+    "style": "weddingblocks-frontend-style",
+    "script": "weddingblocks-frontend-script"
+}

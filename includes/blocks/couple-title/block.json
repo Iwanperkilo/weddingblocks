@@ -1,0 +1,35 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "weddingblocks/couple-title",
+    "title": "WB Nama Cover",
+    "category": "weddingblocks",
+    "icon": "heading",
+    "description": "Menampilkan nama panggilan kedua mempelai untuk judul cover.",
+    "textdomain": "weddingblocks",
+    "attributes": {
+        "groomName": {
+            "type": "string",
+            "source": "meta",
+            "meta": "weddingblocks_groom_name"
+        },
+        "groomNickname": {
+            "type": "string",
+            "source": "meta",
+            "meta": "weddingblocks_groom_nickname"
+        },
+        "brideName": {
+            "type": "string",
+            "source": "meta",
+            "meta": "weddingblocks_bride_name"
+        },
+        "brideNickname": {
+            "type": "string",
+            "source": "meta",
+            "meta": "weddingblocks_bride_nickname"
+        }
+    },
+    "editorScript": "file:./index.js",
+    "render": "file:./render.php",
+    "style": "weddingblocks-frontend-style"
+}

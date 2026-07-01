@@ -1,0 +1,14 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "weddingblocks/rsvp-form",
+    "title": "WB Form RSVP",
+    "category": "weddingblocks",
+    "icon": "feedback",
+    "description": "Menampilkan form konfirmasi kehadiran dan doa restu (RSVP).",
+    "textdomain": "weddingblocks",
+    "editorScript": "file:./index.js",
+    "render": "file:./render.php",
+    "style": "weddingblocks-frontend-style",
+    "script": "weddingblocks-frontend-script"
+}

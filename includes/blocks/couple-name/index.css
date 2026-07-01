@@ -1,0 +1,16 @@
+/**
+ * Editor styles for the Couple Name block.
+ * These styles apply only within the Gutenberg editor.
+ */
+
+.wp-block-weddingblocks-couple-name .atomic-name-text {
+    /* Default styles if not overridden by block attributes */
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 32px;
+    color: #b5a46d;
+    text-transform: none;
+    text-align: center;
+    /* Ensure alignment is respected */
+    display: block;
+    /* Ensure text transform applies correctly */
+}

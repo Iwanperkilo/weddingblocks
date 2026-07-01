@@ -1,0 +1,65 @@
+# ============================================================
+# WeddingBlocks - WordPress Plugin .gitignore
+# ============================================================
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Node / Build tools
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+.pnpm-debug.log
+package-lock.json
+yarn.lock
+.pnp.*
+.eslintcache
+.cache/
+dist/
+build/
+
+# Composer (PHP)
+vendor/
+composer.lock
+
+# WordPress runtime
+*.log
+*.sql
+*.sql.gz
+wp-config.php
+wp-config-sample.php
+debug.log
+error_log
+
+# Local dev / uploads
+uploads/
+backup/
+backups/
+*.bak
+*.orig
+*.rej
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Tests / coverage
+phpunit.xml
+phpunit.xml.dist
+tests/coverage/
+.cov/
+
+# Misc
+*.zip
+*.tar.gz
+*.tgz
+.DS_Store

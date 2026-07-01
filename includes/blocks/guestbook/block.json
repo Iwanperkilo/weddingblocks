@@ -1,0 +1,13 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "weddingblocks/guestbook",
+    "title": "WB Buku Tamu",
+    "category": "weddingblocks",
+    "icon": "admin-comments",
+    "description": "Menampilkan daftar ucapan dan kehadiran dari tamu undangan.",
+    "textdomain": "weddingblocks",
+    "editorScript": "file:./index.js",
+    "render": "file:./render.php",
+    "style": "weddingblocks-frontend-style"
+}

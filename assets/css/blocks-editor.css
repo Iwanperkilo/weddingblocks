@@ -1,0 +1,51 @@
+/**
+ * Gutenberg Editor Stylesheet for WeddingBlocks.
+ */
+
+/* Adjust block layouts inside editor container */
+.wp-block[data-type^="weddingblocks/"] {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Specific resets for editor view to prevent full-screen takeover */
+.weddingblocks-cover-wrapper {
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: 350px;
+    margin: 0 auto;
+    z-index: 1;
+    pointer-events: auto !important;
+    /* Allow selection */
+    transform: none !important;
+    opacity: 1 !important;
+}
+
+/* Hide floating elements in editor */
+.weddingblocks-music-btn {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    margin: 15px auto;
+    display: block !important;
+    /* Change to block for editor visibility if needed, but not flex */
+    pointer-events: auto !important;
+    /* Allow selection */
+}
+
+.weddingblocks-music-container {
+    text-align: center;
+}
+
+/* Ensure typography imports and sizes are correct in editor */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Great+Vibes&display=swap');
+
+.weddingblocks-cover-title {
+    font-family: 'Playfair Display', serif !important;
+    color: #333;
+}
+
+.weddingblocks-cover-wrapper[style*="background-image"] .weddingblocks-cover-title {
+    color: #fff !important;
+}

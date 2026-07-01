@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "weddingblocks/cover",
+    "title": "WB Cover",
+    "category": "weddingblocks",
+    "icon": "cover-image",
+    "description": "Menampilkan cover pembuka undangan digital dengan tombol interaktif.",
+    "textdomain": "weddingblocks",
+    "attributes": {
+        "backgroundImage": {
+            "type": "string",
+            "default": ""
+        },
+        "overlayOpacity": {
+            "type": "number",
+            "default": 35
+        },
+        "overlayColor": {
+            "type": "string",
+            "default": "#000000"
+        },
+        "accentColor": {
+            "type": "string",
+            "default": "#b5a46d"
+        },
+        "buttonText": {
+            "type": "string",
+            "default": "Buka Undangan"
+        }
+    },
+    "editorScript": "file:./index.js",
+    "render": "file:./render.php",
+    "style": "weddingblocks-frontend-style",
+    "script": "weddingblocks-frontend-script"
+}

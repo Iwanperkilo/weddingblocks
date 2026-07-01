@@ -1,0 +1,60 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "weddingblocks/event-info",
+    "title": "WB Info Acara",
+    "category": "weddingblocks",
+    "icon": "calendar-alt",
+    "description": "Menampilkan informasi detail acara Akad Nikah dan Resepsi.",
+    "textdomain": "weddingblocks",
+    "attributes": {
+        "weddingDate": {
+            "type": "string",
+            "source": "meta",
+            "meta": "weddingblocks_wedding_date"
+        },
+        "akadTimeLabel": {
+            "type": "string",
+            "source": "meta",
+            "meta": "weddingblocks_akad_time_label"
+        },
+        "akadLocationName": {
+            "type": "string",
+            "source": "meta",
+            "meta": "weddingblocks_akad_location_name"
+        },
+        "akadLocationAddress": {
+            "type": "string",
+            "source": "meta",
+            "meta": "weddingblocks_akad_location_address"
+        },
+        "resepsiTimeLabel": {
+            "type": "string",
+            "source": "meta",
+            "meta": "weddingblocks_resepsi_time_label"
+        },
+        "resepsiLocationName": {
+            "type": "string",
+            "source": "meta",
+            "meta": "weddingblocks_resepsi_location_name"
+        },
+        "resepsiLocationAddress": {
+            "type": "string",
+            "source": "meta",
+            "meta": "weddingblocks_resepsi_location_address"
+        },
+        "mapsCoords": {
+            "type": "string",
+            "source": "meta",
+            "meta": "weddingblocks_maps_coords"
+        },
+        "whatsappNumber": {
+            "type": "string",
+            "source": "meta",
+            "meta": "weddingblocks_whatsapp_number"
+        }
+    },
+    "editorScript": "file:./index.js",
+    "render": "file:./render.php",
+    "style": "weddingblocks-frontend-style"
+}
