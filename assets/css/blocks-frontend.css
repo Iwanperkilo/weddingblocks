@@ -586,6 +586,8 @@ body.weddingblocks-locked {
   border-radius: 8px;
 }
 .guest-prefix-text {
+  font-family: 'Playfair Display', 'Georgia', serif ;
+  font-style: italic;
   font-size: 14px;
   color: #666;
   margin: 0 0 5px 0;
