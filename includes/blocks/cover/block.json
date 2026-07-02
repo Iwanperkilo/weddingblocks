@@ -27,6 +27,10 @@
         "buttonText": {
             "type": "string",
             "default": "Buka Undangan"
+        },
+        "buttonBorderRadius": {
+            "type": "number",
+            "default": 30
         }
     },
     "editorScript": "file:./index.js",

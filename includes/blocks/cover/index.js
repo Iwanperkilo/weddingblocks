@@ -14,6 +14,7 @@
     blocks.registerBlockType('weddingblocks/cover', {
         edit: function (props) {
             var attributes = props.attributes;
+            var buttonBorderRadius = attributes.buttonBorderRadius !== undefined ? attributes.buttonBorderRadius : 30;
 
             var customColors = [
                 { name: 'Gold', color: '#d4c59a' },
@@ -65,6 +66,16 @@
                             onChange: function (value) {
                                 props.setAttributes({ buttonText: value });
                             }
+                        }),
+                        el(RangeControl, {
+                            label: __('Radius Sudut Tombol', 'weddingblocks'),
+                            value: buttonBorderRadius,
+                            onChange: function (value) {
+                                props.setAttributes({ buttonBorderRadius: value });
+                            },
+                            min: 0,
+                            max: 50,
+                            step: 1
                         })
                     ),
                     el(PanelBody, { title: __('Tampilan & Warna (Premium)', 'weddingblocks'), initialOpen: false },
@@ -153,7 +164,7 @@
                                     padding: '12px 28px',
                                     backgroundColor: attributes.accentColor || '#b5a46d',
                                     color: '#ffffff',
-                                    borderRadius: '30px',
+                                    borderRadius: buttonBorderRadius + 'px',
                                     fontSize: '14px',
                                     fontWeight: '600',
                                     letterSpacing: '1px',
