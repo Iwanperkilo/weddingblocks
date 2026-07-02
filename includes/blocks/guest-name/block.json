@@ -15,6 +15,14 @@
         "fallback": {
             "type": "string",
             "default": "Tamu Undangan"
+        },
+        "textColor": {
+            "type": "string",
+            "default": "#333333"
+        },
+        "backgroundColor": {
+            "type": "string",
+            "default": "transparent"
         }
     },
     "editorScript": "file:./index.js",
