@@ -377,21 +377,20 @@
    can correctly receive click events and select the parent block. */
 .editor-styles-wrapper .weddingblocks-cover-preview > .wb-cover-inner,
 .editor-styles-wrapper .weddingblocks-cover-preview > .wb-editor-badge,
+.editor-styles-wrapper .weddingblocks-guest-name-block .wb-editor-badge,
+.editor-styles-wrapper .weddingblocks-guest-name-block .wb-editor-badge * {
+    pointer-events: none;
+}
+
 .editor-styles-wrapper .weddingblocks-couple-info-editor,
 .editor-styles-wrapper .weddingblocks-couple-info-editor *,
-.editor-styles-wrapper .weddingblocks-event-info-editor,
-.editor-styles-wrapper .weddingblocks-event-info-editor *,
 .editor-styles-wrapper .weddingblocks-countdown-editor,
 .editor-styles-wrapper .weddingblocks-countdown-editor *,
-.editor-styles-wrapper .weddingblocks-rsvp-form-editor,
-.editor-styles-wrapper .weddingblocks-rsvp-form-editor *,
 .editor-styles-wrapper .weddingblocks-guestbook-editor,
 .editor-styles-wrapper .weddingblocks-guestbook-editor *,
 .editor-styles-wrapper .weddingblocks-music-preview,
-.editor-styles-wrapper .weddingblocks-music-preview *,
-.editor-styles-wrapper .weddingblocks-guest-name-block,
-.editor-styles-wrapper .weddingblocks-guest-name-block * {
-    pointer-events: none;
+.editor-styles-wrapper .weddingblocks-music-preview * {
+    pointer-events: auto;
 }
 /* Restore interactivity for actual inputs/buttons in preview form blocks */
 .editor-styles-wrapper .weddingblocks-rsvp-form-editor input,
