@@ -34,15 +34,16 @@ $placeholder_svg = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/s
 
 $inline_style = sprintf( 'width:%1$dpx;height:%1$dpx;', $size );
 $frame_class  = $show_frame ? ' has-frame' : ' no-frame';
-$wrapper_class = 'weddingblocks-atomic-couple-photo role-' . sanitize_html_class( $role ) . ' shape-' . sanitize_html_class( $shape ) . ' align-' . sanitize_html_class( $align ) . $frame_class;
+$shape_class  = ' shape-' . sanitize_html_class( $shape );
+$wrapper_class = 'weddingblocks-atomic-couple-photo role-' . sanitize_html_class( $role ) . ' align-' . sanitize_html_class( $align ) . $frame_class;
+$figure_class  = 'atomic-photo' . $shape_class;
 
 ?>
 <div class="<?php echo esc_attr( $wrapper_class ); ?>">
-    <figure class="atomic-photo" style="<?php echo esc_attr( $inline_style ); ?>">
+    <figure class="<?php echo esc_attr( $figure_class ); ?>" style="<?php echo esc_attr( $inline_style ); ?>">
         <?php if ( '' !== $photo ) : ?>
             <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $name ); ?>" />
         <?php else : ?>
             <img src="<?php echo esc_url( $placeholder_svg ); ?>" alt="<?php echo esc_attr( $name ); ?>" class="atomic-photo-placeholder" />
         <?php endif; ?>
     </figure>
-</div>

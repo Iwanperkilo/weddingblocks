@@ -9,32 +9,45 @@
 .editor-styles-wrapper .weddingblocks-atomic-couple-parents,
 .editor-styles-wrapper .weddingblocks-atomic-couple-photo {
     position: relative;
-    padding-top: 36px;
-    padding-bottom: 8px;
-    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.editor-styles-wrapper .weddingblocks-atomic-couple-photo .atomic-photo {
+    background: #f5f0e6;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.editor-styles-wrapper .weddingblocks-atomic-couple-photo .atomic-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.editor-styles-wrapper .weddingblocks-atomic-couple-photo.shape-circle .atomic-photo {
+    border-radius: 50%;
+}
+
+.editor-styles-wrapper .weddingblocks-atomic-couple-photo.shape-rounded .atomic-photo {
+    border-radius: 15px;
+}
+
+.editor-styles-wrapper .weddingblocks-atomic-couple-photo.shape-square .atomic-photo {
+    border-radius: 0;
+}
+
+.editor-styles-wrapper .weddingblocks-atomic-couple-photo.has-frame .atomic-photo {
+    border: 5px solid #b5a46d;
+    background: rgba(255, 255, 255, 0.7);
 }
 
 /* === Editor Badge (kecil, pojok atas, semi-transparan) === */
 .editor-styles-wrapper .wb-editor-badge {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 3px 8px;
-    background: rgba(181, 164, 109, 0.12);
-    color: #8a7a4f;
-    border: 1px solid rgba(181, 164, 109, 0.35);
-    border-radius: 10px;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    line-height: 1;
-    z-index: 2;
-    pointer-events: none;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    display: none !important;
 }
 
 .editor-styles-wrapper .wb-editor-badge-icon {

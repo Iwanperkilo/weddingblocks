@@ -100,16 +100,6 @@
                             ],
                             onChange: function (v) { props.setAttributes({ nameType: v }); }
                         }),
-                        el(SelectControl, {
-                            label: __("Perataan", "weddingblocks"),
-                            value: align,
-                            options: [
-                                { label: __("Kiri", "weddingblocks"), value: "left" },
-                                { label: __("Tengah", "weddingblocks"), value: "center" },
-                                { label: __("Kanan", "weddingblocks"), value: "right" }
-                            ],
-                            onChange: function (v) { props.setAttributes({ align: v }); }
-                        }),
                         el(RangeControl, {
                             label: __("Ukuran Font (px)", "weddingblocks"),
                             value: fontSize,

@@ -56,7 +56,7 @@
                             onChange: function (v) { props.setAttributes({ role: v }); }
                         }),
                         el(SelectControl, {
-                            label: __('Bentuk Foto', 'weddingblocks'),
+                            label: __('Style Foto', 'weddingblocks'),
                             value: shape,
                             options: [
                                 { label: __('Bulat (Circle)', 'weddingblocks'), value: 'circle' },
@@ -72,16 +72,6 @@
                             max: 800,
                             onChange: function (v) { props.setAttributes({ size: v }); }
                         }),
-                        el(SelectControl, {
-                            label: __('Perataan', 'weddingblocks'),
-                            value: align,
-                            options: [
-                                { label: __('Kiri', 'weddingblocks'), value: 'left' },
-                                { label: __('Tengah', 'weddingblocks'), value: 'center' },
-                                { label: __('Kanan', 'weddingblocks'), value: 'right' }
-                            ],
-                            onChange: function (v) { props.setAttributes({ align: v }); }
-                        }),
                         el(Button, {
                             isSecondary: showFrame,
                             isTertiary: !showFrame,
@@ -90,11 +80,11 @@
                     )
                 ),
                 el('div', useBlockProps({ key: 'preview', className: wrapperClass }),
-                    el('span', { className: 'wb-editor-badge' },
-                        el('span', { className: 'wb-editor-badge-icon' }, '🖼️'),
-                        __('Foto ' + roleLabel, 'weddingblocks')
-                    ),
-                    el('figure', { className: 'atomic-photo', style: imgStyle },
+                    // el('span', { className: 'wb-editor-badge' },
+                    //     el('span', { className: 'wb-editor-badge-icon' }, '🖼️'),
+                    //     __('Foto ' + roleLabel, 'weddingblocks')
+                    // ),
+                    el('figure', { className: 'atomic-photo shape-' + shape + (showFrame ? ' has-frame' : ' no-frame'), style: imgStyle },
                         el('img', { src: displayPhoto, alt: name, className: photo ? '' : 'atomic-photo-placeholder' })
                     )
                 )
