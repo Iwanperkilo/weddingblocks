@@ -275,7 +275,7 @@ body.weddingblocks-locked {
 }
 
 .weddingblocks-couple-column p {
-  font-family: 'Playfair Display', 'Georgia', serif;
+  font-family: "Playfair Display", "Georgia", serif;
   font-size: 13px;
   color: #666;
   margin: 0;
@@ -598,7 +598,7 @@ body.weddingblocks-locked {
   border-radius: 8px;
 }
 .guest-prefix-text {
-  font-family: 'Playfair Display', 'Georgia', serif ;
+  font-family: "Playfair Display", "Georgia", serif;
   font-style: italic;
   font-size: 14px;
   color: #666;
@@ -654,7 +654,7 @@ body.weddingblocks-locked {
   gap: 24px;
   text-align: center;
   flex-wrap: wrap;
-  margin: 16px 0;
+  margin: 0;
 }
 .weddingblocks-atomic-couple-name.layout-stacked {
   flex-direction: column;
@@ -697,11 +697,12 @@ body.weddingblocks-locked {
 /* Couple Parents (Nama Orang Tua) */
 .weddingblocks-atomic-couple-parents {
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 32px;
+  gap: 3px;
   text-align: center;
   flex-wrap: wrap;
-  margin: 16px 0;
+  margin: 0;
 }
 .weddingblocks-atomic-couple-parents.layout-inline {
   flex-direction: row;
@@ -717,19 +718,14 @@ body.weddingblocks-locked {
   gap: 4px;
   min-width: 200px;
 }
-.weddingblocks-atomic-couple-parents .atomic-parents-label {
-  font-family: "Playfair Display", serif;
-  font-style: italic;
-  color: #888;
-  font-size: 0.9em;
-  margin-bottom: 2px;
-}
+.weddingblocks-atomic-couple-parents .atomic-parents-label,
 .weddingblocks-atomic-couple-parents .atomic-parents-names {
-  font-family: "Playfair Display", serif;
-  font-weight: 500;
-  color: #333;
-  font-size: 1.05em;
+  display: block;
   line-height: 1.4;
+  font-weight: 500;
+}
+.weddingblocks-atomic-couple-parents .atomic-parents-label {
+  margin-bottom: 0;
 }
 
 /* Couple Photo (Foto Mempelai) */
@@ -738,7 +734,7 @@ body.weddingblocks-locked {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: 0;
   flex-wrap: wrap;
   margin: 20px 0;
 }
@@ -794,19 +790,19 @@ body.weddingblocks-locked {
 }
 
 .weddingblocks-atomic-couple-photo.shape-circle .atomic-photo {
-    border-radius: 50%;
+  border-radius: 50%;
 }
 .weddingblocks-atomic-couple-photo.shape-rounded .atomic-photo {
-    border-radius: 15px;
+  border-radius: 15px;
 }
 .weddingblocks-atomic-photo.shape-square .atomic-photo {
-    border-radius: 0;
+  border-radius: 0;
 }
 
 /* Frame styling */
 .weddingblocks-atomic-couple-photo.has-frame .atomic-photo {
-    border: 3px solid #b5a46d;
-    background: rgba(255, 255, 255, 0.7);
+  border: 3px solid #b5a46d;
+  background: rgba(255, 255, 255, 0.7);
 }
 
 /* Responsive */
