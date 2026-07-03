@@ -176,7 +176,7 @@
     border: 1px solid rgba(181, 164, 109, 0.3);
     border-radius: 6px;
     padding: 12px 14px;
-    min-width: 64px;
+    max-width: 60px;
     text-align: center;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
@@ -356,16 +356,14 @@
 /* === Couple Title (Cover) === */
 .editor-styles-wrapper .weddingblocks-couple-title-editor {
     position: relative;
-    padding: 30px 20px 20px;
+    padding: 0 20px 20px;
     text-align: center;
-    background: #fbfaf7;
-    border: 1px solid rgba(181, 164, 109, 0.2);
     border-radius: 8px;
 }
 .editor-styles-wrapper .weddingblocks-couple-title-text {
     font-family: 'Playfair Display', 'Georgia', serif;
     font-size: 28px;
-    color: #b5a46d;
+    color: #ffffff;
     margin: 8px 0 0;
     font-weight: 600;
     line-height: 1.3;

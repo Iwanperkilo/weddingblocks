@@ -9,24 +9,28 @@
     "textdomain": "weddingblocks",
     "attributes": {
         "groomName": {
-            "type": "string",
-            "source": "meta",
-            "meta": "weddingblocks_groom_name"
+            "type": "string"
         },
         "groomNickname": {
-            "type": "string",
-            "source": "meta",
-            "meta": "weddingblocks_groom_nickname"
+            "type": "string"
         },
         "brideName": {
-            "type": "string",
-            "source": "meta",
-            "meta": "weddingblocks_bride_name"
+            "type": "string"
         },
         "brideNickname": {
+            "type": "string"
+        },
+        "textColor": {
             "type": "string",
-            "source": "meta",
-            "meta": "weddingblocks_bride_nickname"
+            "default": "#ffffff"
+        },
+        "textTransform": {
+            "type": "string",
+            "default": "none"
+        },
+        "separator": {
+            "type": "string",
+            "default": "&"
         }
     },
     "editorScript": "file:./index.js",
