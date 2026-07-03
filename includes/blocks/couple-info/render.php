@@ -9,6 +9,18 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+// Get block attributes (provided by WordPress)
+$swap_couple = false;
+$layout = 'horizontal';
+
+if ( isset( $attributes['swapCouple'] ) ) {
+    $swap_couple = (bool) $attributes['swapCouple'];
+}
+if ( isset( $attributes['layout'] ) ) {
+    $layout = $attributes['layout'];
+}
+
+// Get post meta
 $groom_name = get_post_meta( get_the_ID(), 'weddingblocks_groom_name', true );
 $groom_parents = get_post_meta( get_the_ID(), 'weddingblocks_groom_parents', true );
 $groom_photo = get_post_meta( get_the_ID(), 'weddingblocks_groom_photo', true );
@@ -27,23 +39,43 @@ $placeholder_svg = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/s
 
 $groom_photo_url = ! empty( $groom_photo ) ? esc_url( $groom_photo ) : $placeholder_svg;
 $bride_photo_url = ! empty( $bride_photo ) ? esc_url( $bride_photo ) : $placeholder_svg;
+
+// Determine display order
+if ( $swap_couple ) {
+    $first_name = $groom_name;
+    $first_parents = $groom_parents;
+    $first_photo_url = $groom_photo_url;
+    $second_name = $bride_name;
+    $second_parents = $bride_parents;
+    $second_photo_url = $bride_photo_url;
+} else {
+    $first_name = $bride_name;
+    $first_parents = $bride_parents;
+    $first_photo_url = $bride_photo_url;
+    $second_name = $groom_name;
+    $second_parents = $groom_parents;
+    $second_photo_url = $groom_photo_url;
+}
+
+// Layout class
+$layout_class = $layout === 'vertical' ? 'weddingblocks-couple-columns--vertical' : '';
 ?>
-<div class="weddingblocks-couple-columns">
+<div class="weddingblocks-couple-columns <?php echo esc_attr( $layout_class ); ?>">
     <div class="weddingblocks-couple-column">
         <div class="weddingblocks-avatar">
-            <img src="<?php echo esc_url( $bride_photo_url ); ?>" alt="<?php echo esc_attr( $bride_name ); ?>">
+            <img src="<?php echo esc_url( $first_photo_url ); ?>" alt="<?php echo esc_attr( $first_name ); ?>">
         </div>
-        <h3><?php echo esc_html( $bride_name ); ?></h3>
-        <p><?php echo esc_html( $bride_parents ); ?></p>
+        <h3><?php echo esc_html( $first_name ); ?></h3>
+        <p><?php echo esc_html( $first_parents ); ?></p>
     </div>
     <div class="weddingblocks-couple-column weddingblocks-separator-column">
         <p class="weddingblocks-ampersand">&</p>
     </div>
     <div class="weddingblocks-couple-column">
         <div class="weddingblocks-avatar">
-            <img src="<?php echo esc_url( $groom_photo_url ); ?>" alt="<?php echo esc_attr( $groom_name ); ?>">
+            <img src="<?php echo esc_url( $second_photo_url ); ?>" alt="<?php echo esc_attr( $second_name ); ?>">
         </div>
-        <h3><?php echo esc_html( $groom_name ); ?></h3>
-        <p><?php echo esc_html( $groom_parents ); ?></p>
+        <h3><?php echo esc_html( $second_name ); ?></h3>
+        <p><?php echo esc_html( $second_parents ); ?></p>
     </div>
 </div>

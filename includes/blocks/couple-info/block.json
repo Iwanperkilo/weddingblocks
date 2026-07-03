@@ -37,6 +37,14 @@
             "type": "string",
             "source": "meta",
             "meta": "weddingblocks_bride_photo"
+        },
+        "swapCouple": {
+            "type": "boolean",
+            "default": false
+        },
+        "layout": {
+            "type": "string",
+            "default": "horizontal"
         }
     },
     "editorScript": "file:./index.js",

@@ -228,8 +228,18 @@ body.weddingblocks-locked {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 20px;
+}
+
+.weddingblocks-couple-columns--vertical {
+  flex-direction: column;
+  gap: 30px;
+}
+
+.weddingblocks-couple-columns--vertical .weddingblocks-couple-column {
+  flex: none;
+  min-width: auto;
 }
 
 .weddingblocks-couple-column {
@@ -265,8 +275,10 @@ body.weddingblocks-locked {
 }
 
 .weddingblocks-couple-column p {
+  font-family: 'Playfair Display', 'Georgia', serif;
   font-size: 13px;
   color: #666;
+  margin: 0;
 }
 
 .weddingblocks-separator-column {
