@@ -2,10 +2,23 @@
     var el = element.createElement;
     var useBlockProps = blockEditor.useBlockProps;
     var InspectorControls = blockEditor.InspectorControls;
+    var __ = i18n.__;
     var PanelBody = components.PanelBody;
     var ToggleControl = components.ToggleControl;
+    var TextControl = components.TextControl;
+    var RangeControl = components.RangeControl;
     var SelectControl = components.SelectControl;
-    var __ = i18n.__;
+    var ColorPalette = components.ColorPalette;
+
+    // Color palette for label text color
+    var LABEL_TEXT_COLORS = [
+      { name: "Hitam", color: "#2c2c2c" },
+      { name: "Abu Gelap", color: "#555555" },
+      { name: "Abu Muda", color: "#888888" },
+      { name: "Putih", color: "#ffffff" },
+      { name: "Emas", color: "#b5a46d" },
+      { name: "Emas Gelap", color: "#8a7a4f" },
+    ];
 
     blocks.registerBlockType('weddingblocks/couple-info', {
         edit: function (props) {
@@ -34,13 +47,42 @@
             var secondParents = attributes.swapCouple ? brideParents : groomParents;
             var secondPhoto = attributes.swapCouple ? bridePhoto : groomPhoto;
             var secondLabel = attributes.swapCouple ? __('Mempelai Wanita', 'weddingblocks') : __('Mempelai Pria', 'weddingblocks');
+            var showParentsLabel = attributes.showParentsLabel;
+            var parentsLabelGroom = attributes.parentsLabelGroom;
+            var parentsLabelBride = attributes.parentsLabelBride;
+            var parentsLabelFontSize = attributes.parentsLabelFontSize;
+            var parentsLabelFontFamily = attributes.parentsLabelFontFamily;
+            var parentsLabelTextColor = attributes.parentsLabelTextColor;
+            var nameFontSize = attributes.nameFontSize || 24;
+
+            // Font family mapping for editor
+            var fontFamilyCss = "Georgia, serif";
+            if ('playfair' === parentsLabelFontFamily) {
+                fontFamilyCss = "'Playfair Display', Georgia, serif";
+            } else if ('greatvibes' === parentsLabelFontFamily) {
+                fontFamilyCss = "'Great Vibes', cursive";
+            } else if ('montserrat' === parentsLabelFontFamily) {
+                fontFamilyCss = "'Montserrat', sans-serif";
+            } else if ('georgia' === parentsLabelFontFamily) {
+                fontFamilyCss = "Georgia, serif";
+            } else if ('sans-serif' === parentsLabelFontFamily) {
+                fontFamilyCss = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+            }
+            var parentsLabelStyle = {
+                fontSize: parentsLabelFontSize + 'px',
+                fontFamily: fontFamilyCss,
+                color: parentsLabelTextColor,
+            };
+            var nameStyle = {
+                fontSize: nameFontSize + 'px',
+            };
 
             // Layout class
             var layoutClass = attributes.layout === 'vertical' ? 'weddingblocks-couple-columns--vertical' : '';
 
-            return el('div', useBlockProps({ className: 'weddingblocks-couple-info-editor' }),
-                el(InspectorControls, {},
-                    el(PanelBody, { title: __('Pengaturan Layout dan Urutan', 'weddingblocks'), initialOpen: true },
+            return el('div', useBlockProps({ className: 'weddingblocks-couple-info-editor' }), 
+                el(InspectorControls, {}, 
+                    el(PanelBody, { title: __('Pengaturan Layout dan Urutan', 'weddingblocks'), initialOpen: true }, 
                         el(ToggleControl, {
                             label: __('Tukar Posisi Mempelai', 'weddingblocks'),
                             help: attributes.swapCouple ? __('Mempelai Pria ditampilkan di kiri/atas', 'weddingblocks') : __('Mempelai Wanita ditampilkan di kiri/atas', 'weddingblocks'),
@@ -60,19 +102,90 @@
                                 setAttributes({ layout: value });
                             }
                         })
+                    ),
+                    el(PanelBody, { title: __('Nama Mempelai', 'weddingblocks'), initialOpen: false },
+                        el(RangeControl, {
+                            label: __('Ukuran Font Nama', 'weddingblocks'),
+                            value: nameFontSize,
+                            onChange: function (value) {
+                                setAttributes({ nameFontSize: value });
+                            },
+                            min: 16,
+                            max: 64,
+                            step: 1,
+                        })
+                    ),
+                    el(PanelBody, { title: __('Label & Nama Orang Tua', 'weddingblocks'), initialOpen: false }, 
+                        el(ToggleControl, {
+                            label: __('Tampilkan Label Orang Tua', 'weddingblocks'),
+                            checked: showParentsLabel,
+                            onChange: function (value) {
+                                setAttributes({ showParentsLabel: value });
+                            }
+                        }),
+                        showParentsLabel && el(TextControl, {
+                            label: __('Label Orang Tua Pria', 'weddingblocks'),
+                            value: parentsLabelGroom,
+                            onChange: function (value) {
+                                setAttributes({ parentsLabelGroom: value });
+                            }
+                        }),
+                        showParentsLabel && el(TextControl, {
+                            label: __('Label Orang Tua Wanita', 'weddingblocks'),
+                            value: parentsLabelBride,
+                            onChange: function (value) {
+                                setAttributes({ parentsLabelBride: value });
+                            }
+                        }),
+                        showParentsLabel && el(RangeControl, {
+                            label: __('Ukuran Font Label', 'weddingblocks'),
+                            value: parentsLabelFontSize,
+                            onChange: function (value) {
+                                setAttributes({ parentsLabelFontSize: value });
+                            },
+                            min: 10,
+                            max: 50,
+                            step: 1,
+                        }),
+                        showParentsLabel && el(SelectControl, {
+                            label: __('Gaya Font Label', 'weddingblocks'),
+                            value: parentsLabelFontFamily,
+                            options: [
+                                { label: 'Playfair Display', value: 'playfair' },
+                                { label: 'Great Vibes', value: 'greatvibes' },
+                                { label: 'Montserrat', value: 'montserrat' },
+                                { label: 'Georgia', value: 'georgia' },
+                                { label: 'Sans-serif', value: 'sans-serif' },
+                            ],
+                            onChange: function (value) {
+                                setAttributes({ parentsLabelFontFamily: value });
+                            }
+                        }),
+                        showParentsLabel && el('div', { className: 'components-base-control' },
+                            el('label', { className: 'components-base-control__label' }, __('Warna Teks Label', 'weddingblocks')),
+                            el(ColorPalette, {
+                                value: parentsLabelTextColor,
+                                colors: LABEL_TEXT_COLORS,
+                                onChange: function (value) {
+                                    setAttributes({ parentsLabelTextColor: value });
+                                },
+                            })
+                        )
                     )
-                ),
-                el('span', { className: 'wb-editor-badge wb-editor-badge--block' },
-                    el('span', { className: 'wb-editor-badge-icon' }, '👥'),
-                    __('Profil Pengantin', 'weddingblocks')
                 ),
                 el('div', { className: 'weddingblocks-couple-columns ' + layoutClass },
                     el('div', { className: 'weddingblocks-couple-column' },
                         el('div', { className: 'weddingblocks-avatar' },
                             el('img', { src: firstPhoto, alt: firstName })
                         ),
-                        el('h3', {}, firstName),
-                        el('p', {}, firstParents)
+                        el('h3', { style: nameStyle }, firstName),
+                        showParentsLabel && el('p', { className: 'weddingblocks-parents-info' },
+                            el('span', { className: 'weddingblocks-parents-label', style: parentsLabelStyle },
+                                attributes.swapCouple ? parentsLabelGroom : parentsLabelBride),
+                            el('span', { className: 'weddingblocks-parents-names', style: parentsLabelStyle },
+                                firstParents)
+                        ),
+                        !showParentsLabel && el('p', {}, firstParents)
                     ),
                     el('div', { className: 'weddingblocks-couple-column weddingblocks-separator-column' },
                         el('p', { className: 'weddingblocks-ampersand' }, '&')
@@ -81,8 +194,14 @@
                         el('div', { className: 'weddingblocks-avatar' },
                             el('img', { src: secondPhoto, alt: secondName })
                         ),
-                        el('h3', {}, secondName),
-                        el('p', {}, secondParents)
+                        el('h3', { style: nameStyle }, secondName),
+                        showParentsLabel && el('p', { className: 'weddingblocks-parents-info' },
+                            el('span', { className: 'weddingblocks-parents-label', style: parentsLabelStyle },
+                                attributes.swapCouple ? parentsLabelBride : parentsLabelGroom),
+                            el('span', { className: 'weddingblocks-parents-names', style: parentsLabelStyle },
+                                secondParents)
+                        ),
+                        !showParentsLabel && el('p', {}, secondParents)
                     )
                 )
             );

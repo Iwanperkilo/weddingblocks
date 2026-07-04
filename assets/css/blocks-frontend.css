@@ -818,7 +818,7 @@ body.weddingblocks-locked {
   .weddingblocks-atomic-couple-parents,
   .weddingblocks-atomic-couple-photo {
     flex-direction: column !important;
-    gap: 16px;
+    gap: 0;
   }
   .weddingblocks-atomic-couple-name.layout-inline .atomic-name--groom::after {
     content: "\0026";

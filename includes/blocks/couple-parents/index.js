@@ -16,9 +16,6 @@
         { name: 'Putih', color: '#ffffff' },
         { name: 'Emas', color: '#b5a46d' },
         { name: 'Emas Gelap', color: '#8a7a4f' },
-        { name: 'Maroon', color: '#800000' },
-        { name: 'Navy', color: '#000080' },
-        { name: 'Rose Gold', color: '#b76e79' }
     ];
     blocks.registerBlockType('weddingblocks/couple-parents', {
         edit: function (props) {

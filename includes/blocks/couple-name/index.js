@@ -14,7 +14,6 @@
         { name: "White", color: "#ffffff" },
         { name: "Black", color: "#2c2c2c" },
         { name: "Maroon", color: "#800000" },
-        { name: "Navy", color: "#000080" },
         { name: "Rose Gold", color: "#b76e79" }
     ];
 

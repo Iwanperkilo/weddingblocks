@@ -1,53 +1,81 @@
 {
-    "$schema": "https://schemas.wp.org/trunk/block.json",
-    "apiVersion": 3,
-    "name": "weddingblocks/couple-info",
-    "title": "WB Profil Mempelai",
-    "category": "weddingblocks",
-    "icon": "align-center",
-    "description": "Menampilkan profil lengkap kedua mempelai (foto, nama, orang tua) secara berdampingan.",
-    "textdomain": "weddingblocks",
-    "attributes": {
-        "groomName": {
-            "type": "string",
-            "source": "meta",
-            "meta": "weddingblocks_groom_name"
-        },
-        "groomParents": {
-            "type": "string",
-            "source": "meta",
-            "meta": "weddingblocks_groom_parents"
-        },
-        "groomPhoto": {
-            "type": "string",
-            "source": "meta",
-            "meta": "weddingblocks_groom_photo"
-        },
-        "brideName": {
-            "type": "string",
-            "source": "meta",
-            "meta": "weddingblocks_bride_name"
-        },
-        "brideParents": {
-            "type": "string",
-            "source": "meta",
-            "meta": "weddingblocks_bride_parents"
-        },
-        "bridePhoto": {
-            "type": "string",
-            "source": "meta",
-            "meta": "weddingblocks_bride_photo"
-        },
-        "swapCouple": {
-            "type": "boolean",
-            "default": false
-        },
-        "layout": {
-            "type": "string",
-            "default": "horizontal"
-        }
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "weddingblocks/couple-info",
+  "title": "WB Profil Mempelai",
+  "category": "weddingblocks",
+  "icon": "align-center",
+  "description": "Menampilkan profil lengkap kedua mempelai (foto, nama, orang tua) secara berdampingan.",
+  "textdomain": "weddingblocks",
+  "attributes": {
+    "groomName": {
+      "type": "string",
+      "source": "meta",
+      "meta": "weddingblocks_groom_name"
     },
-    "editorScript": "file:./index.js",
-    "render": "file:./render.php",
-    "style": "weddingblocks-frontend-style"
+    "groomParents": {
+      "type": "string",
+      "source": "meta",
+      "meta": "weddingblocks_groom_parents"
+    },
+    "groomPhoto": {
+      "type": "string",
+      "source": "meta",
+      "meta": "weddingblocks_groom_photo"
+    },
+    "brideName": {
+      "type": "string",
+      "source": "meta",
+      "meta": "weddingblocks_bride_name"
+    },
+    "brideParents": {
+      "type": "string",
+      "source": "meta",
+      "meta": "weddingblocks_bride_parents"
+    },
+    "bridePhoto": {
+      "type": "string",
+      "source": "meta",
+      "meta": "weddingblocks_bride_photo"
+    },
+    "swapCouple": {
+      "type": "boolean",
+      "default": false
+    },
+    "showParentsLabel": {
+      "type": "boolean",
+      "default": true
+    },
+    "parentsLabelGroom": {
+      "type": "string",
+      "default": "Putra dari"
+    },
+    "parentsLabelBride": {
+      "type": "string",
+      "default": "Putri dari"
+    },
+    "parentsLabelFontSize": {
+      "type": "number",
+      "default": 17
+    },
+    "parentsLabelFontFamily": {
+      "type": "string",
+      "default": "playfair"
+    },
+    "parentsLabelTextColor": {
+      "type": "string",
+      "default": "#333333"
+    },
+    "nameFontSize": {
+      "type": "number",
+      "default": 24
+    },
+    "layout": {
+      "type": "string",
+      "default": "horizontal"
+    }
+  },
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php",
+  "style": "weddingblocks-frontend-style"
 }

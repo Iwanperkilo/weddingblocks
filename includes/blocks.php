@@ -459,6 +459,8 @@ function weddingblocks_render_couple_info( $attributes ) {
 
     $groom_photo_url = ! empty( $groom_photo ) ? esc_url( $groom_photo ) : $placeholder_svg;
     $bride_photo_url = ! empty( $bride_photo ) ? esc_url( $bride_photo ) : $placeholder_svg;
+    $name_font_size = isset( $attributes['nameFontSize'] ) ? intval( $attributes['nameFontSize'] ) : 24;
+    $name_style_attr = sprintf( 'font-size: %dpx;', $name_font_size );
 
     ob_start();
     ?>
@@ -467,7 +469,7 @@ function weddingblocks_render_couple_info( $attributes ) {
             <div class="weddingblocks-avatar">
                 <img src="<?php echo esc_url( $bride_photo_url ); ?>" alt="<?php echo esc_attr( $bride_name ); ?>">
             </div>
-            <h3><?php echo esc_html( $bride_name ); ?></h3>
+            <h3 style="<?php echo esc_attr( $name_style_attr ); ?>"><?php echo esc_html( $bride_name ); ?></h3>
             <p><?php echo esc_html( $bride_parents ); ?></p>
         </div>
         <div class="weddingblocks-couple-column weddingblocks-separator-column">
@@ -477,7 +479,7 @@ function weddingblocks_render_couple_info( $attributes ) {
             <div class="weddingblocks-avatar">
                 <img src="<?php echo esc_url( $groom_photo_url ); ?>" alt="<?php echo esc_attr( $groom_name ); ?>">
             </div>
-            <h3><?php echo esc_html( $groom_name ); ?></h3>
+            <h3 style="<?php echo esc_attr( $name_style_attr ); ?>"><?php echo esc_html( $groom_name ); ?></h3>
             <p><?php echo esc_html( $groom_parents ); ?></p>
         </div>
     </div>
