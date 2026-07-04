@@ -56,7 +56,7 @@
                     label: __('Nama Orang Tua Pria', 'weddingblocks'),
                     value: meta.weddingblocks_groom_parents || '',
                     onChange: function (val) { updateMeta('weddingblocks_groom_parents', val); },
-                    help: __('Contoh: Putra dari Bapak A & Ibu B', 'weddingblocks')
+                    help: __('Contoh: Bapak A & Ibu B', 'weddingblocks')
                 }),
                 el('p', { style: { margin: '10px 0 5px', fontWeight: '600', fontSize: '13px' } }, __('Foto Mempelai Pria:', 'weddingblocks')),
                 el(MediaUpload, {
@@ -98,7 +98,7 @@
                     label: __('Nama Orang Tua Wanita', 'weddingblocks'),
                     value: meta.weddingblocks_bride_parents || '',
                     onChange: function (val) { updateMeta('weddingblocks_bride_parents', val); },
-                    help: __('Contoh: Putri dari Bapak C & Ibu D', 'weddingblocks')
+                    help: __('Contoh: Bapak C & Ibu D', 'weddingblocks')
                 }),
                 el('p', { style: { margin: '10px 0 5px', fontWeight: '600', fontSize: '13px' } }, __('Foto Mempelai Wanita:', 'weddingblocks')),
                 el(MediaUpload, {
@@ -127,7 +127,7 @@
             el('div', {},
                 el('h4', { style: { marginTop: 0, color: '#b5a46d' } }, __('Jadwal & Kontak', 'weddingblocks')),
                 el(TextControl, {
-                    label: __('Tanggal & Jam Pernikahan (Akad)', 'weddingblocks'),
+                    label: __('Tanggal & Jam Pernikahan', 'weddingblocks'),
                     value: meta.weddingblocks_wedding_date || '',
                     placeholder: 'YYYY-MM-DDTHH:MM',
                     onChange: function (val) { updateMeta('weddingblocks_wedding_date', val); },

@@ -72,8 +72,6 @@
     gap: 20px;
     padding: 24px 16px;
     background: #fbfaf7;
-    border-radius: 8px;
-    border: 1px solid rgba(181, 164, 109, 0.2);
 }
 
 .editor-styles-wrapper .weddingblocks-couple-column {
@@ -128,39 +126,53 @@
     margin: 0;
 }
 
-/* === Event Info: 2 card dengan gold accent === */
-.editor-styles-wrapper .weddingblocks-event-columns {
-    display: flex;
+/* === Event Info: layout previews for each variation === */
+.editor-styles-wrapper .weddingblocks-event-info-editor {
+    position: relative;
+}
+
+.editor-styles-wrapper .weddingblocks-event-info-editor .weddingblocks-event-columns {
+    margin: 0;
+    display: grid;
     gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
     padding: 20px;
-    background: #fbfaf7;
-    border-radius: 8px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(251, 250, 247, 1) 100%);
+    border-radius: 18px;
     border: 1px solid rgba(181, 164, 109, 0.2);
+    box-shadow: 0 8px 20px rgba(84, 69, 34, 0.06);
 }
 
-.editor-styles-wrapper .weddingblocks-event-card {
-    flex: 1;
-    min-width: 220px;
-    padding: 18px;
+.editor-styles-wrapper .weddingblocks-event-info-editor .weddingblocks-event-card {
+    position: relative;
+    min-width: 270;
+    padding: 18px 16px;
     background: #ffffff;
-    border: 1px solid rgba(181, 164, 109, 0.3);
-    border-radius: 10px;
+    border: 1px solid rgba(181, 164, 109, 0.22);
+    border-radius: 14px;
     text-align: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
 }
 
-.editor-styles-wrapper .weddingblocks-event-card h3 {
+.editor-styles-wrapper .weddingblocks-event-info-editor .weddingblocks-event-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, rgba(181, 164, 109, 0.15), #b5a46d 50%, rgba(181, 164, 109, 0.15));
+}
+
+.editor-styles-wrapper .weddingblocks-event-info-editor .weddingblocks-event-card h3 {
     font-family: 'Playfair Display', 'Georgia', serif;
-    margin: 0 0 12px 0;
+    margin: 0 0 10px 0;
     color: #b5a46d;
     font-size: 16px;
     font-weight: 600;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.2px;
 }
 
-.editor-styles-wrapper .weddingblocks-event-card p {
+.editor-styles-wrapper .weddingblocks-event-info-editor .weddingblocks-event-card p {
     font-family: 'Playfair Display', 'Georgia', serif;
     font-size: 13px;
     margin: 0;
@@ -168,10 +180,109 @@
     line-height: 1.7;
 }
 
-.editor-styles-wrapper .weddingblocks-event-card p strong {
+.editor-styles-wrapper .weddingblocks-event-info-editor .weddingblocks-event-card p strong {
     color: #2c2c2c;
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
+}
+
+.editor-styles-wrapper .weddingblocks-event-info-editor .weddingblocks-event-card__meta {
+    display: block;
+}
+
+.editor-styles-wrapper .weddingblocks-event-info-editor .weddingblocks-event-card__meta + .weddingblocks-event-card__meta {
+    margin-top: 2px;
+}
+
+.editor-styles-wrapper .weddingblocks-event-info-editor--vertical .weddingblocks-event-columns--vertical {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.editor-styles-wrapper .weddingblocks-event-info-editor--horizontal .weddingblocks-event-columns--horizontal {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-event-columns--timeline {
+    padding: 24px 18px;
+}
+
+.editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline {
+    position: relative;
+    display: grid;
+    gap: 22px;
+}
+
+.editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 8px;
+    bottom: 8px;
+    width: 3px;
+    transform: translateX(-50%);
+    border-radius: 999px;
+    background: linear-gradient(to bottom, rgba(181, 164, 109, 0.12), #b5a46d 18%, #b5a46d 82%, rgba(181, 164, 109, 0.12));
+}
+
+.editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 36px minmax(0, 1fr);
+    align-items: start;
+}
+
+.editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-item--start .weddingblocks-timeline-content {
+    grid-column: 1;
+}
+
+.editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-item--end .weddingblocks-timeline-content {
+    grid-column: 3;
+}
+
+.editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-marker {
+    grid-column: 2;
+    justify-self: center;
+    width: 14px;
+    height: 14px;
+    margin-top: 19px;
+    border-radius: 50%;
+    background: #b5a46d;
+    border: 3px solid #fbfaf7;
+    box-shadow: 0 0 0 5px rgba(181, 164, 109, 0.14);
+}
+
+.editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-content {
+    position: relative;
+}
+
+.editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-item--start .weddingblocks-event-card,
+.editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-item--end .weddingblocks-event-card {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+@media (max-width: 782px) {
+    .editor-styles-wrapper .weddingblocks-event-info-editor--horizontal .weddingblocks-event-columns--horizontal {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline::before {
+        left: 19px;
+        transform: none;
+    }
+
+    .editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-item {
+        grid-template-columns: 24px minmax(0, 1fr);
+    }
+
+    .editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-marker {
+        grid-column: 1;
+    }
+
+    .editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-item--start .weddingblocks-timeline-content,
+    .editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-item--end .weddingblocks-timeline-content {
+        grid-column: 2;
+    }
 }
 
 /* === Countdown: gold-tinted boxes === */

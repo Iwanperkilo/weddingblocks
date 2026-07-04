@@ -52,6 +52,10 @@
             "type": "string",
             "source": "meta",
             "meta": "weddingblocks_whatsapp_number"
+        },
+        "layoutVariation": {
+            "type": "string",
+            "default": "horizontal"
         }
     },
     "editorScript": "file:./index.js",
