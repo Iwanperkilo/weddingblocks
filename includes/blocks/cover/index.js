@@ -22,8 +22,7 @@
                 { name: 'White', color: '#ffffff' },
                 { name: 'Black', color: '#000000' },
                 { name: 'Maroon', color: '#800000' },
-                { name: 'Navy', color: '#000080' },
-                { name: 'Dark Gray', color: '#1c1d1d' }
+                { name: 'Navy', color: '#000080' }
             ];
 
             // Default template for inner blocks
@@ -78,7 +77,7 @@
                             step: 1
                         })
                     ),
-                    el(PanelBody, { title: __('Tampilan & Warna (Premium)', 'weddingblocks'), initialOpen: false },
+                    el(PanelBody, { title: __('Tampilan & Warna', 'weddingblocks'), initialOpen: false },
                         el(RangeControl, {
                             label: __('Kegelapan Overlay Latar (%)', 'weddingblocks'),
                             value: attributes.overlayOpacity !== undefined ? attributes.overlayOpacity : 35,

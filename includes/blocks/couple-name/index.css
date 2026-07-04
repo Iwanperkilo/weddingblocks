@@ -12,5 +12,7 @@
     text-align: center;
     /* Ensure alignment is respected */
     display: block;
+    width: 100%;
+    overflow-wrap: anywhere;
     /* Ensure text transform applies correctly */
 }

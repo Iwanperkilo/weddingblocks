@@ -47,3 +47,4 @@ $figure_class  = 'atomic-photo' . $shape_class;
             <img src="<?php echo esc_url( $placeholder_svg ); ?>" alt="<?php echo esc_attr( $name ); ?>" class="atomic-photo-placeholder" />
         <?php endif; ?>
     </figure>
+</div>

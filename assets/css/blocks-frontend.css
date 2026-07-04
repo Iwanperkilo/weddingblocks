@@ -648,26 +648,27 @@ body.weddingblocks-locked {
 
 /* Couple Name (Nama Mempelai) */
 .weddingblocks-atomic-couple-name {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 24px;
-  text-align: center;
-  flex-wrap: wrap;
+  display: block;
+  width: 100%;
   margin: 0;
+  text-align: center;
+  overflow-wrap: anywhere;
 }
-.weddingblocks-atomic-couple-name.layout-stacked {
-  flex-direction: column;
-  gap: 12px;
+.weddingblocks-atomic-couple-name.align-left {
+  text-align: left;
+}
+.weddingblocks-atomic-couple-name.align-center {
+  text-align: center;
+}
+.weddingblocks-atomic-couple-name.align-right {
+  text-align: right;
 }
 .weddingblocks-atomic-couple-name .atomic-name {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
+  display: block;
+  width: 100%;
 }
 .weddingblocks-atomic-couple-name.layout-inline .atomic-name {
-  flex-direction: column;
+  display: block;
 }
 .weddingblocks-atomic-couple-name .atomic-nickname {
   font-family: "Playfair Display", serif;
@@ -697,26 +698,32 @@ body.weddingblocks-locked {
 /* Couple Parents (Nama Orang Tua) */
 .weddingblocks-atomic-couple-parents {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 3px;
-  text-align: center;
-  flex-wrap: wrap;
+  width: 100%;
   margin: 0;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.weddingblocks-atomic-couple-parents.align-left {
+  text-align: left;
+}
+.weddingblocks-atomic-couple-parents.align-center {
+  text-align: center;
+}
+.weddingblocks-atomic-couple-parents.align-right {
+  text-align: right;
 }
 .weddingblocks-atomic-couple-parents.layout-inline {
-  flex-direction: row;
+  display: block;
 }
 .weddingblocks-atomic-couple-parents.layout-stacked {
-  flex-direction: column;
-  gap: 16px;
+  display: block;
 }
 .weddingblocks-atomic-couple-parents .atomic-parents {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  min-width: 200px;
+  display: block;
+  width: 100%;
 }
 .weddingblocks-atomic-couple-parents .atomic-parents-label,
 .weddingblocks-atomic-couple-parents .atomic-parents-names {
@@ -730,27 +737,39 @@ body.weddingblocks-locked {
 
 /* Couple Photo (Foto Mempelai) */
 .weddingblocks-atomic-couple-photo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
-  flex-wrap: wrap;
+  display: block;
+  width: 100%;
   margin: 20px 0;
+  text-align: center;
+}
+.weddingblocks-atomic-couple-photo.align-left {
+  text-align: left;
+}
+.weddingblocks-atomic-couple-photo.align-center {
+  text-align: center;
+}
+.weddingblocks-atomic-couple-photo.align-right {
+  text-align: right;
 }
 .weddingblocks-atomic-couple-photo.layout-stacked {
-  flex-direction: column;
-  gap: 16px;
+  display: block;
 }
 .weddingblocks-atomic-couple-photo .atomic-photo {
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   overflow: hidden;
   background: #f5f0e6;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+.weddingblocks-atomic-couple-photo.align-left .atomic-photo {
+  margin-left: 0;
+  margin-right: auto;
+}
+.weddingblocks-atomic-couple-photo.align-right .atomic-photo {
+  margin-left: auto;
+  margin-right: 0;
 }
 .weddingblocks-atomic-couple-photo .atomic-photo.shape-circle {
   border-radius: 50%;
@@ -768,9 +787,7 @@ body.weddingblocks-locked {
   display: block;
 }
 .weddingblocks-atomic-couple-photo .atomic-photo-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   width: 100%;
   height: 100%;
   color: #b5a46d;
@@ -795,7 +812,7 @@ body.weddingblocks-locked {
 .weddingblocks-atomic-couple-photo.shape-rounded .atomic-photo {
   border-radius: 15px;
 }
-.weddingblocks-atomic-photo.shape-square .atomic-photo {
+.weddingblocks-atomic-couple-photo.shape-square .atomic-photo {
   border-radius: 0;
 }
 
@@ -814,12 +831,6 @@ body.weddingblocks-locked {
 }
 
 @media (max-width: 600px) {
-  .weddingblocks-atomic-couple-name,
-  .weddingblocks-atomic-couple-parents,
-  .weddingblocks-atomic-couple-photo {
-    flex-direction: column !important;
-    gap: 0;
-  }
   .weddingblocks-atomic-couple-name.layout-inline .atomic-name--groom::after {
     content: "\0026";
     margin-top: 0;

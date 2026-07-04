@@ -73,6 +73,16 @@
                             ],
                             onChange: function (v) { props.setAttributes({ role: v }); }
                         }),
+                        el(SelectControl, {
+                            label: __('Perataan', 'weddingblocks'),
+                            value: align,
+                            options: [
+                                { label: __('Kiri', 'weddingblocks'), value: 'left' },
+                                { label: __('Tengah', 'weddingblocks'), value: 'center' },
+                                { label: __('Kanan', 'weddingblocks'), value: 'right' }
+                            ],
+                            onChange: function (v) { props.setAttributes({ align: v }); }
+                        }),
                         el(TextControl, {
                             label: __('Label (contoh: Putra dari)', 'weddingblocks'),
                             value: label,
