@@ -12,6 +12,22 @@
             "type": "string",
             "source": "meta",
             "meta": "weddingblocks_wedding_date"
+        },
+        "textColor": {
+            "type": "string",
+            "default": "#b5a46d"
+        },
+        "labelColor": {
+            "type": "string",
+            "default": "#888888"
+        },
+        "boxBackgroundColor": {
+            "type": "string",
+            "default": "#ffffff"
+        },
+        "borderColor": {
+            "type": "string",
+            "default": "#b5a46d"
         }
     },
     "editorScript": "file:./index.js",
