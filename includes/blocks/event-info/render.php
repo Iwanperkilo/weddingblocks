@@ -21,6 +21,16 @@ $maps_coords = get_post_meta( get_the_ID(), 'weddingblocks_maps_coords', true );
 $whatsapp    = get_post_meta( get_the_ID(), 'weddingblocks_whatsapp_number', true );
 
 $layout_variation = isset( $attributes['layoutVariation'] ) ? $attributes['layoutVariation'] : 'horizontal';
+$primary_color    = ! empty( $attributes['primaryColor'] ) ? sanitize_hex_color( $attributes['primaryColor'] ) : '#b5a46d';
+$accent_color     = ! empty( $attributes['accentColor'] ) ? sanitize_hex_color( $attributes['accentColor'] ) : '#b5a46d';
+
+if ( empty( $primary_color ) ) {
+    $primary_color = '#b5a46d';
+}
+
+if ( empty( $accent_color ) ) {
+    $accent_color = '#b5a46d';
+}
 $allowed_variants = array( 'vertical', 'horizontal', 'timeline' );
 
 if ( ! in_array( $layout_variation, $allowed_variants, true ) ) {
@@ -70,9 +80,10 @@ $wrapper_attributes = function_exists( 'get_block_wrapper_attributes' )
     ? get_block_wrapper_attributes(
         array(
             'class' => 'weddingblocks-event-info weddingblocks-event-info--' . $layout_variation,
+            'style' => '--wb-event-primary-color: ' . $primary_color . '; --wb-event-accent-color: ' . $accent_color . ';',
         )
     )
-    : 'class="weddingblocks-event-info weddingblocks-event-info--' . esc_attr( $layout_variation ) . '"';
+    : 'class="weddingblocks-event-info weddingblocks-event-info--' . esc_attr( $layout_variation ) . '" style="--wb-event-primary-color: ' . esc_attr( $primary_color ) . '; --wb-event-accent-color: ' . esc_attr( $accent_color ) . ';"';
 ?>
 
 <div <?php echo $wrapper_attributes; ?>>

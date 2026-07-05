@@ -4,7 +4,16 @@
     var InspectorControls = blockEditor.InspectorControls;
     var PanelBody = components.PanelBody;
     var SelectControl = components.SelectControl;
+    var ColorPalette = components.ColorPalette;
     var __ = i18n.__;
+
+    var colorPalette = [
+        { name: __('Gold', 'weddingblocks'), color: '#b5a46d' },
+        { name: __('Dark Gold', 'weddingblocks'), color: '#8a7a4f' },
+        { name: __('Rose Gold', 'weddingblocks'), color: '#b76e79' },
+        { name: __('White', 'weddingblocks'), color: '#ffffff' },
+        { name: __('Black', 'weddingblocks'), color: '#2c2c2c' }
+    ];
 
     blocks.registerBlockType('weddingblocks/event-info', {
         edit: function (props) {
@@ -24,7 +33,14 @@
             var resepsiLocAddr = meta.weddingblocks_resepsi_location_address || 'Jl. Melati No. 45';
 
             var layoutVariation = attributes.layoutVariation || 'horizontal';
+            var primaryColor = attributes.primaryColor || '#b5a46d';
+            var accentColor = attributes.accentColor || '#b5a46d';
             var wrapperClassName = 'weddingblocks-event-info-editor weddingblocks-event-info-editor--' + layoutVariation;
+            var wrapperStyle = {
+                '--wb-event-primary-color': primaryColor,
+                '--wb-event-accent-color': accentColor
+            };
+
             var events = [
                 {
                     title: __('Akad Nikah', 'weddingblocks'),
@@ -51,7 +67,10 @@
                 );
             }
 
-            return el('div', useBlockProps({ className: wrapperClassName }),
+            return el('div', useBlockProps({
+                className: wrapperClassName,
+                style: wrapperStyle
+            }),
                 el(InspectorControls, {},
                     el(PanelBody, { title: __('Variasi Tata Letak', 'weddingblocks'), initialOpen: true },
                         el(SelectControl, {
@@ -66,10 +85,28 @@
                                 setAttributes({ layoutVariation: value });
                             }
                         })
+                    ),
+                    el(PanelBody, { title: __('Pengaturan Warna', 'weddingblocks'), initialOpen: false },
+                        el('p', { style: { marginBottom: '8px', fontWeight: '500' } }, __('Warna Judul & Tombol', 'weddingblocks')),
+                        el(ColorPalette, {
+                            value: primaryColor,
+                            colors: colorPalette,
+                            onChange: function (value) {
+                                setAttributes({ primaryColor: value || '#b5a46d' });
+                            }
+                        }),
+                        el('p', { style: { margin: '16px 0 8px', fontWeight: '500' } }, __('Warna Bulatan, Garis & Border Atas', 'weddingblocks')),
+                        el(ColorPalette, {
+                            value: accentColor,
+                            colors: colorPalette,
+                            onChange: function (value) {
+                                setAttributes({ accentColor: value || '#b5a46d' });
+                            }
+                        })
                     )
                 ),
                 el('span', { className: 'wb-editor-badge wb-editor-badge--block' },
-                    el('span', { className: 'wb-editor-badge-icon' }, '📅'),
+                    el('span', { className: 'wb-editor-badge-icon' }, 'ðŸ“…'),
                     __('Info Acara (Akad & Resepsi)', 'weddingblocks')
                 ),
                 layoutVariation === 'timeline'

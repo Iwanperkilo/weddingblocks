@@ -147,6 +147,8 @@
 /* === Event Info: layout previews for each variation === */
 .editor-styles-wrapper .weddingblocks-event-info-editor {
     position: relative;
+    --wb-event-primary-color: #b5a46d;
+    --wb-event-accent-color: #b5a46d;
 }
 
 .editor-styles-wrapper .weddingblocks-event-info-editor .weddingblocks-event-columns {
@@ -178,13 +180,13 @@
     top: 0;
     width: 100%;
     height: 4px;
-    background: linear-gradient(90deg, rgba(181, 164, 109, 0.15), #b5a46d 50%, rgba(181, 164, 109, 0.15));
+    background: linear-gradient(90deg, color-mix(in srgb, var(--wb-event-accent-color) 15%, transparent), var(--wb-event-accent-color) 50%, color-mix(in srgb, var(--wb-event-accent-color) 15%, transparent));
 }
 
 .editor-styles-wrapper .weddingblocks-event-info-editor .weddingblocks-event-card h3 {
     font-family: 'Playfair Display', 'Georgia', serif;
     margin: 0 0 10px 0;
-    color: #b5a46d;
+    color: var(--wb-event-primary-color);
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 0.2px;
@@ -239,7 +241,7 @@
     width: 3px;
     transform: translateX(-50%);
     border-radius: 999px;
-    background: linear-gradient(to bottom, rgba(181, 164, 109, 0.12), #b5a46d 18%, #b5a46d 82%, rgba(181, 164, 109, 0.12));
+    background: linear-gradient(to bottom, color-mix(in srgb, var(--wb-event-accent-color) 12%, transparent), var(--wb-event-accent-color) 18%, var(--wb-event-accent-color) 82%, color-mix(in srgb, var(--wb-event-accent-color) 12%, transparent));
 }
 
 .editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-item {
@@ -264,9 +266,9 @@
     height: 14px;
     margin-top: 19px;
     border-radius: 50%;
-    background: #b5a46d;
+    background: var(--wb-event-accent-color);
     border: 3px solid #fbfaf7;
-    box-shadow: 0 0 0 5px rgba(181, 164, 109, 0.14);
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--wb-event-accent-color) 14%, transparent);
 }
 
 .editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-content {

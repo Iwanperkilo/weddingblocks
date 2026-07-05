@@ -56,6 +56,14 @@
         "layoutVariation": {
             "type": "string",
             "default": "horizontal"
+        },
+        "primaryColor": {
+            "type": "string",
+            "default": "#b5a46d"
+        },
+        "accentColor": {
+            "type": "string",
+            "default": "#b5a46d"
         }
     },
     "editorScript": "file:./index.js",
