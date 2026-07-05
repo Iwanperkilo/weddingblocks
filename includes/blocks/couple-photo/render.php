@@ -15,7 +15,11 @@ $shape      = in_array( $shape, array( 'circle', 'rounded', 'square' ), true ) ?
 $size       = isset( $attributes['size'] ) ? (int) $attributes['size'] : 200;
 if ( $size < 40 )  { $size = 40; }
 if ( $size > 800 ) { $size = 800; }
-$show_frame = isset( $attributes['showFrame'] ) ? (bool) $attributes['showFrame'] : true;
+$show_frame  = isset( $attributes['showFrame'] ) ? (bool) $attributes['showFrame'] : true;
+$frame_color = isset( $attributes['frameColor'] ) && preg_match( '/^#[0-9a-fA-F]{3,8}$/', $attributes['frameColor'] ) ? $attributes['frameColor'] : '#b5a46d';
+$frame_width = isset( $attributes['frameWidth'] ) ? (int) $attributes['frameWidth'] : 3;
+if ( $frame_width < 1 )  { $frame_width = 1; }
+if ( $frame_width > 10 ) { $frame_width = 10; }
 $align      = isset( $attributes['align'] ) ? sanitize_key( $attributes['align'] ) : 'center';
 $align      = in_array( $align, array( 'left', 'center', 'right' ), true ) ? $align : 'center';
 
@@ -33,6 +37,9 @@ if ( '' === $name ) { $name = $fallback; }
 $placeholder_svg = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23b5a46d"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
 
 $inline_style = sprintf( 'width:%1$dpx;height:%1$dpx;', $size );
+if ( $show_frame ) {
+    $inline_style .= sprintf( 'border-color:%s;border-width:%dpx;', $frame_color, $frame_width );
+}
 $frame_class  = $show_frame ? ' has-frame' : ' no-frame';
 $shape_class  = ' shape-' . sanitize_html_class( $shape );
 $wrapper_class = 'weddingblocks-atomic-couple-photo role-' . sanitize_html_class( $role ) . ' align-' . sanitize_html_class( $align ) . $frame_class;

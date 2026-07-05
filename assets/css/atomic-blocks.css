@@ -131,7 +131,9 @@
 }
 
 .weddingblocks-atomic-couple-photo .atomic-photo.has-frame {
-  border: 3px solid #b5a46d;
+  border-width: 3px;
+  border-style: solid;
+  border-color: #b5a46d;
 }
 
 .weddingblocks-atomic-couple-photo .atomic-photo.shape-circle {
