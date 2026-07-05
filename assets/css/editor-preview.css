@@ -404,6 +404,14 @@
     text-align: center;
 }
 
+/* Remove the card-style border/shadow around the RSVP form section in the editor */
+.editor-styles-wrapper .weddingblocks-section:has(.weddingblocks-rsvp-form-container),
+.editor-styles-wrapper .weddingblocks-rsvp-form-editor {
+    border: none;
+    box-shadow: none;
+    background: transparent;
+}
+
 .editor-styles-wrapper .weddingblocks-rsvp-preview .wb-form-row {
     height: 36px;
     background: #ffffff;

@@ -1,14 +1,24 @@
 {
-    "$schema": "https://schemas.wp.org/trunk/block.json",
-    "apiVersion": 3,
-    "name": "weddingblocks/rsvp-form",
-    "title": "WB Form RSVP",
-    "category": "weddingblocks",
-    "icon": "feedback",
-    "description": "Menampilkan form konfirmasi kehadiran dan doa restu (RSVP).",
-    "textdomain": "weddingblocks",
-    "editorScript": "file:./index.js",
-    "render": "file:./render.php",
-    "style": "weddingblocks-frontend-style",
-    "script": "weddingblocks-frontend-script"
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "weddingblocks/rsvp-form",
+  "title": "WB Form RSVP",
+  "category": "weddingblocks",
+  "icon": "feedback",
+  "description": "Menampilkan form konfirmasi kehadiran dan doa restu (RSVP).",
+  "textdomain": "weddingblocks",
+  "attributes": {
+    "buttonColor": {
+      "type": "string",
+      "default": "#b5a46d"
+    },
+    "inputBorderColor": {
+      "type": "string",
+      "default": "rgba(181, 164, 109, 0.3)"
+    }
+  },
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php",
+  "style": "weddingblocks-frontend-style",
+  "script": "weddingblocks-frontend-script"
 }

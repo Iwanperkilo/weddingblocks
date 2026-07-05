@@ -12,8 +12,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 $current_post_id = get_the_ID();
 $guest_name = isset( $_GET['to'] ) ? sanitize_text_field( $_GET['to'] ) : '';
 
+$button_color       = ! empty( $attributes['buttonColor'] ) ? $attributes['buttonColor'] : '#b5a46d';
+$input_border_color = ! empty( $attributes['inputBorderColor'] ) ? $attributes['inputBorderColor'] : 'rgba(181, 164, 109, 0.3)';
+
+$rsvp_color_vars = sprintf(
+    '--wb-rsvp-button-color: %s; --wb-rsvp-input-border-color: %s;',
+    esc_attr( $button_color ),
+    esc_attr( $input_border_color )
+);
+
 ?>
-<div class="weddingblocks-rsvp-form-container">
+<div class="weddingblocks-rsvp-form-container" style="<?php echo esc_attr( $rsvp_color_vars ); ?>">
     <form id="weddingblocks-rsvp-form" class="weddingblocks-form" data-post-id="<?php echo esc_attr( $current_post_id ); ?>">
         <div class="form-group">
             <label for="rsvp-name"><?php _e( 'Nama Anda', 'weddingblocks' ); ?></label>
