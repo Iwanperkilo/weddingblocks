@@ -13,6 +13,10 @@
     var registerPlugin = plugins.registerPlugin;
 
     function WeddingBlocksDocumentPanel() {
+        function spacedField(control) {
+            return el('div', { style: { marginBottom: '16px' } }, control);
+        }
+
         var meta = data.useSelect(function (select) {
             return select('core/editor').getEditedPostAttribute('meta') || {};
         });
@@ -41,23 +45,23 @@
         },
             // Mempelai Pria Section
             el('div', { style: { marginBottom: '20px', borderBottom: '1px solid #eee', paddingBottom: '15px' } },
-                el('h4', { style: { marginTop: 0, color: '#b5a46d' } }, __('Mempelai Pria', 'weddingblocks')),
-                el(TextControl, {
+                el('h4', { style: { marginTop: 0, marginBottom: '12px', color: '#b5a46d' } }, __('Mempelai Pria', 'weddingblocks')),
+                spacedField(el(TextControl, {
                     label: __('Nama Lengkap Pria', 'weddingblocks'),
                     value: meta.weddingblocks_groom_name || '',
                     onChange: function (val) { updateMeta('weddingblocks_groom_name', val); }
-                }),
-                el(TextControl, {
+                })),
+                spacedField(el(TextControl, {
                     label: __('Nama Panggilan Pria', 'weddingblocks'),
                     value: meta.weddingblocks_groom_nickname || '',
                     onChange: function (val) { updateMeta('weddingblocks_groom_nickname', val); }
-                }),
-                el(TextControl, {
+                })),
+                spacedField(el(TextControl, {
                     label: __('Nama Orang Tua Pria', 'weddingblocks'),
                     value: meta.weddingblocks_groom_parents || '',
                     onChange: function (val) { updateMeta('weddingblocks_groom_parents', val); },
                     help: __('Contoh: Bapak A & Ibu B', 'weddingblocks')
-                }),
+                })),
                 el('p', { style: { margin: '10px 0 5px', fontWeight: '600', fontSize: '13px' } }, __('Foto Mempelai Pria:', 'weddingblocks')),
                 el(MediaUpload, {
                     onSelect: function (media) { updateMeta('weddingblocks_groom_photo', media.url); },
@@ -83,23 +87,23 @@
 
             // Mempelai Wanita Section
             el('div', { style: { marginBottom: '20px', borderBottom: '1px solid #eee', paddingBottom: '15px' } },
-                el('h4', { style: { marginTop: 0, color: '#b5a46d' } }, __('Mempelai Wanita', 'weddingblocks')),
-                el(TextControl, {
+                el('h4', { style: { marginTop: 0, marginBottom: '12px', color: '#b5a46d' } }, __('Mempelai Wanita', 'weddingblocks')),
+                spacedField(el(TextControl, {
                     label: __('Nama Lengkap Wanita', 'weddingblocks'),
                     value: meta.weddingblocks_bride_name || '',
                     onChange: function (val) { updateMeta('weddingblocks_bride_name', val); }
-                }),
-                el(TextControl, {
+                })),
+                spacedField(el(TextControl, {
                     label: __('Nama Panggilan Wanita', 'weddingblocks'),
                     value: meta.weddingblocks_bride_nickname || '',
                     onChange: function (val) { updateMeta('weddingblocks_bride_nickname', val); }
-                }),
-                el(TextControl, {
+                })),
+                spacedField(el(TextControl, {
                     label: __('Nama Orang Tua Wanita', 'weddingblocks'),
                     value: meta.weddingblocks_bride_parents || '',
                     onChange: function (val) { updateMeta('weddingblocks_bride_parents', val); },
                     help: __('Contoh: Bapak C & Ibu D', 'weddingblocks')
-                }),
+                })),
                 el('p', { style: { margin: '10px 0 5px', fontWeight: '600', fontSize: '13px' } }, __('Foto Mempelai Wanita:', 'weddingblocks')),
                 el(MediaUpload, {
                     onSelect: function (media) { updateMeta('weddingblocks_bride_photo', media.url); },
@@ -125,62 +129,62 @@
 
             // Jadwal & Kontak Section
             el('div', {},
-                el('h4', { style: { marginTop: 0, color: '#b5a46d' } }, __('Jadwal & Kontak', 'weddingblocks')),
-                el(TextControl, {
+                el('h4', { style: { marginTop: 0, marginBottom: '12px', color: '#b5a46d' } }, __('Jadwal & Kontak', 'weddingblocks')),
+                spacedField(el(TextControl, {
                     label: __('Tanggal & Jam Pernikahan', 'weddingblocks'),
                     value: meta.weddingblocks_wedding_date || '',
                     placeholder: 'YYYY-MM-DDTHH:MM',
                     onChange: function (val) { updateMeta('weddingblocks_wedding_date', val); },
                     help: __('Contoh: 2026-12-25T08:00')
-                }),
-                el(TextControl, {
+                })),
+                spacedField(el(TextControl, {
                     label: __('Waktu Akad (Teks)', 'weddingblocks'),
                     value: meta.weddingblocks_akad_time_label || '',
                     placeholder: 'Pukul 08:00 - 10:00 WIB',
                     onChange: function (val) { updateMeta('weddingblocks_akad_time_label', val); }
-                }),
-                el(TextControl, {
+                })),
+                spacedField(el(TextControl, {
                     label: __('Tempat Akad', 'weddingblocks'),
                     value: meta.weddingblocks_akad_location_name || '',
                     placeholder: 'Masjid Agung Kota',
                     onChange: function (val) { updateMeta('weddingblocks_akad_location_name', val); }
-                }),
-                el(TextControl, {
+                })),
+                spacedField(el(TextControl, {
                     label: __('Alamat Akad', 'weddingblocks'),
                     value: meta.weddingblocks_akad_location_address || '',
                     placeholder: 'Jl. Cempaka No. 12',
                     onChange: function (val) { updateMeta('weddingblocks_akad_location_address', val); }
-                }),
-                el(TextControl, {
+                })),
+                spacedField(el(TextControl, {
                     label: __('Waktu Resepsi (Teks)', 'weddingblocks'),
                     value: meta.weddingblocks_resepsi_time_label || '',
                     placeholder: 'Pukul 11:00 - Selesai',
                     onChange: function (val) { updateMeta('weddingblocks_resepsi_time_label', val); }
-                }),
-                el(TextControl, {
+                })),
+                spacedField(el(TextControl, {
                     label: __('Tempat Resepsi', 'weddingblocks'),
                     value: meta.weddingblocks_resepsi_location_name || '',
                     placeholder: 'Gedung Serbaguna Indah',
                     onChange: function (val) { updateMeta('weddingblocks_resepsi_location_name', val); }
-                }),
-                el(TextControl, {
+                })),
+                spacedField(el(TextControl, {
                     label: __('Alamat Resepsi', 'weddingblocks'),
                     value: meta.weddingblocks_resepsi_location_address || '',
                     placeholder: 'Jl. Melati No. 45',
                     onChange: function (val) { updateMeta('weddingblocks_resepsi_location_address', val); }
-                }),
-                el(TextControl, {
+                })),
+                spacedField(el(TextControl, {
                     label: __('Tautan Google Maps', 'weddingblocks'),
                     value: meta.weddingblocks_maps_coords || '',
                     placeholder: 'https://maps.google.com/?q=...',
                     onChange: function (val) { updateMeta('weddingblocks_maps_coords', val); }
-                }),
-                el(TextControl, {
+                })),
+                spacedField(el(TextControl, {
                     label: __('No. WhatsApp Admin', 'weddingblocks'),
                     value: meta.weddingblocks_whatsapp_number || '',
                     placeholder: '628123456789',
                     onChange: function (val) { updateMeta('weddingblocks_whatsapp_number', val); }
-                })
+                }))
             )
         );
     }

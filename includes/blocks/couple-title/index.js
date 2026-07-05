@@ -13,7 +13,6 @@
         { name: __('Dark Gold', 'weddingblocks'), color: '#8a7a4f' },
         { name: __('Rose', 'weddingblocks'), color: '#b76e79' },
         { name: __('Maroon', 'weddingblocks'), color: '#800000' },
-        { name: __('Navy', 'weddingblocks'), color: '#1f3a5f' },
         { name: __('Charcoal', 'weddingblocks'), color: '#2c2c2c' }
     ];
 
