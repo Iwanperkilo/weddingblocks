@@ -663,6 +663,18 @@ body.weddingblocks-locked {
 .weddingblocks-atomic-couple-name.align-right {
   text-align: right;
 }
+.weddingblocks-atomic-couple-name.type-both.align-left .atomic-name-text {
+  align-items: flex-start;
+  text-align: left;
+}
+.weddingblocks-atomic-couple-name.type-both.align-center .atomic-name-text {
+  align-items: center;
+  text-align: center;
+}
+.weddingblocks-atomic-couple-name.type-both.align-right .atomic-name-text {
+  align-items: flex-end;
+  text-align: right;
+}
 .weddingblocks-atomic-couple-name .atomic-name {
   display: block;
   width: 100%;
@@ -708,12 +720,15 @@ body.weddingblocks-locked {
 }
 .weddingblocks-atomic-couple-parents.align-left {
   text-align: left;
+  justify-content: flex-start;
 }
 .weddingblocks-atomic-couple-parents.align-center {
   text-align: center;
+  justify-content: center;
 }
 .weddingblocks-atomic-couple-parents.align-right {
   text-align: right;
+  justify-content: flex-end;
 }
 .weddingblocks-atomic-couple-parents.layout-inline {
   display: block;

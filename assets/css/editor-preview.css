@@ -15,6 +15,24 @@
     margin: 0;
 }
 
+.editor-styles-wrapper .weddingblocks-atomic-couple-name.align-left,
+.editor-styles-wrapper .weddingblocks-atomic-couple-parents.align-left {
+    justify-content: flex-start;
+    text-align: left;
+}
+
+.editor-styles-wrapper .weddingblocks-atomic-couple-name.align-center,
+.editor-styles-wrapper .weddingblocks-atomic-couple-parents.align-center {
+    justify-content: center;
+    text-align: center;
+}
+
+.editor-styles-wrapper .weddingblocks-atomic-couple-name.align-right,
+.editor-styles-wrapper .weddingblocks-atomic-couple-parents.align-right {
+    justify-content: flex-end;
+    text-align: right;
+}
+
 .editor-styles-wrapper .weddingblocks-atomic-couple-photo .atomic-photo {
     background: #f5f0e6;
     overflow: hidden;
