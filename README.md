@@ -107,7 +107,7 @@ Standar kontribusi:
 
 Kontribusi dalam bentuk apapun sangat diterima — silakan **fork**, buat branch, dan buka **Pull Request**.
 
-Untuk perubahan besar, mohon buka **Issue** terlebih dahulu untuk mendiskusikan ide Anda.
+Untuk usulan fitur baru atau perubahan besar, **wajib** membuka **Issue** terlebih dahulu untuk mendiskusikan ide Anda sebelum membuat Pull Request.
 
 ## 📜 Lisensi
 
