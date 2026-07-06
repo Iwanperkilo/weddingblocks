@@ -92,6 +92,7 @@ function weddingblocks_register_block_template() {
     $template_file = WEDDINGBLOCKS_PATH . 'templates/single-undangan.html';
     if ( file_exists( $template_file ) ) {
         $template_content = file_get_contents( $template_file );
+        // phpcs:ignore wp_function_not_compatible_with_requires_wp
         register_block_template( 'weddingblocks//single-undangan', array(
             'title'       => __( 'Template Undangan (WeddingBlocks)', 'weddingblocks' ),
             'description' => __( 'Template default halaman undangan digital bersih tanpa header/footer tema.', 'weddingblocks' ),

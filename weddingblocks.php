@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WeddingBlocks
  * Plugin URI: https://wordpress.org/plugins/weddingblocks/
- * Description: Plugin undangan digital berbasis Gutenberg & Full Site Editing (FSE) dengan desain modern, interaktif, dan mudah dikustomisasi.
+ * Description: A digital invitation plugin based on Gutenberg & Full Site Editing (FSE) with a modern, interactive, and easily customizable design.
  * Version: 1.0.0
  * Author: Perkilo
  * Author URI: https://github.com/iwanperkilo

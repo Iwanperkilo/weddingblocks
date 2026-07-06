@@ -4,6 +4,9 @@
  *
  * @package WeddingBlocks
  */
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }

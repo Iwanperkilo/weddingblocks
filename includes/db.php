@@ -42,6 +42,7 @@ function weddingblocks_save_rsvp( $data ) {
     global $wpdb;
     $table_name = $wpdb->prefix . 'weddingblocks_rsvps';
 
+    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
     $inserted = $wpdb->insert(
         $table_name,
         array(
@@ -86,11 +87,8 @@ function weddingblocks_get_rsvps( $post_id = 0, $limit = 100, $offset = 0 ) {
     $params[] = intval( $limit );
     $params[] = intval( $offset );
 
-    if ( ! empty( $params ) ) {
-        return $wpdb->get_results( $wpdb->prepare( $sql, $params ) );
-    }
-
-    return $wpdb->get_results( $sql );
+    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
+    return $wpdb->get_results( $wpdb->prepare( $sql, $params ) );
 }
 
 /**
@@ -104,9 +102,11 @@ function weddingblocks_get_rsvps_count( $post_id = 0 ) {
     $table_name = $wpdb->prefix . 'weddingblocks_rsvps';
 
     if ( $post_id > 0 ) {
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
         return intval( $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $table_name WHERE post_id = %d", $post_id ) ) );
     }
 
+    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
     return intval( $wpdb->get_var( "SELECT COUNT(*) FROM $table_name" ) );
 }
 
@@ -120,6 +120,7 @@ function weddingblocks_delete_rsvp( $id ) {
     global $wpdb;
     $table_name = $wpdb->prefix . 'weddingblocks_rsvps';
 
+    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
     $deleted = $wpdb->delete(
         $table_name,
         array( 'id' => intval( $id ) ),

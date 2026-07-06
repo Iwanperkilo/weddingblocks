@@ -345,13 +345,13 @@ function weddingblocks_render_cover( $attributes, $content = '' ) {
     <div id="weddingblocks-cover" class="weddingblocks-cover-wrapper" style="<?php echo esc_attr( $bg_style ); ?>">
         <div class="weddingblocks-cover-overlay" style="background-color: <?php echo esc_attr( $overlay_color ); ?>; opacity: <?php echo esc_attr( $overlay_opacity / 100 ); ?>;"></div>
         <div class="weddingblocks-cover-content">
-            <?php echo $content; ?>
+            <?php echo wp_kses_post( $content ); ?>
 
             <button id="weddingblocks-open-btn" class="weddingblocks-btn-gold" style="background-color: <?php echo esc_attr( $accent_color ); ?>; border-color: <?php echo esc_attr( $accent_color ); ?>; color: #ffffff !important; border-radius: <?php echo esc_attr( $button_border_radius ); ?>px;">
                 <svg class="icon-mail" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="margin-right: 8px; vertical-align: middle;">
                     <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                 </svg>
-                <span><?php echo $button_text; ?></span>
+                <span><?php echo wp_kses_post( $button_text ); ?></span>
             </button>
         </div>
     </div>
@@ -363,7 +363,8 @@ function weddingblocks_render_cover( $attributes, $content = '' ) {
 function weddingblocks_render_guest_name( $attributes ) {
     $prefix = isset( $attributes['prefix'] ) ? esc_html( $attributes['prefix'] ) : 'Kepada Yth. Bapak/Ibu/Saudara/i:';
     $fallback = isset( $attributes['fallback'] ) ? esc_html( $attributes['fallback'] ) : 'Tamu Undangan';
-    $guest_name = isset( $_GET['to'] ) ? sanitize_text_field( $_GET['to'] ) : $fallback;
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+    $guest_name = isset( $_GET['to'] ) ? sanitize_text_field( wp_unslash( $_GET['to'] ) ) : $fallback;
 
     ob_start();
     ?>
@@ -393,19 +394,19 @@ function weddingblocks_render_countdown( $attributes ) {
     <div class="weddingblocks-countdown" data-target="<?php echo esc_attr( $target ); ?>">
         <div class="countdown-item">
             <span class="countdown-value days">00</span>
-            <span class="countdown-label"><?php _e( 'Hari', 'weddingblocks' ); ?></span>
+            <span class="countdown-label"><?php esc_html_e( 'Hari', 'weddingblocks' ); ?></span>
         </div>
         <div class="countdown-item">
             <span class="countdown-value hours">00</span>
-            <span class="countdown-label"><?php _e( 'Jam', 'weddingblocks' ); ?></span>
+            <span class="countdown-label"><?php esc_html_e( 'Jam', 'weddingblocks' ); ?></span>
         </div>
         <div class="countdown-item">
             <span class="countdown-value minutes">00</span>
-            <span class="countdown-label"><?php _e( 'Menit', 'weddingblocks' ); ?></span>
+            <span class="countdown-label"><?php esc_html_e( 'Menit', 'weddingblocks' ); ?></span>
         </div>
         <div class="countdown-item">
             <span class="countdown-value seconds">00</span>
-            <span class="countdown-label"><?php _e( 'Detik', 'weddingblocks' ); ?></span>
+            <span class="countdown-label"><?php esc_html_e( 'Detik', 'weddingblocks' ); ?></span>
         </div>
     </div>
     <?php
@@ -513,7 +514,7 @@ function weddingblocks_render_event_info( $attributes ) {
     ?>
     <div class="weddingblocks-event-columns">
         <div class="weddingblocks-event-card">
-            <h3><?php _e( 'Akad Nikah', 'weddingblocks' ); ?></h3>
+            <h3><?php esc_html_e( 'Akad Nikah', 'weddingblocks' ); ?></h3>
             <p>
                 <strong><?php echo esc_html( $akad_time ); ?></strong><br>
                 <?php echo esc_html( $akad_loc_name ); ?><br>
@@ -525,13 +526,13 @@ function weddingblocks_render_event_info( $attributes ) {
                         <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" style="vertical-align: middle; margin-right: 4px;">
                             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
                         </svg>
-                        <?php _e( 'Google Maps', 'weddingblocks' ); ?>
+                        <?php esc_html_e( 'Google Maps', 'weddingblocks' ); ?>
                     </a>
                 </div>
             <?php endif; ?>
         </div>
         <div class="weddingblocks-event-card">
-            <h3><?php _e( 'Resepsi', 'weddingblocks' ); ?></h3>
+            <h3><?php esc_html_e( 'Resepsi', 'weddingblocks' ); ?></h3>
             <p>
                 <strong><?php echo esc_html( $resepsi_time ); ?></strong><br>
                 <?php echo esc_html( $resepsi_loc_name ); ?><br>
@@ -543,7 +544,7 @@ function weddingblocks_render_event_info( $attributes ) {
                         <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" style="vertical-align: middle; margin-right: 4px;">
                             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
                         </svg>
-                        <?php _e( 'Google Maps', 'weddingblocks' ); ?>
+                        <?php esc_html_e( 'Google Maps', 'weddingblocks' ); ?>
                     </a>
                 </div>
             <?php endif; ?>
@@ -562,7 +563,7 @@ function weddingblocks_render_event_info( $attributes ) {
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" style="vertical-align: middle; margin-right: 6px;">
                     <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.517 2.266 2.27 3.51 5.276 3.508 8.48-.005 6.66-5.342 11.997-11.953 11.997-2.005-.001-3.973-.503-5.733-1.458L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.858-4.42 9.862-9.864.002-2.637-1.017-5.114-2.873-6.973C16.597 1.91 14.12 .89 11.48.887c-5.441 0-9.863 4.422-9.867 9.868-.002 1.77.464 3.498 1.353 5.031L1.93 21.09l5.059-1.328c1.558.85 3.238 1.293 4.908 1.292h.001zM17.65 14.28c-.319-.16-1.89-.933-2.21-1.049-.32-.116-.552-.174-.784.174-.232.348-.898 1.132-1.101 1.364-.203.232-.406.261-.726.101-1.821-.913-3.003-1.83-4.2-3.89-.319-.549.319-.51.913-1.7.093-.188.046-.352-.023-.512-.069-.16-.552-1.332-.756-1.82-.2-.48-.403-.414-.552-.422-.143-.007-.308-.009-.472-.009-.165 0-.435.062-.663.31-.228.249-.871.851-.871 2.074 0 1.223.89 2.406.99 2.541.101.135 1.751 2.674 4.241 3.746.592.255 1.055.408 1.417.523.595.19 1.137.163 1.564.099.477-.072 1.89-.773 2.158-1.52.268-.747.268-1.388.188-1.52-.08-.135-.299-.214-.619-.374z"/>
                 </svg>
-                <?php _e( 'Hubungi Admin (WhatsApp)', 'weddingblocks' ); ?>
+                <?php esc_html_e( 'Hubungi Admin (WhatsApp)', 'weddingblocks' ); ?>
             </a>
         </div>
     <?php endif; ?>
@@ -574,39 +575,40 @@ function weddingblocks_render_event_info( $attributes ) {
 // 5. RSVP Form
 function weddingblocks_render_rsvp_form( $attributes ) {
     $current_post_id = get_the_ID();
-    $guest_name = isset( $_GET['to'] ) ? sanitize_text_field( $_GET['to'] ) : '';
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+    $guest_name = isset( $_GET['to'] ) ? sanitize_text_field( wp_unslash( $_GET['to'] ) ) : '';
 
     ob_start();
     ?>
     <div class="weddingblocks-rsvp-form-container">
         <form id="weddingblocks-rsvp-form" class="weddingblocks-form" data-post-id="<?php echo esc_attr( $current_post_id ); ?>">
             <div class="form-group">
-                <label for="rsvp-name"><?php _e( 'Nama Anda', 'weddingblocks' ); ?></label>
+                <label for="rsvp-name"><?php esc_html_e( 'Nama Anda', 'weddingblocks' ); ?></label>
                 <input type="text" id="rsvp-name" name="guest_name" value="<?php echo esc_attr( $guest_name ); ?>" placeholder="<?php esc_attr_e( 'Ketik nama lengkap...', 'weddingblocks' ); ?>" required>
             </div>
 
             <div class="form-group">
-                <label for="rsvp-attendance"><?php _e( 'Konfirmasi Kehadiran', 'weddingblocks' ); ?></label>
+                <label for="rsvp-attendance"><?php esc_html_e( 'Konfirmasi Kehadiran', 'weddingblocks' ); ?></label>
                 <select id="rsvp-attendance" name="attendance" required>
-                    <option value="" disabled selected><?php _e( 'Pilih kehadiran...', 'weddingblocks' ); ?></option>
-                    <option value="hadir"><?php _e( 'Hadir', 'weddingblocks' ); ?></option>
-                    <option value="tidak_hadir"><?php _e( 'Tidak Hadir', 'weddingblocks' ); ?></option>
-                    <option value="ragu_ragu"><?php _e( 'Ragu-ragu', 'weddingblocks' ); ?></option>
+                    <option value="" disabled selected><?php esc_html_e( 'Pilih kehadiran...', 'weddingblocks' ); ?></option>
+                    <option value="hadir"><?php esc_html_e( 'Hadir', 'weddingblocks' ); ?></option>
+                    <option value="tidak_hadir"><?php esc_html_e( 'Tidak Hadir', 'weddingblocks' ); ?></option>
+                    <option value="ragu_ragu"><?php esc_html_e( 'Ragu-ragu', 'weddingblocks' ); ?></option>
                 </select>
             </div>
 
             <div class="form-group" id="rsvp-guests-group" style="display: none;">
-                <label for="rsvp-guests"><?php _e( 'Jumlah Tamu (Pax)', 'weddingblocks' ); ?></label>
+                <label for="rsvp-guests"><?php esc_html_e( 'Jumlah Tamu (Pax)', 'weddingblocks' ); ?></label>
                 <input type="number" id="rsvp-guests" name="guests_count" value="1" min="1" max="10">
             </div>
 
             <div class="form-group">
-                <label for="rsvp-message"><?php _e( 'Ucapan & Doa Restu', 'weddingblocks' ); ?></label>
+                <label for="rsvp-message"><?php esc_html_e( 'Ucapan & Doa Restu', 'weddingblocks' ); ?></label>
                 <textarea id="rsvp-message" name="message" rows="4" placeholder="<?php esc_attr_e( 'Berikan ucapan selamat & doa restu terbaik untuk mempelai...', 'weddingblocks' ); ?>" required></textarea>
             </div>
 
             <button type="submit" class="weddingblocks-btn-gold" id="rsvp-submit-btn">
-                <span class="btn-text"><?php _e( 'Kirim Konfirmasi', 'weddingblocks' ); ?></span>
+                <span class="btn-text"><?php esc_html_e( 'Kirim Konfirmasi', 'weddingblocks' ); ?></span>
                 <span class="btn-spinner" style="display: none;"></span>
             </button>
             <div id="rsvp-message-alert" class="rsvp-alert" style="display: none;"></div>
@@ -657,7 +659,7 @@ function weddingblocks_render_guestbook( $attributes ) {
                 <?php endforeach; ?>
             <?php else : ?>
                 <div class="guestbook-empty" id="guestbook-empty-placeholder">
-                    <p><?php _e( 'Belum ada ucapan. Jadilah yang pertama memberikan doa restu!', 'weddingblocks' ); ?></p>
+                    <p><?php esc_html_e( 'Belum ada ucapan. Jadilah yang pertama memberikan doa restu!', 'weddingblocks' ); ?></p>
                 </div>
             <?php endif; ?>
         </div>

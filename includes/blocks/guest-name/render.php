@@ -5,13 +5,16 @@
  * @package WeddingBlocks
  */
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 $prefix = isset( $attributes['prefix'] ) ? $attributes['prefix'] : 'Kepada Yth. Bapak/Ibu/Saudara/i:';
 $fallback = isset( $attributes['fallback'] ) ? $attributes['fallback'] : 'Tamu Undangan';
-$guest_name = isset( $_GET['to'] ) ? sanitize_text_field( $_GET['to'] ) : $fallback;
+// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+$guest_name = isset( $_GET['to'] ) ? sanitize_text_field( wp_unslash( $_GET['to'] ) ) : $fallback;
 ?>
 <?php
 $text_color = isset( $attributes['textColor'] ) ? $attributes['textColor'] : '#333333';

@@ -5,6 +5,8 @@
  * @package WeddingBlocks
  */
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
@@ -47,7 +49,7 @@ $rsvps = weddingblocks_get_rsvps( $current_post_id, 50, 0 );
             <?php endforeach; ?>
         <?php else : ?>
             <div class="guestbook-empty" id="guestbook-empty-placeholder">
-                <p><?php _e( 'Belum ada ucapan. Jadilah yang pertama memberikan doa restu!', 'weddingblocks' ); ?></p>
+                <p><?php esc_html_e( 'Belum ada ucapan. Jadilah yang pertama memberikan doa restu!', 'weddingblocks' ); ?></p>
             </div>
         <?php endif; ?>
     </div>

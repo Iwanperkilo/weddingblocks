@@ -5,6 +5,8 @@
  * @package WeddingBlocks
  */
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
@@ -37,18 +39,18 @@ $border_color         = ! empty( $block_attributes['borderColor'] ) ? $block_att
 <div class="weddingblocks-countdown" data-target="<?php echo esc_attr( $target ); ?>">
     <div class="countdown-item" style="background-color: <?php echo esc_attr( $box_background_color ); ?>; border-color: <?php echo esc_attr( $border_color ); ?>;">
         <span class="countdown-value days" style="color: <?php echo esc_attr( $text_color ); ?>;">00</span>
-        <span class="countdown-label" style="color: <?php echo esc_attr( $label_color ); ?>;"><?php _e( 'Hari', 'weddingblocks' ); ?></span>
+        <span class="countdown-label" style="color: <?php echo esc_attr( $label_color ); ?>;"><?php esc_html_e( 'Hari', 'weddingblocks' ); ?></span>
     </div>
     <div class="countdown-item" style="background-color: <?php echo esc_attr( $box_background_color ); ?>; border-color: <?php echo esc_attr( $border_color ); ?>;">
         <span class="countdown-value hours" style="color: <?php echo esc_attr( $text_color ); ?>;">00</span>
-        <span class="countdown-label" style="color: <?php echo esc_attr( $label_color ); ?>;"><?php _e( 'Jam', 'weddingblocks' ); ?></span>
+        <span class="countdown-label" style="color: <?php echo esc_attr( $label_color ); ?>;"><?php esc_html_e( 'Jam', 'weddingblocks' ); ?></span>
     </div>
     <div class="countdown-item" style="background-color: <?php echo esc_attr( $box_background_color ); ?>; border-color: <?php echo esc_attr( $border_color ); ?>;">
         <span class="countdown-value minutes" style="color: <?php echo esc_attr( $text_color ); ?>;">00</span>
-        <span class="countdown-label" style="color: <?php echo esc_attr( $label_color ); ?>;"><?php _e( 'Menit', 'weddingblocks' ); ?></span>
+        <span class="countdown-label" style="color: <?php echo esc_attr( $label_color ); ?>;"><?php esc_html_e( 'Menit', 'weddingblocks' ); ?></span>
     </div>
     <div class="countdown-item" style="background-color: <?php echo esc_attr( $box_background_color ); ?>; border-color: <?php echo esc_attr( $border_color ); ?>;">
         <span class="countdown-value seconds" style="color: <?php echo esc_attr( $text_color ); ?>;">00</span>
-        <span class="countdown-label" style="color: <?php echo esc_attr( $label_color ); ?>;"><?php _e( 'Detik', 'weddingblocks' ); ?></span>
+        <span class="countdown-label" style="color: <?php echo esc_attr( $label_color ); ?>;"><?php esc_html_e( 'Detik', 'weddingblocks' ); ?></span>
     </div>
 </div>

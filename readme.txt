@@ -1,8 +1,8 @@
 === WeddingBlocks ===
 Contributors: iwanperkilo
-Tags: wedding, invitation, gutenberg, fse, blocks, undagan, pernikahan
+Tags: wedding, invitation, gutenberg, fse, blocks
 Requires at least: 6.0
-Tested up to: 6.6
+Tested up to: 7.0
 Requires PHP: 7.4
 Stable tag: 1.0.0
 License: GPLv2 or later
@@ -10,101 +10,101 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Plugin URI: https://wordpress.org/plugins/weddingblocks/
 Author URI: https://github.com/iwanperkilo
 
-Plugin undangan digital berbasis Gutenberg & Full Site Editing (FSE) dengan desain modern, interaktif, dan mudah dikustomisasi.
+A Gutenberg & Full Site Editing (FSE) based digital wedding invitation plugin with a modern, interactive, and easily customizable design.
 
 == Description ==
 
-**WeddingBlocks** adalah plugin WordPress yang membantu Anda membuat **undangan digital pernikahan** dengan mudah dan cepat menggunakan sistem blok Gutenberg modern.
+**WeddingBlocks** is a WordPress plugin that helps you create beautiful **digital wedding invitations** quickly and easily using the modern Gutenberg block system.
 
-Plugin ini sangat cocok untuk:
-* Pasangan yang ingin membuat undangan pernikahan digital
-* Web designer / developer yang menyediakan jasa undangan online
-* Wedding organizer yang butuh template siap pakai
+This plugin is perfect for:
+* Couples who want to build their own wedding website/invitation
+* Web designers / developers offering digital invitation services
+* Wedding organizers looking for ready-to-use template layouts
 
-= Fitur Utama =
+= Key Features =
 
-* 🎨 Lebih dari 10 **custom Gutenberg blocks** siap pakai
-* 📱 **Responsive design** untuk semua ukuran layar
-* 💌 **Form RSVP** dengan penyimpanan ke database
-* 📖 **Guestbook** untuk ucapan & doa tamu
-* 🎵 **Music player** untuk backsound undangan
-* 🧩 Dukungan **Full Site Editing (FSE)**
-* ⚡ Ringan, cepat, dan **tanpa dependency** tambahan
-* 🌍 Siap internasionalisasi (i18n ready)
+* 🎨 Over 10 **custom Gutenberg blocks** ready to use
+* 📱 **Responsive design** optimized for all screens
+* 💌 **RSVP Form** with direct database logging
+* 📖 **Guestbook** for guest greetings & wishes
+* 🎵 **Music Player** for automated backsound audio
+* 🧩 **Full Site Editing (FSE)** support
+* ⚡ Lightweight, fast, and **zero external dependencies**
+* 🌍 i18n ready (Fully translatable)
 
-= Block yang Tersedia =
+= Available Blocks =
 
-* **Cover** — Sampul pembuka undangan
-* **Couple Name** — Nama pengantin
-* **Couple Title** — Sapaan (Putra/Putri dari ...)
-* **Couple Parents** — Info orang tua
-* **Couple Photo** — Galeri foto pasangan
-* **Couple Info** — Biodata singkat
-* **Event Info** — Detail acara
-* **Countdown** — Hitung mundur hari H
-* **Music Player** — Backsound otomatis
-* **Guest Name** — Sapaan personal tamu
-* **RSVP Form** — Form konfirmasi kehadiran
-* **Guestbook** — Ucapan & doa
+* **Cover** — Welcoming cover screen for the invitation
+* **Couple Name** — Groom & Bride names
+* **Couple Title** — Custom text/greetings (e.g. Putra/Putri dari ...)
+* **Couple Parents** — Parents information
+* **Couple Photo** — Gallery or single photo of the couple
+* **Couple Info** — Brief biography
+* **Event Info** — Wedding event schedule & location details
+* **Countdown** — Countdown clock to the wedding day
+* **Music Player** — Backsound soundtrack player
+* **Guest Name** — Personalized guest name display from URL query
+* **RSVP Form** — Attendance confirmation form
+* **Guestbook** — Wishes, messages, and greetings stream
 
-= Untuk Siapa Plugin Ini? =
+= Who Is This Plugin For? =
 
-Plugin ini dibuat dengan semangat untuk membantu pasangan-pasangan Indonesia berbagi kabar bahagia mereka secara modern. Dengan antarmuka visual berbasis block, siapa pun bisa membuat undangan digital yang indah tanpa harus paham coding.
+This plugin is created to help couples share their happy news in a modern, elegant way. With a block-based visual interface, anyone can create stunning digital invitations without any coding skills.
 
 == Installation ==
 
-1. Upload folder `weddingblocks` ke direktori `/wp-content/plugins/`, atau install langsung melalui dashboard WordPress.
-2. Aktifkan plugin melalui menu **Plugins** di WordPress.
-3. Buka menu **Undangan** di sidebar admin untuk mulai membuat undangan baru.
-4. Gunakan block-block WeddingBlocks di editor untuk membangun halaman undangan Anda.
+1. Upload the `weddingblocks` directory to the `/wp-content/plugins/` directory, or install it directly via the WordPress admin dashboard.
+2. Activate the plugin through the **Plugins** menu in WordPress.
+3. Open the **Undangan** menu in your admin sidebar to start creating invitations.
+4. Use the custom WeddingBlocks in the Gutenberg editor to build your invitation page.
 
 == Frequently Asked Questions ==
 
-= Apakah plugin ini gratis? =
+= Is this plugin free? =
 
-Ya, WeddingBlocks 100% gratis dan open source di bawah lisensi GPL v2 atau lebih baru.
+Yes, WeddingBlocks is 100% free and open-source under the GPL v2 or later license.
 
-= Apakah saya perlu block theme / FSE theme? =
+= Do I need a block / FSE theme? =
 
-Tidak wajib. Plugin ini juga bekerja di classic theme. Namun, untuk pengalaman terbaik dan penggunaan template FSE, kami sangat merekomendasikan block theme (misalnya Twenty Twenty-Four).
+No. While the plugin works on classic themes, we recommend using a block theme (such as Twenty Twenty-Four) to get the best experience and utilize FSE templates.
 
-= Bagaimana cara menambahkan musik? =
+= How do I add music? =
 
-Gunakan block **Music Player**, lalu upload file MP3 Anda di panel pengaturan block.
+Add the **Music Player** block to your page, then upload your MP3 audio file in the block settings panel.
 
-= Apakah RSVP akan tersimpan? =
+= Will RSVP responses be saved? =
 
-Ya, semua data RSVP tersimpan di database WordPress dan dapat dilihat di halaman admin **Undangan → RSVP**.
+Yes, all RSVP data is securely saved in your WordPress database and can be managed from the admin dashboard under **Undangan → RSVP**.
 
-= Bisakah saya menerjemahkan plugin ini? =
+= Can I translate this plugin? =
 
-Tentu! Plugin ini sudah menggunakan `text domain: weddingblocks` dan siap diterjemahkan ke bahasa apapun.
+Absolutely! The plugin is fully translatable and uses the `weddingblocks` text domain.
 
 == Screenshots ==
 
-1. Sampul undangan dengan animasi
-2. Countdown menuju hari H
-3. Detail acara (tanggal, lokasi, waktu)
-4. Form RSVP untuk tamu
-5. Guestbook ucapan & doa
-6. Tampilan di mobile
+1. Invitation cover with fade animation
+2. Countdown clock to the big day
+3. Event details (date, time, venue address)
+4. Guest RSVP confirmation form
+5. Guestbook wishes stream
+6. Mobile preview
 
 == Changelog ==
 
 = 1.0.0 =
-* 🎉 Rilis awal WeddingBlocks
-* 11+ custom Gutenberg blocks (cover, countdown, couple info, event info, music player, RSVP, guestbook, dll)
+* 🎉 Initial release of WeddingBlocks
+* 11+ custom Gutenberg blocks (cover, countdown, couple info, event info, music player, RSVP, guestbook, etc.)
 * Custom Post Type "undangan"
-* Halaman admin untuk kelola RSVP & guestbook
-* Template undangan (classic + FSE)
-* Dukungan penuh untuk Full Site Editing (FSE)
-* Zero dependency eksternal
+* Admin dashboard to manage RSVPs & guestbook
+* Pre-designed invitation template (classic + FSE)
+* Full support for Full Site Editing (FSE)
+* Zero external dependencies
 
 == Upgrade Notice ==
 
 = 1.0.0 =
-Rilis awal plugin WeddingBlocks. Tidak ada upgrade dari versi sebelumnya.
+Initial release of WeddingBlocks. No upgrades required.
 
 == Credits ==
 
-Dibuat dengan ❤️ oleh **Perkilo** ([github.com/iwanperkilo](https://github.com/iwanperkilo)) untuk komunitas pernikahan Indonesia.
+Made with ❤️ by **Perkilo** ([github.com/iwanperkilo](https://github.com/iwanperkilo)) for the wedding community.

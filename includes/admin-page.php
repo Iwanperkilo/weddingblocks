@@ -31,15 +31,15 @@ function weddingblocks_render_admin_rsvp_page() {
         $rsvp_id = isset( $_GET['id'] ) ? intval( $_GET['id'] ) : 0;
         
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_die( __( 'Anda tidak memiliki izin untuk melakukan ini.', 'weddingblocks' ) );
+            wp_die( esc_html__( 'Anda tidak memiliki izin untuk melakukan ini.', 'weddingblocks' ) );
         }
 
         check_admin_referer( 'delete_rsvp_' . $rsvp_id );
 
         if ( weddingblocks_delete_rsvp( $rsvp_id ) ) {
-            echo '<div class="notice notice-success is-dismissible"><p>' . __( 'Data RSVP berhasil dihapus.', 'weddingblocks' ) . '</p></div>';
+            echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Data RSVP berhasil dihapus.', 'weddingblocks' ) . '</p></div>';
         } else {
-            echo '<div class="notice notice-error is-dismissible"><p>' . __( 'Gagal menghapus data RSVP.', 'weddingblocks' ) . '</p></div>';
+            echo '<div class="notice notice-error is-dismissible"><p>' . esc_html__( 'Gagal menghapus data RSVP.', 'weddingblocks' ) . '</p></div>';
         }
     }
 
@@ -63,7 +63,7 @@ function weddingblocks_render_admin_rsvp_page() {
 
     ?>
     <div class="wrap">
-        <h1 class="wp-heading-inline"><?php _e( 'Daftar RSVP Tamu', 'weddingblocks' ); ?></h1>
+        <h1 class="wp-heading-inline"><?php esc_html_e( 'Daftar RSVP Tamu', 'weddingblocks' ); ?></h1>
         <hr class="wp-header-end">
 
         <!-- Filter Form -->
@@ -74,7 +74,7 @@ function weddingblocks_render_admin_rsvp_page() {
             <div class="tablenav top">
                 <div class="alignleft actions">
                     <select name="post_filter">
-                        <option value="0"><?php _e( 'Semua Undangan', 'weddingblocks' ); ?></option>
+                        <option value="0"><?php esc_html_e( 'Semua Undangan', 'weddingblocks' ); ?></option>
                         <?php foreach ( $invitations as $invitation ) : ?>
                             <option value="<?php echo esc_attr( $invitation->ID ); ?>" <?php selected( $post_filter, $invitation->ID ); ?>>
                                 <?php echo esc_html( $invitation->post_title ); ?>
@@ -86,17 +86,20 @@ function weddingblocks_render_admin_rsvp_page() {
                 
                 <?php if ( $total_pages > 1 ) : ?>
                     <div class="tablenav-pages">
-                        <span class="displaying-num"><?php printf( _n( '%s item', '%s items', $total_items, 'weddingblocks' ), number_format_i18n( $total_items ) ); ?></span>
+                        <span class="displaying-num"><?php
+                            /* translators: %s: number of items */
+                            printf( esc_html( _n( '%s item', '%s items', $total_items, 'weddingblocks' ) ), esc_html( number_format_i18n( $total_items ) ) );
+                        ?></span>
                         <span class="pagination-links">
                             <?php
-                            echo paginate_links( array(
+                            echo wp_kses_post( paginate_links( array(
                                 'base'      => add_query_arg( 'paged', '%#%' ),
                                 'format'    => '',
                                 'prev_text' => '&laquo;',
                                 'next_text' => '&raquo;',
                                 'total'     => $total_pages,
                                 'current'   => $current_page,
-                            ) );
+                            ) ) );
                             ?>
                         </span>
                     </div>
@@ -109,12 +112,12 @@ function weddingblocks_render_admin_rsvp_page() {
         <table class="wp-list-table widefat fixed striped table-view-list rsvps">
             <thead>
                 <tr>
-                    <th scope="col" class="manage-column column-name" style="width: 15%;"><?php _e( 'Nama Tamu', 'weddingblocks' ); ?></th>
-                    <th scope="col" class="manage-column column-invitation" style="width: 20%;"><?php _e( 'Undangan', 'weddingblocks' ); ?></th>
-                    <th scope="col" class="manage-column column-attendance" style="width: 12%;"><?php _e( 'Kehadiran', 'weddingblocks' ); ?></th>
-                    <th scope="col" class="manage-column column-guests" style="width: 10%;"><?php _e( 'Jumlah Pax', 'weddingblocks' ); ?></th>
-                    <th scope="col" class="manage-column column-message" style="width: 28%;"><?php _e( 'Ucapan & Doa Restu', 'weddingblocks' ); ?></th>
-                    <th scope="col" class="manage-column column-date" style="width: 15%;"><?php _e( 'Tanggal Kirim', 'weddingblocks' ); ?></th>
+                    <th scope="col" class="manage-column column-name" style="width: 15%;"><?php esc_html_e( 'Nama Tamu', 'weddingblocks' ); ?></th>
+                    <th scope="col" class="manage-column column-invitation" style="width: 20%;"><?php esc_html_e( 'Undangan', 'weddingblocks' ); ?></th>
+                    <th scope="col" class="manage-column column-attendance" style="width: 12%;"><?php esc_html_e( 'Kehadiran', 'weddingblocks' ); ?></th>
+                    <th scope="col" class="manage-column column-guests" style="width: 10%;"><?php esc_html_e( 'Jumlah Pax', 'weddingblocks' ); ?></th>
+                    <th scope="col" class="manage-column column-message" style="width: 28%;"><?php esc_html_e( 'Ucapan & Doa Restu', 'weddingblocks' ); ?></th>
+                    <th scope="col" class="manage-column column-date" style="width: 15%;"><?php esc_html_e( 'Tanggal Kirim', 'weddingblocks' ); ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -147,7 +150,7 @@ function weddingblocks_render_admin_rsvp_page() {
                                 <div class="row-actions">
                                     <span class="delete">
                                         <a href="<?php echo esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'delete', 'id' => $rsvp->id ) ), 'delete_rsvp_' . $rsvp->id ) ); ?>" class="submitdelete" onclick="return confirm('Apakah Anda yakin ingin menghapus data RSVP ini?');">
-                                            <?php _e( 'Hapus', 'weddingblocks' ); ?>
+                                            <?php esc_html_e( 'Hapus', 'weddingblocks' ); ?>
                                         </a>
                                     </span>
                                 </div>
@@ -158,7 +161,7 @@ function weddingblocks_render_admin_rsvp_page() {
                                         <?php echo esc_html( $invitation_title ); ?>
                                     </a>
                                 <?php else : ?>
-                                    <span class="description"><?php _e( '(Tidak ada/Dihapus)', 'weddingblocks' ); ?></span>
+                                    <span class="description"><?php esc_html_e( '(Tidak ada/Dihapus)', 'weddingblocks' ); ?></span>
                                 <?php endif; ?>
                             </td>
                             <td class="column-attendance">
@@ -172,15 +175,15 @@ function weddingblocks_render_admin_rsvp_page() {
                             <td class="column-message">
                                 <?php echo nl2br( esc_html( $rsvp->message ) ); ?>
                             </td>
-                            <td class="column-date">
-                                <?php echo date_i18n( get_option( 'date_format' ) . ' H:i', strtotime( $rsvp->created_at ) ); ?>
+                             <td class="column-date">
+                                <?php echo esc_html( date_i18n( get_option( 'date_format' ) . ' H:i', strtotime( $rsvp->created_at ) ) ); ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else : ?>
                     <tr>
-                        <td colspan="6" class="colspanchange">
-                            <?php _e( 'Tidak ada data RSVP ditemukan.', 'weddingblocks' ); ?>
+                         <td colspan="6" class="colspanchange">
+                            <?php esc_html_e( 'Tidak ada data RSVP ditemukan.', 'weddingblocks' ); ?>
                         </td>
                     </tr>
                 <?php endif; ?>
@@ -188,19 +191,19 @@ function weddingblocks_render_admin_rsvp_page() {
         </table>
 
         <!-- Bottom Pagination -->
-        <?php if ( $total_pages > 1 ) : ?>
+         <?php if ( $total_pages > 1 ) : ?>
             <div class="tablenav bottom">
                 <div class="tablenav-pages">
                     <span class="pagination-links">
                         <?php
-                        echo paginate_links( array(
+                        echo wp_kses_post( paginate_links( array(
                             'base'      => add_query_arg( 'paged', '%#%' ),
                             'format'    => '',
                             'prev_text' => '&laquo;',
                             'next_text' => '&raquo;',
                             'total'     => $total_pages,
                             'current'   => $current_page,
-                        ) );
+                        ) ) );
                         ?>
                     </span>
                 </div>
