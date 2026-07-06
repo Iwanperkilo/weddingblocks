@@ -1,7 +1,7 @@
 === WeddingBlocks ===
 Contributors: iwanperkilo
 Tags: wedding, invitation, gutenberg, fse, blocks
-Requires at least: 6.0
+Requires at least: 6.7
 Tested up to: 7.0
 Requires PHP: 7.4
 Stable tag: 1.0.0
