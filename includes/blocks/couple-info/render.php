@@ -17,10 +17,13 @@ $layout = 'horizontal';
 $show_parents_label = false;
 $parents_label_groom = '';
 $parents_label_bride = '';
-$parents_label_font_size = 14;
+$parents_label_font_size = 15;
 $parents_label_font_family = 'georgia';
 $parents_label_text_color = '#000000';
-$name_font_size = 24;
+$name_font_size = 20;
+$name_text_color = '#2c2c2c';
+$avatar_border_color = '#b5a46d';
+$avatar_border_width = 4;
 
 if ( isset( $attributes['swapCouple'] ) ) {
 	$swap_couple = (bool) $attributes['swapCouple'];
@@ -48,6 +51,15 @@ if ( isset( $attributes['parentsLabelTextColor'] ) ) {
 }
 if ( isset( $attributes['nameFontSize'] ) ) {
 	$name_font_size = intval( $attributes['nameFontSize'] );
+}
+if ( isset( $attributes['nameTextColor'] ) ) {
+	$name_text_color = sanitize_hex_color( $attributes['nameTextColor'] );
+}
+if ( isset( $attributes['avatarBorderColor'] ) ) {
+	$avatar_border_color = sanitize_hex_color( $attributes['avatarBorderColor'] );
+}
+if ( isset( $attributes['avatarBorderWidth'] ) ) {
+	$avatar_border_width = intval( $attributes['avatarBorderWidth'] );
 }
 
 // Get post meta
@@ -122,8 +134,14 @@ $parents_label_style_attr = sprintf(
 	esc_attr( $parents_label_text_color )
 );
 $name_style_attr = sprintf(
-	'font-size: %dpx;',
-	$name_font_size
+	'font-size: %dpx; color: %s;',
+	$name_font_size,
+	esc_attr( $name_text_color )
+);
+$avatar_style_attr = sprintf(
+	'border-color: %s; border-width: %dpx; border-style: solid;',
+	esc_attr( $avatar_border_color ),
+	$avatar_border_width
 );
 
 // Layout class
@@ -131,7 +149,7 @@ $layout_class = $layout === 'vertical' ? 'weddingblocks-couple-columns--vertical
 ?>
 <div class="weddingblocks-couple-columns <?php echo esc_attr( $layout_class ); ?>">
 	<div class="weddingblocks-couple-column">
-		<div class="weddingblocks-avatar">
+		<div class="weddingblocks-avatar" style="<?php echo esc_attr( $avatar_style_attr ); ?>">
 			<img src="<?php echo esc_url( $first_photo_url ); ?>" alt="<?php echo esc_attr( $first_name ); ?>">
 		</div>
 		<h3 style="<?php echo esc_attr( $name_style_attr ); ?>"><?php echo esc_html( $first_name ); ?></h3>
@@ -148,7 +166,7 @@ $layout_class = $layout === 'vertical' ? 'weddingblocks-couple-columns--vertical
 		<p class="weddingblocks-ampersand">&</p>
 	</div>
 	<div class="weddingblocks-couple-column">
-		<div class="weddingblocks-avatar">
+		<div class="weddingblocks-avatar" style="<?php echo esc_attr( $avatar_style_attr ); ?>">
 			<img src="<?php echo esc_url( $second_photo_url ); ?>" alt="<?php echo esc_attr( $second_name ); ?>">
 		</div>
 		<h3 style="<?php echo esc_attr( $name_style_attr ); ?>"><?php echo esc_html( $second_name ); ?></h3>
