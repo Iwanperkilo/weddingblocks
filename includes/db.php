@@ -57,6 +57,7 @@ function weddingblocks_save_rsvp( $data ) {
     );
 
     if ( $inserted ) {
+        weddingblocks_clear_rsvps_count_cache( intval( $data['post_id'] ) );
         return $wpdb->insert_id;
     }
 
@@ -101,13 +102,36 @@ function weddingblocks_get_rsvps_count( $post_id = 0 ) {
     global $wpdb;
     $table_name = $wpdb->prefix . 'weddingblocks_rsvps';
 
-    if ( $post_id > 0 ) {
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
-        return intval( $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $table_name WHERE post_id = %d", $post_id ) ) );
+    $cache_key   = 'weddingblocks_rsvps_count_' . intval( $post_id );
+    $cache_group = 'weddingblocks';
+
+    $cached = wp_cache_get( $cache_key, $cache_group );
+    if ( false !== $cached ) {
+        return intval( $cached );
     }
 
-    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
-    return intval( $wpdb->get_var( "SELECT COUNT(*) FROM $table_name" ) );
+    if ( $post_id > 0 ) {
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
+        $count = intval( $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $table_name WHERE post_id = %d", $post_id ) ) );
+    } else {
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
+        $count = intval( $wpdb->get_var( "SELECT COUNT(*) FROM $table_name" ) );
+    }
+
+    wp_cache_set( $cache_key, $count, $cache_group, 5 * MINUTE_IN_SECONDS );
+
+    return $count;
+}
+
+/**
+ * Clear cached RSVP counts for a given invitation (and the global total).
+ *
+ * @param int $post_id Invitation post ID.
+ */
+function weddingblocks_clear_rsvps_count_cache( $post_id ) {
+    $cache_group = 'weddingblocks';
+    wp_cache_delete( 'weddingblocks_rsvps_count_' . intval( $post_id ), $cache_group );
+    wp_cache_delete( 'weddingblocks_rsvps_count_0', $cache_group );
 }
 
 /**
@@ -120,12 +144,21 @@ function weddingblocks_delete_rsvp( $id ) {
     global $wpdb;
     $table_name = $wpdb->prefix . 'weddingblocks_rsvps';
 
-    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+    // Fetch the related post_id first so we know which cached count to invalidate.
+    // This is a one-off lookup immediately followed by a delete, so caching it is not useful.
+    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+    $post_id = $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM %i WHERE id = %d", $table_name, intval( $id ) ) );
+
+    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
     $deleted = $wpdb->delete(
         $table_name,
         array( 'id' => intval( $id ) ),
         array( '%d' )
     );
+
+    if ( $deleted !== false ) {
+        weddingblocks_clear_rsvps_count_cache( intval( $post_id ) );
+    }
 
     return $deleted !== false;
 }

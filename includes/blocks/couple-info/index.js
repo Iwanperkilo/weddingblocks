@@ -138,7 +138,7 @@
                             }
                         }),
                         showParentsLabel && el(RangeControl, {
-                            label: __('Ukuran Font Label', 'weddingblocks'),
+                            label: __('Ukuran Font', 'weddingblocks'),
                             value: parentsLabelFontSize,
                             onChange: function (value) {
                                 setAttributes({ parentsLabelFontSize: value });
@@ -148,7 +148,7 @@
                             step: 1,
                         }),
                         showParentsLabel && el(SelectControl, {
-                            label: __('Gaya Font Label', 'weddingblocks'),
+                            label: __('Gaya Font', 'weddingblocks'),
                             value: parentsLabelFontFamily,
                             options: [
                                 { label: 'Playfair Display', value: 'playfair' },
@@ -162,7 +162,7 @@
                             }
                         }),
                         showParentsLabel && el('div', { className: 'components-base-control' },
-                            el('label', { className: 'components-base-control__label' }, __('Warna Teks Label', 'weddingblocks')),
+                            el('label', { className: 'components-base-control__label' }, __('Warna Teks', 'weddingblocks')),
                             el(ColorPalette, {
                                 value: parentsLabelTextColor,
                                 colors: LABEL_TEXT_COLORS,
