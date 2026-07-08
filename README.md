@@ -3,7 +3,7 @@
 > Plugin WordPress untuk membuat **undangan digital pernikahan** berbasis **Gutenberg & Full Site Editing (FSE)** dengan desain modern, interaktif, dan mudah dikustomisasi.
 
 [![License: GPL v2 or later](https://img.shields.io/badge/License-GPLv2+-blue.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
-[![WordPress](https://img.shields.io/badge/WordPress-6.0%2B-21759b.svg)](https://wordpress.org/)
+[![WordPress](https://img.shields.io/badge/WordPress-6.7%2B-21759b.svg)](https://wordpress.org/)
 [![PHP](https://img.shields.io/badge/PHP-7.4%2B-777bb4.svg)](https://www.php.net/)
 [![Version](https://img.shields.io/badge/version-1.0.0-success.svg)](#changelog)
 
@@ -57,7 +57,7 @@ Cari **WeddingBlocks** di direktori plugin WordPress dan klik **Install Now**.
 
 | Kebutuhan | Versi Minimum |
 |-----------|---------------|
-| WordPress | 6.0+ |
+| WordPress | 6.7+ |
 | PHP | 7.4+ |
 | MySQL/MariaDB | 5.7+ / 10.3+ |
 | Browser | Modern (Chrome, Firefox, Safari, Edge) |
@@ -101,7 +101,7 @@ git checkout -b feature/nama-fitur
 Standar kontribusi:
 - Ikuti [WordPress Coding Standards](https://developer.wordpress.org/coding-standards/).
 - Gunakan `text-domain: weddingblocks` untuk semua string yang bisa diterjemahkan.
-- Test di WordPress 6.0+ & PHP 7.4+ sebelum membuka PR.
+- Test di WordPress 6.7+ & PHP 7.4+ sebelum membuka PR.
 
 ## 🤝 Kontribusi
 
