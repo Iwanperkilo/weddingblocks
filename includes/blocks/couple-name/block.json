@@ -1,70 +1,72 @@
 {
-    "$schema": "https://schemas.wp.org/trunk/block.json",
-    "apiVersion": 3,
-    "name": "weddingblocks/couple-name",
-    "title": "WB Nama Mempelai",
-    "category": "weddingblocks",
-    "icon": "id",
-    "description": "Menampilkan nama mempelai pria atau wanita dengan kustomisasi gaya.",
-    "keywords": [
-        "wedding",
-        "couple",
-        "name",
-        "mempelai"
-    ],
-    "textdomain": "weddingblocks",
-    "attributes": {
-        "groomName": {
-            "type": "string",
-            "source": "meta",
-            "meta": "weddingblocks_groom_name"
-        },
-        "groomNickname": {
-            "type": "string",
-            "source": "meta",
-            "meta": "weddingblocks_groom_nickname"
-        },
-        "brideName": {
-            "type": "string",
-            "source": "meta",
-            "meta": "weddingblocks_bride_name"
-        },
-        "brideNickname": {
-            "type": "string",
-            "source": "meta",
-            "meta": "weddingblocks_bride_nickname"
-        },
-        "role": {
-            "type": "string",
-            "default": "groom"
-        },
-        "nameType": {
-            "type": "string",
-            "default": "full"
-        },
-        "align": {
-            "type": "string",
-            "default": "center"
-        },
-        "fontSize": {
-            "type": "number",
-            "default": 32
-        },
-        "fontFamily": {
-            "type": "string",
-            "default": "playfair"
-        },
-        "textColor": {
-            "type": "string",
-            "default": "#b5a46d"
-        },
-        "textTransform": {
-            "type": "string",
-            "default": "none"
-        }
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "weddingblocks/couple-name",
+  "title": "WB Nama Mempelai",
+  "category": "weddingblocks",
+  "icon": "id",
+  "description": "Menampilkan nama mempelai pria atau wanita dengan kustomisasi gaya.",
+  "keywords": ["wedding", "couple", "name", "mempelai"],
+  "textdomain": "weddingblocks",
+  "attributes": {
+    "groomName": {
+      "type": "string",
+      "source": "meta",
+      "meta": "weddingblocks_groom_name"
     },
-    "editorScript": "file:./index.js",
-    "render": "file:./render.php",
-    "style": "file:../../../assets/css/blocks-frontend.css",
-    "editorStyle": "file:./index.css"
+    "groomNickname": {
+      "type": "string",
+      "source": "meta",
+      "meta": "weddingblocks_groom_nickname"
+    },
+    "brideName": {
+      "type": "string",
+      "source": "meta",
+      "meta": "weddingblocks_bride_name"
+    },
+    "brideNickname": {
+      "type": "string",
+      "source": "meta",
+      "meta": "weddingblocks_bride_nickname"
+    },
+    "role": {
+      "type": "string",
+      "default": "groom"
+    },
+    "nameType": {
+      "type": "string",
+      "default": "full"
+    },
+    "align": {
+      "type": "string",
+      "default": "center"
+    },
+    "fontSize": {
+      "type": "number",
+      "default": 32
+    },
+    "fontFamily": {
+      "type": "string",
+      "default": "playfair"
+    },
+    "textColor": {
+      "type": "string",
+      "default": "#b5a46d"
+    },
+    "textTransform": {
+      "type": "string",
+      "default": "none"
+    }
+  },
+  "supports": {
+    "html": false,
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php",
+  "style": "file:../../../assets/css/blocks-frontend.css",
+  "editorStyle": "file:./index.css"
 }

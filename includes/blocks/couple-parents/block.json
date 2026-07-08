@@ -47,6 +47,13 @@
       "default": "#333333"
     }
   },
+  "supports": {
+    "html": false,
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
   "editorScript": "file:./index.js",
   "render": "file:./render.php",
   "style": ["weddingblocks-frontend-style", "weddingblocks-atomic-style"]

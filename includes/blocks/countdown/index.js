@@ -3,6 +3,10 @@
   var useBlockProps = blockEditor.useBlockProps;
   var InspectorControls = blockEditor.InspectorControls;
   var PanelColorSettings = blockEditor.PanelColorSettings;
+  var PanelBody = components.PanelBody;
+  var RangeControl = components.RangeControl;
+  var ToggleControl = components.ToggleControl;
+  var TextControl = components.TextControl;
   var __ = i18n.__;
 
   var colorPalette = [
@@ -29,6 +33,72 @@
       var labelColor = attributes.labelColor || "#888888";
       var boxBackgroundColor = attributes.boxBackgroundColor || "#ffffff";
       var borderColor = attributes.borderColor || "#b5a46d";
+
+      var borderWidth =
+        typeof attributes.borderWidth === "number" ? attributes.borderWidth : 1;
+      var borderRadius =
+        typeof attributes.borderRadius === "number"
+          ? attributes.borderRadius
+          : 15;
+      var boxShadow =
+        typeof attributes.boxShadow === "boolean" ? attributes.boxShadow : true;
+      var valueFontSize =
+        typeof attributes.valueFontSize === "number"
+          ? attributes.valueFontSize
+          : 32;
+      var labelFontSize =
+        typeof attributes.labelFontSize === "number"
+          ? attributes.labelFontSize
+          : 10;
+      var gap = typeof attributes.gap === "number" ? attributes.gap : 15;
+      var boxPaddingVertical =
+        typeof attributes.boxPaddingVertical === "number"
+          ? attributes.boxPaddingVertical
+          : 15;
+      var boxPaddingHorizontal =
+        typeof attributes.boxPaddingHorizontal === "number"
+          ? attributes.boxPaddingHorizontal
+          : 5;
+
+      var labelDays = attributes.labelDays || __("Hari", "weddingblocks");
+      var labelHours = attributes.labelHours || __("Jam", "weddingblocks");
+      var labelMinutes =
+        attributes.labelMinutes || __("Menit", "weddingblocks");
+      var labelSeconds =
+        attributes.labelSeconds || __("Detik", "weddingblocks");
+
+      var itemStyle = {
+        backgroundColor: boxBackgroundColor,
+        borderColor: borderColor,
+        borderWidth: borderWidth + "px",
+        borderStyle: "solid",
+        borderRadius: borderRadius + "px",
+        boxShadow: boxShadow ? "0 8px 30px rgba(181, 164, 109, 0.06)" : "none",
+        padding: boxPaddingVertical + "px " + boxPaddingHorizontal + "px",
+      };
+
+      var makeItem = function (label) {
+        return el(
+          "div",
+          { className: "countdown-item", style: itemStyle },
+          el(
+            "span",
+            {
+              className: "countdown-value",
+              style: { color: textColor, fontSize: valueFontSize + "px" },
+            },
+            "00",
+          ),
+          el(
+            "span",
+            {
+              className: "countdown-label",
+              style: { color: labelColor, fontSize: labelFontSize + "px" },
+            },
+            label,
+          ),
+        );
+      };
 
       return [
         el(
@@ -72,6 +142,128 @@
               },
             ],
           }),
+          el(
+            PanelBody,
+            {
+              title: __("Pengaturan Box & Tipografi", "weddingblocks"),
+              initialOpen: false,
+            },
+            el(RangeControl, {
+              label: __("Ketebalan Border (px)", "weddingblocks"),
+              value: borderWidth,
+              min: 0,
+              max: 8,
+              onChange: function (value) {
+                setAttributes({ borderWidth: value === undefined ? 1 : value });
+              },
+            }),
+            el(RangeControl, {
+              label: __("Border Radius (px)", "weddingblocks"),
+              value: borderRadius,
+              min: 0,
+              max: 50,
+              onChange: function (value) {
+                setAttributes({
+                  borderRadius: value === undefined ? 15 : value,
+                });
+              },
+            }),
+            el(ToggleControl, {
+              label: __("Aktifkan Box Shadow", "weddingblocks"),
+              checked: boxShadow,
+              onChange: function (value) {
+                setAttributes({ boxShadow: value });
+              },
+            }),
+            el(RangeControl, {
+              label: __("Ukuran Font Angka (px)", "weddingblocks"),
+              value: valueFontSize,
+              min: 16,
+              max: 60,
+              onChange: function (value) {
+                setAttributes({
+                  valueFontSize: value === undefined ? 32 : value,
+                });
+              },
+            }),
+            el(RangeControl, {
+              label: __("Ukuran Font Label (px)", "weddingblocks"),
+              value: labelFontSize,
+              min: 8,
+              max: 20,
+              onChange: function (value) {
+                setAttributes({
+                  labelFontSize: value === undefined ? 10 : value,
+                });
+              },
+            }),
+            el(RangeControl, {
+              label: __("Jarak Antar Box (px)", "weddingblocks"),
+              value: gap,
+              min: 0,
+              max: 40,
+              onChange: function (value) {
+                setAttributes({ gap: value === undefined ? 15 : value });
+              },
+            }),
+            el(RangeControl, {
+              label: __("Padding Atas-Bawah Box (px)", "weddingblocks"),
+              value: boxPaddingVertical,
+              min: 0,
+              max: 40,
+              onChange: function (value) {
+                setAttributes({
+                  boxPaddingVertical: value === undefined ? 15 : value,
+                });
+              },
+            }),
+            el(RangeControl, {
+              label: __("Padding Kiri-Kanan Box (px)", "weddingblocks"),
+              value: boxPaddingHorizontal,
+              min: 0,
+              max: 40,
+              onChange: function (value) {
+                setAttributes({
+                  boxPaddingHorizontal: value === undefined ? 5 : value,
+                });
+              },
+            }),
+          ),
+          el(
+            PanelBody,
+            {
+              title: __("Teks Label", "weddingblocks"),
+              initialOpen: false,
+            },
+            el(TextControl, {
+              label: __("Label Hari", "weddingblocks"),
+              value: labelDays,
+              onChange: function (value) {
+                setAttributes({ labelDays: value });
+              },
+            }),
+            el(TextControl, {
+              label: __("Label Jam", "weddingblocks"),
+              value: labelHours,
+              onChange: function (value) {
+                setAttributes({ labelHours: value });
+              },
+            }),
+            el(TextControl, {
+              label: __("Label Menit", "weddingblocks"),
+              value: labelMinutes,
+              onChange: function (value) {
+                setAttributes({ labelMinutes: value });
+              },
+            }),
+            el(TextControl, {
+              label: __("Label Detik", "weddingblocks"),
+              value: labelSeconds,
+              onChange: function (value) {
+                setAttributes({ labelSeconds: value });
+              },
+            }),
+          ),
         ),
         el(
           "div",
@@ -80,106 +272,15 @@
             className: "weddingblocks-countdown-editor",
           }),
           el(
-            "span",
-            { className: "wb-editor-badge wb-editor-badge--block" },
-            el("span", { className: "wb-editor-badge-icon" }, "⏳"),
-            __("Countdown", "weddingblocks"),
-          ),
-          el(
-            "p",
-            {
-              style: {
-                fontSize: "12px",
-                color: "#888",
-                textAlign: "center",
-                margin: "0 0 8px",
-              },
-            },
-            "📅 " + weddingDate,
-          ),
-          el(
             "div",
-            { className: "weddingblocks-countdown" },
-            el(
-              "div",
-              {
-                className: "countdown-item",
-                style: {
-                  backgroundColor: boxBackgroundColor,
-                  borderColor: borderColor,
-                },
-              },
-              el(
-                "span",
-                { className: "countdown-value", style: { color: textColor } },
-                "00",
-              ),
-              el(
-                "span",
-                { className: "countdown-label", style: { color: labelColor } },
-                __("Hari", "weddingblocks"),
-              ),
-            ),
-            el(
-              "div",
-              {
-                className: "countdown-item",
-                style: {
-                  backgroundColor: boxBackgroundColor,
-                  borderColor: borderColor,
-                },
-              },
-              el(
-                "span",
-                { className: "countdown-value", style: { color: textColor } },
-                "00",
-              ),
-              el(
-                "span",
-                { className: "countdown-label", style: { color: labelColor } },
-                __("Jam", "weddingblocks"),
-              ),
-            ),
-            el(
-              "div",
-              {
-                className: "countdown-item",
-                style: {
-                  backgroundColor: boxBackgroundColor,
-                  borderColor: borderColor,
-                },
-              },
-              el(
-                "span",
-                { className: "countdown-value", style: { color: textColor } },
-                "00",
-              ),
-              el(
-                "span",
-                { className: "countdown-label", style: { color: labelColor } },
-                __("Menit", "weddingblocks"),
-              ),
-            ),
-            el(
-              "div",
-              {
-                className: "countdown-item",
-                style: {
-                  backgroundColor: boxBackgroundColor,
-                  borderColor: borderColor,
-                },
-              },
-              el(
-                "span",
-                { className: "countdown-value", style: { color: textColor } },
-                "00",
-              ),
-              el(
-                "span",
-                { className: "countdown-label", style: { color: labelColor } },
-                __("Detik", "weddingblocks"),
-              ),
-            ),
+            {
+              className: "weddingblocks-countdown",
+              style: { gap: gap + "px" },
+            },
+            makeItem(labelDays),
+            makeItem(labelHours),
+            makeItem(labelMinutes),
+            makeItem(labelSeconds),
           ),
         ),
       ];

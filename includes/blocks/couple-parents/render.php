@@ -53,8 +53,14 @@ $style_attr = sprintf(
     $text_color
 );
 $wrapper_class = 'weddingblocks-atomic-couple-parents role-' . sanitize_html_class( $role ) . ' align-' . sanitize_html_class( $align );
+
+$wrapper_attributes = get_block_wrapper_attributes(
+    array(
+        'class' => $wrapper_class,
+    )
+);
 ?>
-<div class="<?php echo esc_attr( $wrapper_class ); ?>">
+<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
     <?php if ( $show_label ) : ?>
         <span class="atomic-parents-label" style="<?php echo esc_attr( $style_attr ); ?>"><?php echo esc_html( $label ); ?></span>
     <?php endif; ?>

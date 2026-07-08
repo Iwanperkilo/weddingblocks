@@ -310,7 +310,7 @@ body.weddingblocks-locked {
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 15px;
   padding: 15px 5px;
-  width: clamp(75px, 15vw, 100px);
+  width: clamp(55px, 15vw, 55px);
   box-shadow: 0 8px 30px rgba(181, 164, 109, 0.06);
   display: flex;
   flex-direction: column;

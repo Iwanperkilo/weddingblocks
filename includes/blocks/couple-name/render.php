@@ -69,8 +69,14 @@ $style_attr = sprintf(
     $text_transform
 );
 
+$wrapper_attributes = get_block_wrapper_attributes(
+    array(
+        'class' => $wrapper_class,
+    )
+);
+
 ?>
-<div class="<?php echo esc_attr( $wrapper_class ); ?>">
+<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
     <span class="atomic-name-text" style="<?php echo esc_attr( $style_attr ); ?>"><?php echo esc_html( $display ); ?></span>
 </div>
 <?php

@@ -311,9 +311,7 @@
     gap: 10px;
     justify-content: center;
     padding: 20px;
-    background: #fbfaf7;
     border-radius: 8px;
-    border: 1px solid rgba(181, 164, 109, 0.2);
 }
 
 .editor-styles-wrapper .weddingblocks-countdown .countdown-item {
