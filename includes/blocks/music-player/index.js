@@ -19,7 +19,7 @@
                             onChange: function (value) {
                                 props.setAttributes({ musicUrl: value });
                             },
-                            help: __('Masukkan URL file audio MP3. Biarkan kosong untuk menggunakan lagu default.', 'weddingblocks')
+                            help: __('Masukkan URL file audio MP3 (unggah lewat Media Library). Jika dikosongkan, pemutar musik tidak akan ditampilkan.', 'weddingblocks')
                         })
                     )
                 ),
@@ -28,9 +28,9 @@
                         el('span', { className: 'wb-editor-badge-icon' }, '🎵'),
                         __('Music Player', 'weddingblocks')
                     ),
-                    el('p', { className: 'wb-music-title' }, attributes.musicUrl ? 'Lagu Aktif' : 'Lagu Bawaan'),
+                    el('p', { className: 'wb-music-title' }, attributes.musicUrl ? 'Lagu Aktif' : 'Belum Ada Lagu'),
                     el('p', { className: 'wb-music-sub' },
-                        attributes.musicUrl ? 'Audio URL telah diatur' : 'Default track akan digunakan di frontend'
+                        attributes.musicUrl ? 'Audio URL telah diatur' : 'Isi URL lagu di panel Pengaturan Musik agar player tampil di frontend'
                     )
                 )
             ];

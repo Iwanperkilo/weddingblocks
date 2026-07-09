@@ -11,7 +11,11 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$music_url = ! empty( $attributes['musicUrl'] ) ? esc_url( $attributes['musicUrl'] ) : 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
+$music_url = ! empty( $attributes['musicUrl'] ) ? esc_url( $attributes['musicUrl'] ) : '';
+
+if ( empty( $music_url ) ) {
+    return;
+}
 ?>
 <div class="weddingblocks-music-container" data-music-url="<?php echo esc_attr( $music_url ); ?>">
     <audio id="weddingblocks-audio" loop preload="auto">

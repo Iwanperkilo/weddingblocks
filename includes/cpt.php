@@ -76,7 +76,7 @@ function weddingblocks_register_cpt() {
         ),
     );
 
-    register_post_type( 'undangan', $args );
+    register_post_type( 'wdbl_undangan', $args );
 }
 add_action( 'init', 'weddingblocks_register_cpt' );
 
@@ -97,7 +97,7 @@ function weddingblocks_register_block_template() {
             'title'       => __( 'Template Undangan (WeddingBlocks)', 'weddingblocks' ),
             'description' => __( 'Template default halaman undangan digital bersih tanpa header/footer tema.', 'weddingblocks' ),
             'content'     => $template_content,
-            'post_types'  => array( 'undangan' ),
+            'post_types'  => array( 'wdbl_undangan' ),
         ) );
     }
 }
@@ -107,7 +107,7 @@ add_action( 'init', 'weddingblocks_register_block_template', 20 );
  * Fallback for classic (non-block) themes to load a clean full-screen canvas.
  */
 function weddingblocks_template_include( $template ) {
-    if ( is_singular( 'undangan' ) ) {
+    if ( is_singular( 'wdbl_undangan' ) ) {
         // If not using a block theme, use classic-undangan.php to bypass theme header/footer.
         if ( ! function_exists( 'wp_is_block_theme' ) || ! wp_is_block_theme() ) {
             $fallback_file = WEDDINGBLOCKS_PATH . 'templates/classic-undangan.php';

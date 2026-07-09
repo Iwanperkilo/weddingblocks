@@ -32,7 +32,7 @@ function weddingblocks_register_post_meta() {
     );
 
     foreach ( $meta_fields as $meta_key => $type ) {
-        register_post_meta( 'undangan', $meta_key, array(
+        register_post_meta( 'wdbl_undangan', $meta_key, array(
             'show_in_rest'      => true,
             'single'            => true,
             'type'              => $type,
@@ -113,11 +113,8 @@ function weddingblocks_register_blocks() {
         array(),
         WEDDINGBLOCKS_VERSION
     );
-
-    // 3. Register Block Types. (Semua blok didaftarkan melalui block.json)
-    // Tidak perlu lagi memanggil register_block_type secara manual untuk setiap blok di sini.
     
-    // Register blocks from their block.json files.
+    // 3. Register blocks from their block.json files.
     $blocks = array(
         'countdown',
         'couple-info',
@@ -160,26 +157,6 @@ add_action( 'enqueue_block_editor_assets', 'weddingblocks_enqueue_editor_preview
  */
 
 // 1. Music Player
-function weddingblocks_render_music_player( $attributes ) {
-    $music_url = ! empty( $attributes['musicUrl'] ) ? esc_url( $attributes['musicUrl'] ) : 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
-    ob_start();
-    ?>
-    <div class="weddingblocks-music-container" data-music-url="<?php echo esc_attr( $music_url ); ?>">
-        <audio id="weddingblocks-audio" loop preload="auto">
-            <source src="<?php echo esc_attr( $music_url ); ?>" type="audio/mpeg">
-        </audio>
-        <button id="weddingblocks-music-toggle" class="weddingblocks-music-btn paused" aria-label="Toggle Music" style="display: none;">
-            <svg class="icon-play" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                <path d="M8 5v14l11-7z"/>
-            </svg>
-            <svg class="icon-pause" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" style="display:none;">
-                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-            </svg>
-        </button>
-    </div>
-    <?php
-    return ob_get_clean();
-}
 
 function weddingblocks_render_couple_name( $attributes ) {
     $role       = isset( $attributes['role'] ) ? sanitize_key( $attributes['role'] ) : 'groom';

@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function weddingblocks_add_admin_menu() {
     add_submenu_page(
-        'edit.php?post_type=undangan',
+        'edit.php?post_type=wdbl_undangan',
         __( 'Daftar RSVP', 'weddingblocks' ),
         __( 'Daftar RSVP', 'weddingblocks' ),
         'manage_options',
@@ -51,7 +51,7 @@ function weddingblocks_render_admin_rsvp_page() {
 
     // Fetch invitations for filter dropdown.
     $invitations = get_posts( array(
-        'post_type'      => 'undangan',
+        'post_type'      => 'wdbl_undangan',
         'posts_per_page' => -1,
         'post_status'    => 'any',
     ) );
@@ -68,7 +68,7 @@ function weddingblocks_render_admin_rsvp_page() {
 
         <!-- Filter Form -->
         <form method="get" action="">
-            <input type="hidden" name="post_type" value="undangan" />
+            <input type="hidden" name="post_type" value="wdbl_undangan" />
             <input type="hidden" name="page" value="weddingblocks-rsvp" />
             
             <div class="tablenav top">

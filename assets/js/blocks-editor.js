@@ -33,7 +33,7 @@
             return select('core/editor').getCurrentPostType();
         });
 
-        if (postType !== 'undangan') {
+        if (postType !== 'wdbl_undangan') {
             return null;
         }
 

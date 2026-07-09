@@ -42,7 +42,7 @@ function weddingblocks_handle_rsvp_submission( $request ) {
     $guests_count = isset( $params['guests_count'] ) ? intval( $params['guests_count'] ) : 1;
     $message      = isset( $params['message'] ) ? sanitize_textarea_field( $params['message'] ) : '';
 
-    if ( ! $post_id || get_post_type( $post_id ) !== 'undangan' ) {
+    if ( ! $post_id || get_post_type( $post_id ) !== 'wdbl_undangan' ) {
         return new WP_REST_Response( array(
             'success' => false,
             'message' => __( 'ID Undangan tidak valid.', 'weddingblocks' )
