@@ -164,7 +164,7 @@
 
 .editor-styles-wrapper .weddingblocks-event-info-editor .weddingblocks-event-card {
     position: relative;
-    min-width: 270;
+    min-width: 180px;
     padding: 18px 16px;
     background: #ffffff;
     border: 1px solid rgba(181, 164, 109, 0.22);
@@ -210,7 +210,7 @@
     display: block;
 }
 
-.editor-styles-wrapper .weddingblocks-event-info-editor .weddingblocks-event-card__meta + .weddingblocks-event-card__meta {
+.editor-styles-wrapper .weddingblocks-event-info-editor .weddingblocks-event-card__meta+.weddingblocks-event-card__meta {
     margin-top: 2px;
 }
 
@@ -277,8 +277,8 @@
 
 .editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-item--start .weddingblocks-event-card,
 .editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-item--end .weddingblocks-event-card {
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: 10;
+    margin-right: 10;
 }
 
 @media (max-width: 782px) {
@@ -340,7 +340,7 @@
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-top: 4px;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 /* === Cover Preview: clean, no dashed border === */
@@ -503,6 +503,7 @@
     font-size: 18px;
     font-weight: 600;
 }
+
 /* === Couple Title (Cover) === */
 .editor-styles-wrapper .weddingblocks-couple-title-editor {
     position: relative;
@@ -510,6 +511,7 @@
     text-align: center;
     border-radius: 8px;
 }
+
 .editor-styles-wrapper .weddingblocks-couple-title-text {
     font-family: 'Playfair Display', 'Georgia', serif;
     font-size: 28px;
@@ -522,8 +524,8 @@
 /* === Block selection helpers (editor only) === */
 /* Make purely visual overlays/decorations non-interactive so the canvas
    can correctly receive click events and select the parent block. */
-.editor-styles-wrapper .weddingblocks-cover-preview > .wb-cover-inner,
-.editor-styles-wrapper .weddingblocks-cover-preview > .wb-editor-badge,
+.editor-styles-wrapper .weddingblocks-cover-preview>.wb-cover-inner,
+.editor-styles-wrapper .weddingblocks-cover-preview>.wb-editor-badge,
 .editor-styles-wrapper .weddingblocks-guest-name-block .wb-editor-badge,
 .editor-styles-wrapper .weddingblocks-guest-name-block .wb-editor-badge * {
     pointer-events: none;
@@ -539,6 +541,7 @@
 .editor-styles-wrapper .weddingblocks-music-preview * {
     pointer-events: auto;
 }
+
 /* Restore interactivity for actual inputs/buttons in preview form blocks */
 .editor-styles-wrapper .weddingblocks-rsvp-form-editor input,
 .editor-styles-wrapper .weddingblocks-rsvp-form-editor textarea,

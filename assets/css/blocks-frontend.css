@@ -101,7 +101,8 @@ body.weddingblocks-locked {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.35); /* Fallback overlay */
+  background: rgba(0, 0, 0, 0.35);
+  /* Fallback overlay */
 }
 
 /* Fallback image when none selected */
@@ -121,11 +122,9 @@ body.weddingblocks-locked {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.3) 0%,
-    rgba(0, 0, 0, 0.7) 100%
-  );
+  background: linear-gradient(180deg,
+      rgba(0, 0, 0, 0.3) 0%,
+      rgba(0, 0, 0, 0.7) 100%);
   z-index: 1;
 }
 
@@ -333,6 +332,7 @@ body.weddingblocks-locked {
 .countdown-label {
   font-family: "Montserrat", sans-serif;
   font-size: 10px;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 1px;
   color: #777;
@@ -340,13 +340,6 @@ body.weddingblocks-locked {
 }
 
 /* --- 5. EVENT DETAILS --- */
-.weddingblocks-event-info .weddingblocks-event-columns {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
 .weddingblocks-event-info .weddingblocks-event-card {
   flex: 1;
   min-width: 180px;
@@ -494,14 +487,17 @@ body.weddingblocks-locked {
 .guestbook-list::-webkit-scrollbar {
   width: 6px;
 }
+
 .guestbook-list::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.03);
   border-radius: 10px;
 }
+
 .guestbook-list::-webkit-scrollbar-thumb {
   background: rgba(181, 164, 109, 0.3);
   border-radius: 10px;
 }
+
 .guestbook-list::-webkit-scrollbar-thumb:hover {
   background: rgba(181, 164, 109, 0.5);
 }
@@ -525,6 +521,7 @@ body.weddingblocks-locked {
     transform: translateY(-10px);
     background: #fdfae6;
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -598,6 +595,7 @@ body.weddingblocks-locked {
   padding: 10px;
   border-radius: 8px;
 }
+
 .guest-prefix-text {
   font-family: "Playfair Display", "Georgia", serif;
   font-style: italic;
@@ -605,6 +603,7 @@ body.weddingblocks-locked {
   color: #666;
   margin: 0 0 5px 0;
 }
+
 .guest-name-text {
   font-family: "Playfair Display", serif;
   font-size: 26px;
@@ -655,34 +654,43 @@ body.weddingblocks-locked {
   text-align: center;
   overflow-wrap: anywhere;
 }
+
 .weddingblocks-atomic-couple-name.align-left {
   text-align: left;
 }
+
 .weddingblocks-atomic-couple-name.align-center {
   text-align: center;
 }
+
 .weddingblocks-atomic-couple-name.align-right {
   text-align: right;
 }
+
 .weddingblocks-atomic-couple-name.type-both.align-left .atomic-name-text {
   align-items: flex-start;
   text-align: left;
 }
+
 .weddingblocks-atomic-couple-name.type-both.align-center .atomic-name-text {
   align-items: center;
   text-align: center;
 }
+
 .weddingblocks-atomic-couple-name.type-both.align-right .atomic-name-text {
   align-items: flex-end;
   text-align: right;
 }
+
 .weddingblocks-atomic-couple-name .atomic-name {
   display: block;
   width: 100%;
 }
+
 .weddingblocks-atomic-couple-name.layout-inline .atomic-name {
   display: block;
 }
+
 .weddingblocks-atomic-couple-name .atomic-nickname {
   font-family: "Playfair Display", serif;
   font-style: italic;
@@ -690,6 +698,7 @@ body.weddingblocks-locked {
   font-size: 1.1em;
   letter-spacing: 0.05em;
 }
+
 .weddingblocks-atomic-couple-name .atomic-fullname {
   font-family: "Playfair Display", serif;
   font-weight: 600;
@@ -697,6 +706,7 @@ body.weddingblocks-locked {
   font-size: 1.5em;
   line-height: 1.2;
 }
+
 .weddingblocks-atomic-couple-name.layout-inline .atomic-name--groom::after {
   content: "\0026";
   display: block;
@@ -719,34 +729,42 @@ body.weddingblocks-locked {
   text-align: center;
   overflow-wrap: anywhere;
 }
+
 .weddingblocks-atomic-couple-parents.align-left {
   text-align: left;
   justify-content: flex-start;
 }
+
 .weddingblocks-atomic-couple-parents.align-center {
   text-align: center;
   justify-content: center;
 }
+
 .weddingblocks-atomic-couple-parents.align-right {
   text-align: right;
   justify-content: flex-end;
 }
+
 .weddingblocks-atomic-couple-parents.layout-inline {
   display: block;
 }
+
 .weddingblocks-atomic-couple-parents.layout-stacked {
   display: block;
 }
+
 .weddingblocks-atomic-couple-parents .atomic-parents {
   display: block;
   width: 100%;
 }
+
 .weddingblocks-atomic-couple-parents .atomic-parents-label,
 .weddingblocks-atomic-couple-parents .atomic-parents-names {
   display: block;
   line-height: 1.4;
   font-weight: 500;
 }
+
 .weddingblocks-atomic-couple-parents .atomic-parents-label {
   margin-bottom: 0;
 }
@@ -758,18 +776,23 @@ body.weddingblocks-locked {
   margin: 20px 0;
   text-align: center;
 }
+
 .weddingblocks-atomic-couple-photo.align-left {
   text-align: left;
 }
+
 .weddingblocks-atomic-couple-photo.align-center {
   text-align: center;
 }
+
 .weddingblocks-atomic-couple-photo.align-right {
   text-align: right;
 }
+
 .weddingblocks-atomic-couple-photo.layout-stacked {
   display: block;
 }
+
 .weddingblocks-atomic-couple-photo .atomic-photo {
   margin: 0;
   display: block;
@@ -779,29 +802,36 @@ body.weddingblocks-locked {
   background: #f5f0e6;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
+
 .weddingblocks-atomic-couple-photo.align-left .atomic-photo {
   margin-left: 0;
   margin-right: auto;
 }
+
 .weddingblocks-atomic-couple-photo.align-right .atomic-photo {
   margin-left: auto;
   margin-right: 0;
 }
+
 .weddingblocks-atomic-couple-photo .atomic-photo.shape-circle {
   border-radius: 50%;
 }
+
 .weddingblocks-atomic-couple-photo .atomic-photo.shape-rounded {
   border-radius: 16px;
 }
+
 .weddingblocks-atomic-couple-photo .atomic-photo.shape-square {
   border-radius: 0;
 }
+
 .weddingblocks-atomic-couple-photo .atomic-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
+
 .weddingblocks-atomic-couple-photo .atomic-photo-placeholder {
   display: block;
   width: 100%;
@@ -811,6 +841,7 @@ body.weddingblocks-locked {
   font-size: 3em;
   font-weight: 700;
 }
+
 .weddingblocks-atomic-couple-photo .atomic-photo-caption {
   position: absolute;
   width: 1px;
@@ -825,9 +856,11 @@ body.weddingblocks-locked {
 .weddingblocks-atomic-couple-photo.shape-circle .atomic-photo {
   border-radius: 50%;
 }
+
 .weddingblocks-atomic-couple-photo.shape-rounded .atomic-photo {
   border-radius: 15px;
 }
+
 .weddingblocks-atomic-couple-photo.shape-square .atomic-photo {
   border-radius: 0;
 }
@@ -972,7 +1005,7 @@ body.weddingblocks-locked {
   display: block;
 }
 
-.weddingblocks-event-info .weddingblocks-event-card__meta + .weddingblocks-event-card__meta {
+.weddingblocks-event-info .weddingblocks-event-card__meta+.weddingblocks-event-card__meta {
   margin-top: 2px;
 }
 
@@ -1031,19 +1064,17 @@ body.weddingblocks-locked {
   width: 3px;
   transform: translateX(-50%);
   border-radius: 999px;
-  background: linear-gradient(
-    to bottom,
-    color-mix(in srgb, var(--wb-event-accent-color) 8%, transparent),
-    var(--wb-event-accent-color) 14%,
-    var(--wb-event-accent-color) 86%,
-    color-mix(in srgb, var(--wb-event-accent-color) 8%, transparent)
-  );
+  background: linear-gradient(to bottom,
+      color-mix(in srgb, var(--wb-event-accent-color) 8%, transparent),
+      var(--wb-event-accent-color) 14%,
+      var(--wb-event-accent-color) 86%,
+      color-mix(in srgb, var(--wb-event-accent-color) 8%, transparent));
 }
 
 .weddingblocks-event-info .weddingblocks-timeline-item {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 40px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) 30px minmax(0, 1fr);
   align-items: start;
 }
 
