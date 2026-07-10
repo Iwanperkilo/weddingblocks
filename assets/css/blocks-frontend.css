@@ -477,7 +477,6 @@ body.weddingblocks-locked {
 .guestbook-list {
   max-height: 500px;
   overflow-y: auto;
-  padding-right: 10px;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -539,7 +538,6 @@ body.weddingblocks-locked {
 .guestbook-header .guest-name {
   font-size: 15px;
   font-weight: 600;
-  color: #333;
   margin: 0;
 }
 
@@ -568,7 +566,6 @@ body.weddingblocks-locked {
 
 .guest-message {
   font-size: 13px;
-  color: #555;
   line-height: 1.6;
   margin: 0 0 8px 0;
 }

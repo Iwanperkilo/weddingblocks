@@ -9,5 +9,51 @@
     "textdomain": "weddingblocks",
     "editorScript": "file:./index.js",
     "render": "file:./render.php",
-    "style": "weddingblocks-frontend-style"
+    "style": "weddingblocks-frontend-style",
+    "attributes": {
+        "entriesToShow": {
+            "type": "number",
+            "default": 50
+        },
+        "order": {
+            "type": "string",
+            "default": "newest"
+        },
+        "showTimestamp": {
+            "type": "boolean",
+            "default": true
+        },
+        "showStatusBadge": {
+            "type": "boolean",
+            "default": true
+        },
+        "emptyStateText": {
+            "type": "string",
+            "default": ""
+        },
+        "messageMaxLength": {
+            "type": "number",
+            "default": 0
+        },
+        "cardBackgroundColor": {
+            "type": "string",
+            "default": ""
+        },
+        "cardBorderColor": {
+            "type": "string",
+            "default": ""
+        }
+    },
+    "supports": {
+        "html": false,
+        "spacing": {
+            "margin": true,
+            "padding": true,
+            "blockGap": true
+        },
+        "color": {
+            "background": true,
+            "text": true
+        }
+    }
 }
