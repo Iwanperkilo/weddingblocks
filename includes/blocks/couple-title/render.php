@@ -20,9 +20,6 @@ if ( isset( $attributes ) ) {
     }
 }
 
-/* --------------------------------------------------------------
- * Get groom display name
- * -------------------------------------------------------------- */
 $groom_display = get_post_meta( get_the_ID(), 'weddingblocks_groom_nickname', true );
 if ( empty( $groom_display ) ) {
     $groom_display = get_post_meta( get_the_ID(), 'weddingblocks_groom_name', true );
@@ -31,9 +28,6 @@ if ( empty( $groom_display ) ) {
     $groom_display = __( 'Mempelai Pria', 'weddingblocks' );
 }
 
-/* --------------------------------------------------------------
- * Get bride display name
- * -------------------------------------------------------------- */
 $bride_display = get_post_meta( get_the_ID(), 'weddingblocks_bride_nickname', true );
 if ( empty( $bride_display ) ) {
     $bride_display = get_post_meta( get_the_ID(), 'weddingblocks_bride_name', true );
@@ -42,16 +36,24 @@ if ( empty( $bride_display ) ) {
     $bride_display = __( 'Mempelai Wanita', 'weddingblocks' );
 }
 
-/* --------------------------------------------------------------
- * Get style attributes
- * -------------------------------------------------------------- */
-$text_color     = ! empty( $block_attributes['textColor'] ) ? $block_attributes['textColor'] : '#ffffff';
-$text_transform = ! empty( $block_attributes['textTransform'] ) ? $block_attributes['textTransform'] : 'none';
-$separator      = isset( $block_attributes['separator'] ) ? $block_attributes['separator'] : '&';
+$text_color = ! empty( $block_attributes['textColor'] ) ? $block_attributes['textColor'] : '#ffffff';
 
-/* --------------------------------------------------------------
- * Text transformation helper
- * -------------------------------------------------------------- */
+$allowed_transforms = array( 'none', 'uppercase', 'lowercase', 'capitalize' );
+$text_transform      = isset( $block_attributes['textTransform'] ) ? $block_attributes['textTransform'] : 'none';
+if ( ! in_array( $text_transform, $allowed_transforms, true ) ) {
+    $text_transform = 'none';
+}
+
+$allowed_aligns = array( 'left', 'center', 'right' );
+$text_align      = isset( $block_attributes['textAlign'] ) ? $block_attributes['textAlign'] : 'center';
+if ( ! in_array( $text_align, $allowed_aligns, true ) ) {
+    $text_align = 'center';
+}
+
+$separator    = isset( $block_attributes['separator'] ) ? $block_attributes['separator'] : '&';
+$text_shadow  = ! empty( $block_attributes['textShadow'] );
+$font_size    = ! empty( $block_attributes['style']['typography']['fontSize'] ) ? $block_attributes['style']['typography']['fontSize'] : '';
+
 $transform_text = static function ( $text, $transform ) {
     if ( $transform === 'uppercase' ) {
         return strtoupper( $text );
@@ -63,14 +65,32 @@ $transform_text = static function ( $text, $transform ) {
     return $text;
 };
 
-/* --------------------------------------------------------------
- * Apply transformations
- * -------------------------------------------------------------- */
 $groom_transformed = $transform_text( $groom_display, $text_transform );
 $bride_transformed = $transform_text( $bride_display, $text_transform );
+
+$inline_style = sprintf( 'color: %s !important; text-transform: %s; text-align: %s;',
+    esc_attr( $text_color ),
+    esc_attr( $text_transform ),
+    esc_attr( $text_align )
+);
+if ( ! empty( $font_size ) ) {
+    $inline_style .= sprintf( ' font-size: %s;', esc_attr( $font_size ) );
+}
+if ( $text_shadow ) {
+    $inline_style .= ' text-shadow: 0 2px 6px rgba(0,0,0,0.45);';
+}
+
+$extra_classes = 'weddingblocks-cover-title';
+if ( $text_shadow ) {
+    $extra_classes .= ' has-text-shadow';
+}
+
+$wrapper_attributes = get_block_wrapper_attributes( array(
+    'class' => $extra_classes,
+    'style' => $inline_style,
+) );
 ?>
 
-<h1 class="weddingblocks-cover-title text-align-center"
-    style="text-align: center; color: <?php echo esc_attr( $text_color ); ?> !important; text-transform: <?php echo esc_attr( $text_transform ); ?>;">
+<h1 <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
     <?php echo esc_html( $groom_transformed ); ?> <?php echo esc_html( $separator ); ?> <?php echo esc_html( $bride_transformed ); ?>
 </h1>

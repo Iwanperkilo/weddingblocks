@@ -1,8 +1,14 @@
 (function (blocks, element, blockEditor, components, i18n) {
   var el = element.createElement;
+  var Fragment = element.Fragment;
   var InspectorControls = blockEditor.InspectorControls;
+  var BlockControls = blockEditor.BlockControls;
+  var AlignmentToolbar = blockEditor.AlignmentToolbar;
   var PanelBody = components.PanelBody;
   var SelectControl = components.SelectControl;
+  var TextControl = components.TextControl;
+  var ToggleControl = components.ToggleControl;
+  var FontSizePicker = components.FontSizePicker;
   var PanelColorSettings = blockEditor.PanelColorSettings;
   var useBlockProps = blockEditor.useBlockProps;
   var __ = i18n.__;
@@ -14,6 +20,21 @@
     { name: __("Rose", "weddingblocks"), color: "#b76e79" },
     { name: __("Maroon", "weddingblocks"), color: "#800000" },
     { name: __("Charcoal", "weddingblocks"), color: "#2c2c2c" },
+  ];
+
+  // Preset font size, dipakai oleh FontSizePicker dan otomatis
+  // konsisten dengan supports.typography.fontSize di block.json.
+  var fontSizePresets = [
+    { name: __("Kecil", "weddingblocks"), slug: "small", size: "24px" },
+    { name: __("Sedang", "weddingblocks"), slug: "medium", size: "36px" },
+    { name: __("Besar", "weddingblocks"), slug: "large", size: "48px" },
+    { name: __("Sangat Besar", "weddingblocks"), slug: "x-large", size: "64px" },
+  ];
+
+  var separatorPresets = [
+    { label: "&", value: "&" },
+    { label: "\u2764\ufe0f", value: "\u2764\ufe0f" },
+    { label: __("Custom...", "weddingblocks"), value: "__custom__" },
   ];
 
   blocks.registerBlockType("weddingblocks/couple-title", {
@@ -41,7 +62,14 @@
 
       var textColor = attributes.textColor || "#ffffff";
       var textTransform = attributes.textTransform || "none";
-      var separator = attributes.separator || "&";
+      var separator =
+        typeof attributes.separator === "string" ? attributes.separator : "&";
+      var textAlign = attributes.textAlign || "center";
+      var textShadow = !!attributes.textShadow;
+
+      var isCustomSeparator = !separatorPresets.some(function (item) {
+        return item.value === separator;
+      });
 
       var transformText = function (text) {
         if (textTransform === "uppercase") {
@@ -59,9 +87,26 @@
       var titleStyle = {
         color: textColor,
         textTransform: textTransform,
+        textAlign: textAlign,
       };
+      if (textShadow) {
+        titleStyle.textShadow = "0 2px 6px rgba(0, 0, 0, 0.45)";
+      }
+      if (attributes.style && attributes.style.typography && attributes.style.typography.fontSize) {
+        titleStyle.fontSize = attributes.style.typography.fontSize;
+      }
 
       return [
+        el(
+          BlockControls,
+          { key: "toolbar" },
+          el(AlignmentToolbar, {
+            value: textAlign,
+            onChange: function (value) {
+              setAttributes({ textAlign: value || "center" });
+            },
+          }),
+        ),
         el(
           InspectorControls,
           { key: "inspector" },
@@ -79,6 +124,42 @@
               },
             ],
           }),
+          el(
+            PanelBody,
+            {
+              title: __("Tipografi", "weddingblocks"),
+              initialOpen: true,
+            },
+            el(FontSizePicker, {
+              value:
+                attributes.style &&
+                attributes.style.typography &&
+                attributes.style.typography.fontSize,
+              fontSizes: fontSizePresets,
+              onChange: function (value) {
+                setAttributes({
+                  style: Object.assign({}, attributes.style, {
+                    typography: Object.assign(
+                      {},
+                      attributes.style && attributes.style.typography,
+                      { fontSize: value },
+                    ),
+                  }),
+                });
+              },
+            }),
+            el(
+              "div",
+              { style: { marginTop: "20px" } },
+              el(ToggleControl, {
+                label: __("Efek Bayangan Teks", "weddingblocks"),
+                checked: textShadow,
+                onChange: function (value) {
+                  setAttributes({ textShadow: value });
+                },
+              }),
+            ),
+          ),
           el(
             PanelBody,
             {
@@ -103,13 +184,21 @@
             }),
             el(SelectControl, {
               label: __("Tanda Hubung", "weddingblocks"),
+              value: isCustomSeparator ? "__custom__" : separator,
+              options: separatorPresets,
+              onChange: function (value) {
+                if (value === "__custom__") {
+                  setAttributes({ separator: "" });
+                } else {
+                  setAttributes({ separator: value });
+                }
+              },
+            }),
+            isCustomSeparator &&
+            el(TextControl, {
+              label: __("Tanda Hubung Custom", "weddingblocks"),
               value: separator,
-              options: [
-                { label: "&", value: "&" },
-                { label: "\u2764\ufe0f", value: "\u2764\ufe0f" },
-                { label: "\u272d\ufe0f", value: "\u272d\ufe0f" },
-                { label: "\u2014", value: "\u2014" },
-              ],
+              placeholder: __("mis. dan", "weddingblocks"),
               onChange: function (value) {
                 setAttributes({ separator: value });
               },
@@ -132,10 +221,10 @@
               style: titleStyle,
             },
             transformText(groomDisplay) +
-              " " +
-              separator +
-              " " +
-              transformText(brideDisplay),
+            " " +
+            separator +
+            " " +
+            transformText(brideDisplay),
           ),
         ),
       ];

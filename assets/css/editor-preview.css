@@ -402,7 +402,6 @@
     text-align: center;
 }
 
-/* Remove the card-style border/shadow around the RSVP form section in the editor */
 .editor-styles-wrapper .weddingblocks-section:has(.weddingblocks-rsvp-form-container),
 .editor-styles-wrapper .weddingblocks-rsvp-form-editor {
     border: none;
@@ -514,7 +513,7 @@
 
 .editor-styles-wrapper .weddingblocks-couple-title-text {
     font-family: 'Playfair Display', 'Georgia', serif;
-    font-size: 28px;
+    font-size: clamp(38px, 7vw, 60px);
     color: #ffffff;
     margin: 8px 0 0;
     font-weight: 600;
@@ -522,8 +521,6 @@
 }
 
 /* === Block selection helpers (editor only) === */
-/* Make purely visual overlays/decorations non-interactive so the canvas
-   can correctly receive click events and select the parent block. */
 .editor-styles-wrapper .weddingblocks-cover-preview>.wb-cover-inner,
 .editor-styles-wrapper .weddingblocks-cover-preview>.wb-editor-badge,
 .editor-styles-wrapper .weddingblocks-guest-name-block .wb-editor-badge,
