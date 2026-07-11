@@ -21,20 +21,6 @@
   text-align: right;
 }
 
-.weddingblocks-atomic-couple-name.type-both.align-left .atomic-name-text {
-  align-items: flex-start;
-  text-align: left;
-}
-
-.weddingblocks-atomic-couple-name.type-both.align-center .atomic-name-text {
-  align-items: center;
-  text-align: center;
-}
-
-.weddingblocks-atomic-couple-name.type-both.align-right .atomic-name-text {
-  align-items: flex-end;
-  text-align: right;
-}
 
 .weddingblocks-atomic-couple-name .atomic-name-text {
   display: inline-block;
@@ -55,19 +41,6 @@
   letter-spacing: 0.03em;
 }
 
-.weddingblocks-atomic-couple-name.type-both .atomic-name-text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
-
-.weddingblocks-atomic-couple-name.type-both .atomic-name-text::before {
-  content: attr(data-nickname);
-  font-style: italic;
-  color: #b5a46d;
-  font-size: 1.1em;
-}
 
 /* Couple Parents (Single) */
 .weddingblocks-atomic-couple-parents {

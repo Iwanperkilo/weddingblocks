@@ -57,8 +57,6 @@
       var display;
       if (nameType === "nickname") {
         display = nickName || fullName || fallback;
-      } else if (nameType === "both") {
-        display = (nickName + " " + fullName).trim() || fallback;
       } else {
         display = fullName || nickName || fallback;
       }
@@ -129,7 +127,6 @@
                   label: __("Nama Panggilan", "weddingblocks"),
                   value: "nickname",
                 },
-                { label: __("Keduanya", "weddingblocks"), value: "both" },
               ],
               onChange: function (v) {
                 props.setAttributes({ nameType: v });

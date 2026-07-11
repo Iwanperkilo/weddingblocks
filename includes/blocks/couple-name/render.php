@@ -37,9 +37,6 @@ if ( 'bride' === $role ) {
 if ( 'nickname' === $name_type ) {
     $display = '' !== $nick_name ? $nick_name : $full_name;
     if ( '' === $display ) { $display = $fallback; }
-} elseif ( 'both' === $name_type ) {
-    $display = trim( $nick_name . ' ' . $full_name );
-    if ( '' === $display ) { $display = $fallback; }
 } else {
     $display = '' !== $full_name ? $full_name : ( '' !== $nick_name ? $nick_name : $fallback );
 }
@@ -80,7 +77,3 @@ $wrapper_attributes = get_block_wrapper_attributes(
     <span class="atomic-name-text" style="<?php echo esc_attr( $style_attr ); ?>"><?php echo esc_html( $display ); ?></span>
 </div>
 <?php
-
-// Register the block
-// The block registration will be handled by block.json
-// add_action( 'init', 'weddingblocks_register_couple_name_block' );
