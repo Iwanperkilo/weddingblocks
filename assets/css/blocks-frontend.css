@@ -302,7 +302,7 @@ body.weddingblocks-locked {
   display: flex;
   justify-content: center;
   gap: 15px;
-  margin: 30px auto;
+  margin: auto;
   flex-wrap: wrap;
 }
 

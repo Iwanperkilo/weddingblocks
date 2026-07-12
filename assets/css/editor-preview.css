@@ -88,8 +88,7 @@
     justify-content: space-around;
     flex-wrap: wrap;
     gap: 20px;
-    padding: 24px 16px;
-    background: #fbfaf7;
+    padding: 16px;
 }
 
 .editor-styles-wrapper .weddingblocks-couple-column {
@@ -310,7 +309,6 @@
     display: flex;
     gap: 10px;
     justify-content: center;
-    padding: 20px;
     border-radius: 8px;
 }
 
