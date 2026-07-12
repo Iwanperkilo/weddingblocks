@@ -73,7 +73,7 @@
         borderWidth: borderWidth + "px",
         borderStyle: "solid",
         borderRadius: borderRadius + "px",
-        boxShadow: boxShadow ? "0 8px 30px rgba(181, 164, 109, 0.06)" : "none",
+        boxShadow: boxShadow ? "3px 6px 8px rgb(145 145 145 / 54%)" : "none",
         padding: boxPaddingVertical + "px " + boxPaddingHorizontal + "px",
       };
 
@@ -112,6 +112,7 @@
                 value: textColor,
                 colors: colorPalette,
                 label: __("Warna Angka", "weddingblocks"),
+                enableAlpha: true,
                 onChange: function (value) {
                   setAttributes({ textColor: value || "#b5a46d" });
                 },
@@ -120,6 +121,7 @@
                 value: labelColor,
                 colors: colorPalette,
                 label: __("Warna Label", "weddingblocks"),
+                enableAlpha: true,
                 onChange: function (value) {
                   setAttributes({ labelColor: value || "#888888" });
                 },
@@ -128,6 +130,7 @@
                 value: boxBackgroundColor,
                 colors: colorPalette,
                 label: __("Warna Background Box", "weddingblocks"),
+                enableAlpha: true,
                 onChange: function (value) {
                   setAttributes({ boxBackgroundColor: value || "#ffffff" });
                 },
@@ -136,6 +139,7 @@
                 value: borderColor,
                 colors: colorPalette,
                 label: __("Warna Border", "weddingblocks"),
+                enableAlpha: true,
                 onChange: function (value) {
                   setAttributes({ borderColor: value || "#b5a46d" });
                 },

@@ -32,11 +32,45 @@ if (empty($target)) {
 }
 $target = esc_attr($target);
 
-// Colors, with hex validation so invalid values fall back to defaults.
-$text_color           = ! empty($block_attributes['textColor']) ? sanitize_hex_color($block_attributes['textColor']) : '';
-$label_color          = ! empty($block_attributes['labelColor']) ? sanitize_hex_color($block_attributes['labelColor']) : '';
-$box_background_color = ! empty($block_attributes['boxBackgroundColor']) ? sanitize_hex_color($block_attributes['boxBackgroundColor']) : '';
-$border_color          = ! empty($block_attributes['borderColor']) ? sanitize_hex_color($block_attributes['borderColor']) : '';
+if (! function_exists('weddingblocks_sanitize_color')) {
+    /**
+     * Sanitize a color value, allowing hex (#fff / #ffffff / #ffffffff with alpha),
+     * rgb()/rgba(), and the literal 'transparent'. Falls back to an empty string
+     * (caller decides the default) if the value doesn't match any allowed format.
+     *
+     * @param string $color Raw color value from block attributes.
+     * @return string
+     */
+    function weddingblocks_sanitize_color($color)
+    {
+        if (empty($color)) {
+            return '';
+        }
+
+        $color = trim($color);
+
+        if ('transparent' === strtolower($color)) {
+            return 'transparent';
+        }
+
+        // #fff, #ffffff, or #ffffffff (8-digit hex with alpha channel).
+        if (preg_match('/^#([A-Fa-f0-9]{3}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{8})$/', $color)) {
+            return $color;
+        }
+
+        // rgb(r, g, b) or rgba(r, g, b, a).
+        if (preg_match('/^rgba?\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*(,\s*(0|1|0?\.\d+)\s*)?\)$/i', $color)) {
+            return $color;
+        }
+
+        return '';
+    }
+}
+
+$text_color           = ! empty($block_attributes['textColor']) ? weddingblocks_sanitize_color($block_attributes['textColor']) : '';
+$label_color          = ! empty($block_attributes['labelColor']) ? weddingblocks_sanitize_color($block_attributes['labelColor']) : '';
+$box_background_color = ! empty($block_attributes['boxBackgroundColor']) ? weddingblocks_sanitize_color($block_attributes['boxBackgroundColor']) : '';
+$border_color          = ! empty($block_attributes['borderColor']) ? weddingblocks_sanitize_color($block_attributes['borderColor']) : '';
 
 $text_color           = $text_color ? $text_color : '#b5a46d';
 $label_color          = $label_color ? $label_color : '#888888';
@@ -53,7 +87,7 @@ $gap              = isset($block_attributes['gap']) ? absint($block_attributes['
 $box_padding_vertical   = isset($block_attributes['boxPaddingVertical']) ? absint($block_attributes['boxPaddingVertical']) : 15;
 $box_padding_horizontal = isset($block_attributes['boxPaddingHorizontal']) ? absint($block_attributes['boxPaddingHorizontal']) : 5;
 
-$box_shadow_css = $box_shadow ? '0 8px 30px rgba(181, 164, 109, 0.06)' : 'none';
+$box_shadow_css = $box_shadow ? '3px 6px 8px rgb(145 145 145 / 54%)' : 'none';
 
 $item_style = sprintf(
     'background-color: %1$s; border-color: %2$s; border-width: %3$dpx; border-style: solid; border-radius: %4$dpx; box-shadow: %5$s; padding: %6$dpx %7$dpx;',
