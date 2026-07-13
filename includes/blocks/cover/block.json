@@ -7,6 +7,10 @@
     "icon": "cover-image",
     "description": "Menampilkan cover pembuka undangan digital dengan tombol interaktif.",
     "textdomain": "weddingblocks",
+    "supports": {
+        "html": false,
+        "spacing": false
+    },
     "attributes": {
         "backgroundImage": {
             "type": "string",

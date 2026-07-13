@@ -94,17 +94,6 @@ body.weddingblocks-locked {
     opacity 1.2s ease-in-out;
 }
 
-.weddingblocks-cover-wrapper::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.35);
-  /* Fallback overlay */
-}
-
 /* Fallback image when none selected */
 .weddingblocks-cover-wrapper:not([style*="background-image"]) {
   background: linear-gradient(135deg, #252627 0%, #151617 100%);
@@ -151,10 +140,6 @@ body.weddingblocks-locked {
   line-height: 1.2;
   margin: 25px 0;
   color: #ffffff !important;
-}
-
-.weddingblocks-cover-title.has-text-shadow {
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
 }
 
 .weddingblocks-cover-title.has-text-shadow {
