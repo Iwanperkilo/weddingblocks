@@ -15,6 +15,55 @@
     "inputBorderColor": {
       "type": "string",
       "default": "rgba(181, 164, 109, 0.3)"
+    },
+    "showGuestsField": {
+      "type": "boolean",
+      "default": true
+    },
+    "maxGuests": {
+      "type": "number",
+      "default": 10
+    },
+    "labelName": {
+      "type": "string",
+      "default": "Nama Anda"
+    },
+    "labelAttendance": {
+      "type": "string",
+      "default": "Konfirmasi Kehadiran"
+    },
+    "labelMessage": {
+      "type": "string",
+      "default": "Ucapan & Doa Restu"
+    },
+    "placeholderMessage": {
+      "type": "string",
+      "default": "Berikan ucapan selamat & doa restu terbaik untuk mempelai..."
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "Kirim Konfirmasi"
+    },
+    "successMessage": {
+      "type": "string",
+      "default": "Konfirmasi RSVP berhasil dikirim!"
+    },
+    "errorMessage": {
+      "type": "string",
+      "default": "Gagal mengirim konfirmasi. Silakan coba lagi."
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "anchor": true,
+    "spacing": {
+      "margin": true,
+      "padding": true,
+      "blockGap": true
     }
   },
   "editorScript": "file:./index.js",
