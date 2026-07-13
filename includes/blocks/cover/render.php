@@ -23,6 +23,26 @@ $accent_color = ! empty($attributes['accentColor']) ? sanitize_hex_color($attrib
 
 $bg_style = $bg_image ? "background-image: url('$bg_image');" : "";
 
+// Cover width mode: "full" (default, edge-to-edge), "mobile" (fixed ~480px
+// card centered on screen), or "custom" (user-defined px width).
+$cover_width_mode = ! empty($attributes['coverWidth']) && in_array($attributes['coverWidth'], array('full', 'mobile', 'custom'), true)
+    ? $attributes['coverWidth']
+    : 'full';
+
+$wrapper_classes = array('weddingblocks-cover-wrapper');
+
+if ('mobile' === $cover_width_mode) {
+    $wrapper_classes[] = 'weddingblocks-cover-wrapper--boxed';
+    $bg_style         .= '--wb-cover-max-width: 480px;';
+} elseif ('custom' === $cover_width_mode) {
+    // Clamp to a sane range so the cover never collapses or overflows oddly.
+    $cover_custom_width = isset($attributes['coverCustomWidth']) ? intval($attributes['coverCustomWidth']) : 480;
+    $cover_custom_width = max(280, min(960, $cover_custom_width));
+
+    $wrapper_classes[] = 'weddingblocks-cover-wrapper--boxed';
+    $bg_style          .= '--wb-cover-max-width: ' . $cover_custom_width . 'px;';
+}
+
 // Auto-contrast text color for the button, so a light/white accent color
 // doesn't render invisible white-on-white text.
 if (! function_exists('weddingblocks_get_contrast_color')) {
@@ -49,7 +69,7 @@ $button_text_color = weddingblocks_get_contrast_color($accent_color);
 $wrapper_attributes = get_block_wrapper_attributes(
     array(
         'id'    => 'weddingblocks-cover',
-        'class' => 'weddingblocks-cover-wrapper',
+        'class' => implode(' ', $wrapper_classes),
         'style' => $bg_style,
     )
 );

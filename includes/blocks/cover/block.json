@@ -35,6 +35,14 @@
         "buttonBorderRadius": {
             "type": "number",
             "default": 30
+        },
+        "coverWidth": {
+            "type": "string",
+            "default": "full"
+        },
+        "coverCustomWidth": {
+            "type": "number",
+            "default": 480
         }
     },
     "editorScript": "file:./index.js",

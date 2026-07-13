@@ -56,7 +56,7 @@ body.weddingblocks-locked {
   font-size: clamp(28px, 4vw, 42px) !important;
   color: #b5a46d !important;
   font-weight: 600 !important;
-  margin-bottom: 15px !important;
+  margin-bottom: 15px;
 }
 
 .weddingblocks-subheading {
@@ -97,6 +97,50 @@ body.weddingblocks-locked {
 /* Fallback image when none selected */
 .weddingblocks-cover-wrapper:not([style*="background-image"]) {
   background: linear-gradient(135deg, #252627 0%, #151617 100%);
+}
+
+/* --- 1a. WP ADMIN BAR COMPATIBILITY --- */
+/* WordPress adds the "admin-bar" class to <body> whenever the toolbar is
+   showing for a logged-in user. The bar itself is position:fixed with
+   z-index 99999, well below our cover's 999999, so without this the cover
+   fully hides it. Push the cover down to start right under the bar instead
+   of overlapping it. */
+body.admin-bar .weddingblocks-cover-wrapper {
+  top: 32px !important;
+  height: calc(100vh - 32px) !important;
+}
+
+@media screen and (max-width: 782px) {
+
+  /* WP switches the admin bar to its taller mobile height at this breakpoint. */
+  body.admin-bar .weddingblocks-cover-wrapper {
+    top: 46px !important;
+    height: calc(100vh - 46px) !important;
+  }
+}
+
+/* --- 1b. COVER WIDTH VARIANT (mobile / custom) --- */
+/* Same fixed/fullscreen/slide-up behavior as default, only the horizontal
+   width and centering change. Uses left+translateX instead of margin math
+   so it stays correct for any --wb-cover-max-width value. */
+.weddingblocks-cover-wrapper.weddingblocks-cover-wrapper--boxed {
+  left: 50% !important;
+  right: auto !important;
+  width: 100% !important;
+  max-width: min(var(--wb-cover-max-width, 480px), calc(100vw - 24px)) !important;
+  transform: translateX(-50%);
+}
+
+@media (min-width: 600px) {
+  .weddingblocks-cover-wrapper.weddingblocks-cover-wrapper--boxed {
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.35);
+  }
+}
+
+/* Combine with the open/slide-up state: translateX for centering still
+   needs to apply while the cover slides up and fades out. */
+.weddingblocks-cover-wrapper.weddingblocks-cover-wrapper--boxed.opened {
+  transform: translate(-50%, -110vh);
 }
 
 .weddingblocks-cover-wrapper.opened {

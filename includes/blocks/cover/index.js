@@ -4,6 +4,7 @@
   var PanelBody = components.PanelBody;
   var TextControl = components.TextControl;
   var RangeControl = components.RangeControl;
+  var SelectControl = components.SelectControl;
   var PanelColorSettings = blockEditor.PanelColorSettings;
   var MediaUpload = blockEditor.MediaUpload;
   var Button = components.Button;
@@ -18,6 +19,11 @@
         attributes.buttonBorderRadius !== undefined
           ? attributes.buttonBorderRadius
           : 30;
+      var coverWidth = attributes.coverWidth || "full";
+      var coverCustomWidth =
+        attributes.coverCustomWidth !== undefined
+          ? attributes.coverCustomWidth
+          : 480;
 
       var customColors = [
         { name: "Gold", color: "#d4c59a" },
@@ -89,17 +95,17 @@
                       : __("Ganti Gambar", "weddingblocks"),
                   ),
                   attributes.backgroundImage &&
-                    el(
-                      Button,
-                      {
-                        isDestructive: true,
-                        onClick: function () {
-                          props.setAttributes({ backgroundImage: "" });
-                        },
-                        style: { marginLeft: "10px", marginBottom: "10px" },
+                  el(
+                    Button,
+                    {
+                      isDestructive: true,
+                      onClick: function () {
+                        props.setAttributes({ backgroundImage: "" });
                       },
-                      __("Hapus", "weddingblocks"),
-                    ),
+                      style: { marginLeft: "10px", marginBottom: "10px" },
+                    },
+                    __("Hapus", "weddingblocks"),
+                  ),
                 );
               },
             }),
@@ -132,6 +138,39 @@
               min: 0,
               max: 95,
               step: 5,
+            }),
+          ),
+          el(
+            PanelBody,
+            {
+              initialOpen: true,
+            },
+            el(SelectControl, {
+              label: __("Mode Cover", "weddingblocks"),
+              value: coverWidth,
+              options: [
+                { label: __("Full (layar penuh)", "weddingblocks"), value: "full" },
+                { label: __("Mobile (± 480px)", "weddingblocks"), value: "mobile" },
+                { label: __("Custom", "weddingblocks"), value: "custom" },
+              ],
+              onChange: function (value) {
+                props.setAttributes({ coverWidth: value });
+              },
+              help:
+                coverWidth === "full"
+                  ? __("Cover memenuhi seluruh lebar layar.", "weddingblocks")
+                  : __("Isi undangan lain di bawah cover tetap memakai lebar aslinya.", "weddingblocks"),
+            }),
+            coverWidth === "custom" &&
+            el(RangeControl, {
+              label: __("Lebar Custom (px)", "weddingblocks"),
+              value: coverCustomWidth,
+              onChange: function (value) {
+                props.setAttributes({ coverCustomWidth: value });
+              },
+              min: 280,
+              max: 960,
+              step: 10,
             }),
           ),
           el(PanelColorSettings, {
@@ -167,7 +206,13 @@
               padding: "60px 20px",
               border: "1px solid " + (attributes.accentColor || "#b5a46d"),
               borderRadius: "12px",
-              margin: "10px 0",
+              margin: "10px auto",
+              maxWidth:
+                coverWidth === "mobile"
+                  ? "480px"
+                  : coverWidth === "custom"
+                    ? coverCustomWidth + "px"
+                    : "none",
               backgroundImage: attributes.backgroundImage
                 ? "url(" + attributes.backgroundImage + ")"
                 : "none",
