@@ -5,9 +5,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Lock scroll initially if cover is present.
     var cover = document.getElementById('weddingblocks-cover');
+    var lockedScrollY = 0;
     if (cover) {
         // Move cover to the top of body to bypass any FSE layout constraints on desktop
         document.body.insertBefore(cover, document.body.firstChild);
+
+        // Remember scroll position before switching body to position:fixed,
+        // otherwise the page silently jumps back to the top once unlocked.
+        lockedScrollY = window.scrollY || window.pageYOffset || 0;
+        document.body.style.top = '-' + lockedScrollY + 'px';
         document.body.classList.add('weddingblocks-locked');
     }
 
@@ -21,6 +27,8 @@ document.addEventListener('DOMContentLoaded', function () {
             // Fade out/slide up cover.
             cover.classList.add('opened');
             document.body.classList.remove('weddingblocks-locked');
+            document.body.style.top = '';
+            window.scrollTo(0, lockedScrollY);
 
             // Play music.
             if (audio) {
