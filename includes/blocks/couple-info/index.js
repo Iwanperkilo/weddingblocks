@@ -106,7 +106,11 @@
 
       return el(
         "div",
-        useBlockProps({ className: "weddingblocks-couple-info-editor" }),
+        useBlockProps({
+          className:
+            "weddingblocks-couple-info-editor weddingblocks-couple-columns " +
+            layoutClass,
+        }),
         el(
           InspectorControls,
           {},
@@ -121,9 +125,9 @@
               help: attributes.swapCouple
                 ? __("Mempelai Pria ditampilkan di kiri/atas", "weddingblocks")
                 : __(
-                    "Mempelai Wanita ditampilkan di kiri/atas",
-                    "weddingblocks",
-                  ),
+                  "Mempelai Wanita ditampilkan di kiri/atas",
+                  "weddingblocks",
+                ),
               checked: attributes.swapCouple,
               onChange: function (value) {
                 setAttributes({ swapCouple: value });
@@ -211,124 +215,120 @@
               },
             }),
             showParentsLabel &&
-              el(TextControl, {
-                label: __("Label Orang Tua Pria", "weddingblocks"),
-                value: parentsLabelGroom,
-                onChange: function (value) {
-                  setAttributes({ parentsLabelGroom: value });
-                },
-              }),
+            el(TextControl, {
+              label: __("Label Orang Tua Pria", "weddingblocks"),
+              value: parentsLabelGroom,
+              onChange: function (value) {
+                setAttributes({ parentsLabelGroom: value });
+              },
+            }),
             showParentsLabel &&
-              el(TextControl, {
-                label: __("Label Orang Tua Wanita", "weddingblocks"),
-                value: parentsLabelBride,
-                onChange: function (value) {
-                  setAttributes({ parentsLabelBride: value });
-                },
-              }),
+            el(TextControl, {
+              label: __("Label Orang Tua Wanita", "weddingblocks"),
+              value: parentsLabelBride,
+              onChange: function (value) {
+                setAttributes({ parentsLabelBride: value });
+              },
+            }),
             showParentsLabel &&
-              el(RangeControl, {
-                label: __("Ukuran Font", "weddingblocks"),
-                value: parentsLabelFontSize,
-                onChange: function (value) {
-                  setAttributes({ parentsLabelFontSize: value });
-                },
-                min: 10,
-                max: 50,
-                step: 1,
-              }),
+            el(RangeControl, {
+              label: __("Ukuran Font", "weddingblocks"),
+              value: parentsLabelFontSize,
+              onChange: function (value) {
+                setAttributes({ parentsLabelFontSize: value });
+              },
+              min: 10,
+              max: 50,
+              step: 1,
+            }),
             showParentsLabel &&
-              el(SelectControl, {
-                label: __("Gaya Font", "weddingblocks"),
-                value: parentsLabelFontFamily,
-                options: [
-                  { label: "Playfair Display", value: "playfair" },
-                  { label: "Great Vibes", value: "greatvibes" },
-                  { label: "Montserrat", value: "montserrat" },
-                  { label: "Georgia", value: "georgia" },
-                  { label: "Sans-serif", value: "sans-serif" },
-                ],
-                onChange: function (value) {
-                  setAttributes({ parentsLabelFontFamily: value });
-                },
-              }),
+            el(SelectControl, {
+              label: __("Gaya Font", "weddingblocks"),
+              value: parentsLabelFontFamily,
+              options: [
+                { label: "Playfair Display", value: "playfair" },
+                { label: "Great Vibes", value: "greatvibes" },
+                { label: "Montserrat", value: "montserrat" },
+                { label: "Georgia", value: "georgia" },
+                { label: "Sans-serif", value: "sans-serif" },
+              ],
+              onChange: function (value) {
+                setAttributes({ parentsLabelFontFamily: value });
+              },
+            }),
           ),
         ),
         el(
           "div",
-          { className: "weddingblocks-couple-columns " + layoutClass },
+          { className: "weddingblocks-couple-column" },
           el(
             "div",
-            { className: "weddingblocks-couple-column" },
+            { className: "weddingblocks-avatar", style: avatarStyle },
+            el("img", { src: firstPhoto, alt: firstName }),
+          ),
+          el("h3", { style: nameStyle }, firstName),
+          showParentsLabel &&
+          el(
+            "p",
+            { className: "weddingblocks-parents-info" },
             el(
-              "div",
-              { className: "weddingblocks-avatar", style: avatarStyle },
-              el("img", { src: firstPhoto, alt: firstName }),
+              "span",
+              {
+                className: "weddingblocks-parents-label",
+                style: parentsLabelStyle,
+              },
+              attributes.swapCouple ? parentsLabelGroom : parentsLabelBride,
             ),
-            el("h3", { style: nameStyle }, firstName),
-            showParentsLabel &&
-              el(
-                "p",
-                { className: "weddingblocks-parents-info" },
-                el(
-                  "span",
-                  {
-                    className: "weddingblocks-parents-label",
-                    style: parentsLabelStyle,
-                  },
-                  attributes.swapCouple ? parentsLabelGroom : parentsLabelBride,
-                ),
-                el(
-                  "span",
-                  {
-                    className: "weddingblocks-parents-names",
-                    style: parentsLabelStyle,
-                  },
-                  firstParents,
-                ),
-              ),
-            !showParentsLabel && el("p", {}, firstParents),
-          ),
-          el(
-            "div",
-            {
-              className:
-                "weddingblocks-couple-column weddingblocks-separator-column",
-            },
-            el("p", { className: "weddingblocks-ampersand" }, "&"),
-          ),
-          el(
-            "div",
-            { className: "weddingblocks-couple-column" },
             el(
-              "div",
-              { className: "weddingblocks-avatar", style: avatarStyle },
-              el("img", { src: secondPhoto, alt: secondName }),
+              "span",
+              {
+                className: "weddingblocks-parents-names",
+                style: parentsLabelStyle,
+              },
+              firstParents,
             ),
-            el("h3", { style: nameStyle }, secondName),
-            showParentsLabel &&
-              el(
-                "p",
-                { className: "weddingblocks-parents-info" },
-                el(
-                  "span",
-                  {
-                    className: "weddingblocks-parents-label",
-                    style: parentsLabelStyle,
-                  },
-                  attributes.swapCouple ? parentsLabelBride : parentsLabelGroom,
-                ),
-                el(
-                  "span",
-                  {
-                    className: "weddingblocks-parents-names",
-                    style: parentsLabelStyle,
-                  },
-                  secondParents,
-                ),
-              ),
-            !showParentsLabel && el("p", {}, secondParents),
           ),
+          !showParentsLabel && el("p", {}, firstParents),
+        ),
+        el(
+          "div",
+          {
+            className:
+              "weddingblocks-couple-column weddingblocks-separator-column",
+          },
+          el("p", { className: "weddingblocks-ampersand" }, "&"),
+        ),
+        el(
+          "div",
+          { className: "weddingblocks-couple-column" },
+          el(
+            "div",
+            { className: "weddingblocks-avatar", style: avatarStyle },
+            el("img", { src: secondPhoto, alt: secondName }),
+          ),
+          el("h3", { style: nameStyle }, secondName),
+          showParentsLabel &&
+          el(
+            "p",
+            { className: "weddingblocks-parents-info" },
+            el(
+              "span",
+              {
+                className: "weddingblocks-parents-label",
+                style: parentsLabelStyle,
+              },
+              attributes.swapCouple ? parentsLabelBride : parentsLabelGroom,
+            ),
+            el(
+              "span",
+              {
+                className: "weddingblocks-parents-names",
+                style: parentsLabelStyle,
+              },
+              secondParents,
+            ),
+          ),
+          !showParentsLabel && el("p", {}, secondParents),
         ),
       );
     },

@@ -83,17 +83,23 @@
 
 /* === Couple Info: 2 kolom dengan styling frontend === */
 .editor-styles-wrapper .weddingblocks-couple-columns {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
-    justify-content: space-around;
-    flex-wrap: wrap;
     gap: 20px;
     padding: 16px;
+    container-type: inline-size;
+    container-name: wb-couple-info;
+}
+
+.editor-styles-wrapper .weddingblocks-couple-columns--vertical {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: 24px;
 }
 
 .editor-styles-wrapper .weddingblocks-couple-column {
-    flex: 1;
-    min-width: 140px;
+    min-width: 0;
     text-align: center;
 }
 
@@ -131,8 +137,16 @@
     line-height: 1.4;
 }
 
+@container wb-couple-info (max-width: 480px) {
+    .editor-styles-wrapper .weddingblocks-couple-columns {
+        grid-template-columns: minmax(0, 1fr);
+        justify-items: center;
+        gap: 24px;
+    }
+}
+
 .editor-styles-wrapper .weddingblocks-separator-column {
-    flex: 0 0 auto;
+    justify-self: center;
 }
 
 .editor-styles-wrapper .weddingblocks-ampersand {
@@ -146,6 +160,8 @@
 /* === Event Info: layout previews for each variation === */
 .editor-styles-wrapper .weddingblocks-event-info-editor {
     position: relative;
+    container-type: inline-size;
+    container-name: wb-event-info;
     --wb-event-primary-color: #b5a46d;
     --wb-event-accent-color: #b5a46d;
 }
@@ -163,13 +179,14 @@
 
 .editor-styles-wrapper .weddingblocks-event-info-editor .weddingblocks-event-card {
     position: relative;
-    min-width: 180px;
+    min-width: 0;
     padding: 18px 16px;
     background: #ffffff;
     border: 1px solid rgba(181, 164, 109, 0.22);
     border-radius: 14px;
     text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+    overflow-wrap: break-word;
 }
 
 .editor-styles-wrapper .weddingblocks-event-info-editor .weddingblocks-event-card::before {
@@ -248,6 +265,7 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr) 36px minmax(0, 1fr);
     align-items: start;
+    min-width: 0;
 }
 
 .editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-item--start .weddingblocks-timeline-content {
@@ -274,13 +292,15 @@
     position: relative;
 }
 
-.editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-item--start .weddingblocks-event-card,
-.editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-item--end .weddingblocks-event-card {
-    margin-left: 10;
-    margin-right: 10;
+.editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-item--start .weddingblocks-event-card {
+    margin-right: 20px;
 }
 
-@media (max-width: 782px) {
+.editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-item--end .weddingblocks-event-card {
+    margin-left: 20px;
+}
+
+@container wb-event-info (max-width: 560px) {
     .editor-styles-wrapper .weddingblocks-event-info-editor--horizontal .weddingblocks-event-columns--horizontal {
         grid-template-columns: minmax(0, 1fr);
     }
@@ -301,6 +321,39 @@
     .editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-item--start .weddingblocks-timeline-content,
     .editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-item--end .weddingblocks-timeline-content {
         grid-column: 2;
+    }
+
+    .editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-item--start .weddingblocks-event-card,
+    .editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-item--end .weddingblocks-event-card {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+}
+
+/* Fallback untuk browser tanpa dukungan container query */
+@supports not (container-type: inline-size) {
+    @media (max-width: 782px) {
+        .editor-styles-wrapper .weddingblocks-event-info-editor--horizontal .weddingblocks-event-columns--horizontal {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline::before {
+            left: 19px;
+            transform: none;
+        }
+
+        .editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-item {
+            grid-template-columns: 24px minmax(0, 1fr);
+        }
+
+        .editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-marker {
+            grid-column: 1;
+        }
+
+        .editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-item--start .weddingblocks-timeline-content,
+        .editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-item--end .weddingblocks-timeline-content {
+            grid-column: 2;
+        }
     }
 }
 

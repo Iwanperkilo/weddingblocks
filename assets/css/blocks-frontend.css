@@ -257,26 +257,22 @@ body.admin-bar .weddingblocks-cover-wrapper {
 
 /* --- 3. COUPLE DETAILS --- */
 .weddingblocks-couple-columns {
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  flex-wrap: wrap;
   gap: 20px;
+  container-type: inline-size;
+  container-name: wb-couple-info;
 }
 
 .weddingblocks-couple-columns--vertical {
-  flex-direction: column;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
   gap: 30px;
 }
 
-.weddingblocks-couple-columns--vertical .weddingblocks-couple-column {
-  flex: none;
-  min-width: auto;
-}
-
 .weddingblocks-couple-column {
-  flex: 1;
-  min-width: 250px;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -314,8 +310,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
 }
 
 .weddingblocks-separator-column {
-  min-width: 50px;
-  flex: 0;
+  justify-self: center;
 }
 
 .weddingblocks-ampersand {
@@ -887,10 +882,21 @@ body.admin-bar .weddingblocks-cover-wrapper {
 }
 
 /* Responsive */
-@media (max-width: 700px) {
+@container wb-couple-info (max-width: 640px) {
   .weddingblocks-couple-columns {
-    flex-direction: column;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
     gap: 30px;
+  }
+}
+
+@supports not (container-type: inline-size) {
+  @media (max-width: 700px) {
+    .weddingblocks-couple-columns {
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: center;
+      gap: 30px;
+    }
   }
 }
 
@@ -940,6 +946,8 @@ body.admin-bar .weddingblocks-cover-wrapper {
 /* Event Info Block Layout Variations */
 .weddingblocks-event-info {
   position: relative;
+  container-type: inline-size;
+  container-name: wb-event-info;
   --wb-event-primary-color: #b5a46d;
   --wb-event-accent-color: #b5a46d;
 }
@@ -971,6 +979,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
   border-radius: 18px;
   box-shadow: 0 8px 20px rgba(84, 69, 34, 0.06);
   overflow: hidden;
+  min-width: 0;
   transition:
     transform 0.25s ease,
     box-shadow 0.25s ease,
@@ -1091,6 +1100,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 30px minmax(0, 1fr);
   align-items: start;
+  min-width: 0;
 }
 
 .weddingblocks-event-info .weddingblocks-timeline-item--start .weddingblocks-timeline-content {
@@ -1166,7 +1176,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
   border-color: #1fbe5b;
 }
 
-@media (max-width: 992px) {
+@container wb-event-info (max-width: 560px) {
   .weddingblocks-event-info .weddingblocks-event-columns--horizontal {
     grid-template-columns: 1fr;
   }
@@ -1197,8 +1207,47 @@ body.admin-bar .weddingblocks-cover-wrapper {
 
   .weddingblocks-event-info .weddingblocks-timeline-item--start .weddingblocks-event-card,
   .weddingblocks-event-info .weddingblocks-timeline-item--end .weddingblocks-event-card {
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+}
+
+/* Fallback untuk browser tanpa dukungan container query (Chrome <105, Safari <16, Firefox <110) */
+@supports not (container-type: inline-size) {
+  @media (max-width: 992px) {
+    .weddingblocks-event-info .weddingblocks-event-columns--horizontal {
+      grid-template-columns: 1fr;
+    }
+
+    .weddingblocks-event-info .weddingblocks-event-columns--timeline {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .weddingblocks-event-info .weddingblocks-timeline::before {
+      left: 11px;
+      transform: none;
+    }
+
+    .weddingblocks-event-info .weddingblocks-timeline-item {
+      grid-template-columns: 24px minmax(0, 1fr);
+    }
+
+    .weddingblocks-event-info .weddingblocks-timeline-marker {
+      grid-column: 1;
+      margin-top: 20px;
+    }
+
+    .weddingblocks-event-info .weddingblocks-timeline-item--start .weddingblocks-timeline-content,
+    .weddingblocks-event-info .weddingblocks-timeline-item--end .weddingblocks-timeline-content {
+      grid-column: 2;
+    }
+
+    .weddingblocks-event-info .weddingblocks-timeline-item--start .weddingblocks-event-card,
+    .weddingblocks-event-info .weddingblocks-timeline-item--end .weddingblocks-event-card {
+      margin-left: 5px;
+      margin-right: 5px;
+    }
   }
 }
 
