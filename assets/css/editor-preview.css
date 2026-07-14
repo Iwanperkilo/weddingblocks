@@ -230,6 +230,13 @@
     margin-top: 2px;
 }
 
+/* Event Info: keep action buttons in sync with the chosen primary/accent colors */
+.editor-styles-wrapper .weddingblocks-event-info-editor .weddingblocks-btn-gold {
+    background-color: var(--wb-event-primary-color);
+    border-color: var(--wb-event-primary-color);
+    color: var(--wb-event-button-text-color, #ffffff) !important;
+}
+
 .editor-styles-wrapper .weddingblocks-event-info-editor--vertical .weddingblocks-event-columns--vertical {
     grid-template-columns: minmax(0, 1fr);
 }
@@ -298,6 +305,11 @@
 
 .editor-styles-wrapper .weddingblocks-event-info-editor--timeline .weddingblocks-timeline-item--end .weddingblocks-event-card {
     margin-left: 20px;
+}
+
+.weddingblocks-event-map-link {
+    font-size: 11px;
+    padding: 8px 16px;
 }
 
 @container wb-event-info (max-width: 560px) {

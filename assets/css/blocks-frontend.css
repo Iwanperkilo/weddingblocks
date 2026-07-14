@@ -666,6 +666,11 @@ body.admin-bar .weddingblocks-cover-wrapper {
   transform: translateY(0);
 }
 
+/* Event Info: auto WCAG-contrast text color for action buttons */
+.weddingblocks-event-info .weddingblocks-btn-gold {
+  color: var(--wb-event-button-text-color, #ffffff) !important;
+}
+
 /* ================================
    Atomic Blocks - Couple
    ================================ */
@@ -950,13 +955,14 @@ body.admin-bar .weddingblocks-cover-wrapper {
   container-name: wb-event-info;
   --wb-event-primary-color: #b5a46d;
   --wb-event-accent-color: #b5a46d;
+  --wb-event-ink: #2f2b24;
+  --wb-event-muted: #655f55;
+  --wb-event-button-text-color: #ffffff;
 }
 
 .weddingblocks-event-info__inner {
   --wb-event-gold: #b5a46d;
   --wb-event-gold-soft: rgba(181, 164, 109, 0.12);
-  --wb-event-ink: #2f2b24;
-  --wb-event-muted: #655f55;
 }
 
 .weddingblocks-event-columns {
@@ -1137,7 +1143,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
   margin-left: 20px;
 }
 
-.weddingblocks-event-info .weddingblocks-wa-action {
+.weddingblocks-wa-action {
   margin: 28px auto 0;
   text-align: center;
 }
@@ -1168,7 +1174,6 @@ body.admin-bar .weddingblocks-cover-wrapper {
   background-color: #25d366;
   border-color: #25d366;
   color: #ffffff !important;
-  box-shadow: 0 10px 22px rgba(37, 211, 102, 0.18);
 }
 
 .weddingblocks-wa-button:hover {

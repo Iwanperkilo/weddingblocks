@@ -64,6 +64,43 @@
         "accentColor": {
             "type": "string",
             "default": "#b5a46d"
+        },
+        "textColor": {
+            "type": "string",
+            "default": ""
+        },
+        "akadEventLabel": {
+            "type": "string",
+            "default": "Akad Nikah"
+        },
+        "resepsiEventLabel": {
+            "type": "string",
+            "default": "Resepsi"
+        },
+        "showMapsButton": {
+            "type": "boolean",
+            "default": true
+        },
+        "showWhatsappButton": {
+            "type": "boolean",
+            "default": true
+        },
+        "whatsappButtonLabel": {
+            "type": "string",
+            "default": "Hubungi Admin (WhatsApp)"
+        }
+    },
+    "supports": {
+        "html": false,
+        "anchor": true,
+        "align": [
+            "wide",
+            "full"
+        ],
+        "spacing": {
+            "margin": true,
+            "padding": true,
+            "blockGap": false
         }
     },
     "editorScript": "file:./index.js",
