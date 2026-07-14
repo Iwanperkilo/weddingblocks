@@ -3,13 +3,25 @@
   var InspectorControls = blockEditor.InspectorControls;
   var PanelBody = components.PanelBody;
   var TextControl = components.TextControl;
+  var ToggleControl = components.ToggleControl;
+  var ToggleGroupControl = components.__experimentalToggleGroupControl;
+  var ToggleGroupControlOption =
+    components.__experimentalToggleGroupControlOption;
   var PanelColorSettings = blockEditor.PanelColorSettings;
   var useBlockProps = blockEditor.useBlockProps;
   var __ = i18n.__;
 
+  var FONT_SIZE_MAP = {
+    small: "15px",
+    medium: "18px",
+    large: "24px",
+  };
+
   blocks.registerBlockType("weddingblocks/guest-name", {
     edit: function (props) {
       var attributes = props.attributes;
+      var nameFontSize =
+        FONT_SIZE_MAP[attributes.fontSize] || FONT_SIZE_MAP.medium;
 
       return [
         el(
@@ -28,6 +40,16 @@
                 props.setAttributes({ prefix: value });
               },
             }),
+            el(ToggleControl, {
+              label: __(
+                "Tampilkan Teks Pembuka (Prefix)",
+                "weddingblocks",
+              ),
+              checked: attributes.showPrefix,
+              onChange: function (value) {
+                props.setAttributes({ showPrefix: value });
+              },
+            }),
             el(TextControl, {
               label: __("Teks Cadangan (Fallback)", "weddingblocks"),
               value: attributes.fallback,
@@ -39,6 +61,54 @@
                 "weddingblocks",
               ),
             }),
+            el(
+              ToggleGroupControl,
+              {
+                label: __("Perataan Teks", "weddingblocks"),
+                value: attributes.textAlign,
+                isBlock: true,
+                onChange: function (value) {
+                  props.setAttributes({ textAlign: value });
+                },
+                __nextHasNoMarginBottom: true,
+              },
+              el(ToggleGroupControlOption, {
+                value: "left",
+                label: __("Kiri", "weddingblocks"),
+              }),
+              el(ToggleGroupControlOption, {
+                value: "center",
+                label: __("Tengah", "weddingblocks"),
+              }),
+              el(ToggleGroupControlOption, {
+                value: "right",
+                label: __("Kanan", "weddingblocks"),
+              }),
+            ),
+            el(
+              ToggleGroupControl,
+              {
+                label: __("Ukuran Nama Tamu", "weddingblocks"),
+                value: attributes.fontSize,
+                isBlock: true,
+                onChange: function (value) {
+                  props.setAttributes({ fontSize: value });
+                },
+                __nextHasNoMarginBottom: true,
+              },
+              el(ToggleGroupControlOption, {
+                value: "small",
+                label: __("Kecil", "weddingblocks"),
+              }),
+              el(ToggleGroupControlOption, {
+                value: "medium",
+                label: __("Sedang", "weddingblocks"),
+              }),
+              el(ToggleGroupControlOption, {
+                value: "large",
+                label: __("Besar", "weddingblocks"),
+              }),
+            ),
           ),
           el(PanelColorSettings, {
             title: __("Pengaturan Warna", "weddingblocks"),
@@ -59,6 +129,7 @@
                   { name: "Gold", slug: "gold", color: "#b5a46d" },
                 ],
                 label: __("Warna Teks", "weddingblocks"),
+                enableAlpha: true,
                 onChange: function (value) {
                   props.setAttributes({ textColor: value });
                 },
@@ -76,6 +147,7 @@
                   { name: "Gold", slug: "gold", color: "#b5a46d" },
                 ],
                 label: __("Warna Background", "weddingblocks"),
+                enableAlpha: true,
                 onChange: function (value) {
                   props.setAttributes({ backgroundColor: value });
                 },
@@ -88,7 +160,10 @@
           useBlockProps({
             key: "editor-preview",
             className: "weddingblocks-guest-name-block",
-            style: { backgroundColor: attributes.backgroundColor },
+            style: {
+              backgroundColor: attributes.backgroundColor,
+              textAlign: attributes.textAlign,
+            },
           }),
           el(
             "span",
@@ -96,19 +171,24 @@
             el("span", { className: "wb-editor-badge-icon" }, "👤"),
             __("Nama Tamu", "weddingblocks"),
           ),
-          el(
-            "p",
-            {
-              className: "guest-prefix-text",
-              style: { color: attributes.textColor },
-            },
-            attributes.prefix,
-          ),
+          attributes.showPrefix
+            ? el(
+              "p",
+              {
+                className: "guest-prefix-text",
+                style: { color: attributes.textColor },
+              },
+              attributes.prefix,
+            )
+            : null,
           el(
             "h4",
             {
               className: "guest-name-text",
-              style: { color: attributes.textColor },
+              style: {
+                color: attributes.textColor,
+                fontSize: nameFontSize,
+              },
             },
             attributes.fallback,
           ),

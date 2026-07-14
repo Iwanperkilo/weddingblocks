@@ -23,6 +23,18 @@
         "backgroundColor": {
             "type": "string",
             "default": "transparent"
+        },
+        "showPrefix": {
+            "type": "boolean",
+            "default": true
+        },
+        "textAlign": {
+            "type": "string",
+            "default": "center"
+        },
+        "fontSize": {
+            "type": "string",
+            "default": "medium"
         }
     },
     "editorScript": "file:./index.js",

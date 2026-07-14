@@ -542,7 +542,7 @@
 /* === Guest Name preview: refined === */
 .editor-styles-wrapper .weddingblocks-guest-name-block {
     position: relative;
-    padding: 24px 16px 16px;
+    padding: 16px;
     text-align: center;
     background: #fbfaf7;
     border: 1px solid rgba(181, 164, 109, 0.2);
