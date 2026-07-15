@@ -35,10 +35,8 @@ body.weddingblocks-locked {
   padding: 60px 30px;
   margin-bottom: 40px;
   border-radius: 20px;
-  background: rgba(255, 255, 255);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: #ffffff;
+  border: 1px solid rgba(181, 164, 109, 0.12);
   box-shadow: 0 10px 40px rgba(181, 164, 109, 0.04);
   text-align: center;
   transition:
@@ -89,9 +87,11 @@ body.weddingblocks-locked {
   align-items: center;
   justify-content: center;
   text-align: center;
+  visibility: visible;
   transition:
     transform 1.2s cubic-bezier(0.77, 0, 0.175, 1),
-    opacity 1.2s ease-in-out;
+    opacity 1.2s ease-in-out,
+    visibility 1.2s step-end;
 }
 
 /* Fallback image when none selected */
@@ -147,6 +147,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
   transform: translateY(-110vh);
   opacity: 0;
   pointer-events: none;
+  visibility: hidden;
 }
 
 .weddingblocks-cover-overlay {
@@ -251,7 +252,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
   background: #ffffff;
 }
 
-.weddingblocks-music-btn.playing {
+.weddingblocks-music-btn.playing svg {
   animation: spinMusic 4s linear infinite;
 }
 
@@ -337,10 +338,8 @@ body.admin-bar .weddingblocks-cover-wrapper {
 }
 
 .countdown-item {
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(181, 164, 109, 0.15);
   border-radius: 15px;
   padding: 15px 5px;
   width: clamp(55px, 15vw, 55px);
