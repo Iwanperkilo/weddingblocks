@@ -11,6 +11,22 @@
         "musicUrl": {
             "type": "string",
             "default": ""
+        },
+        "loopMusic": {
+            "type": "boolean",
+            "default": true
+        },
+        "buttonPosition": {
+            "type": "string",
+            "default": "right"
+        },
+        "buttonColor": {
+            "type": "string",
+            "default": "#b5a46d"
+        },
+        "buttonBgColor": {
+            "type": "string",
+            "default": "rgba(255, 255, 255, 0.85)"
         }
     },
     "editorScript": "file:./index.js",

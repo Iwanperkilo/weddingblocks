@@ -20,6 +20,7 @@ define( 'WEDDINGBLOCKS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WEDDINGBLOCKS_URL', plugin_dir_url( __FILE__ ) );
 
 // Load Sub-modules.
+require_once WEDDINGBLOCKS_PATH . 'includes/helpers.php';
 require_once WEDDINGBLOCKS_PATH . 'includes/db.php';
 require_once WEDDINGBLOCKS_PATH . 'includes/cpt.php';
 require_once WEDDINGBLOCKS_PATH . 'includes/rsvp-handler.php';
