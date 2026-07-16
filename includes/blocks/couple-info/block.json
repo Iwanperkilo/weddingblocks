@@ -9,34 +9,22 @@
   "textdomain": "weddingblocks",
   "attributes": {
     "groomName": {
-      "type": "string",
-      "source": "meta",
-      "meta": "weddingblocks_groom_name"
+      "type": "string"
     },
     "groomParents": {
-      "type": "string",
-      "source": "meta",
-      "meta": "weddingblocks_groom_parents"
+      "type": "string"
     },
     "groomPhoto": {
-      "type": "string",
-      "source": "meta",
-      "meta": "weddingblocks_groom_photo"
+      "type": "string"
     },
     "brideName": {
-      "type": "string",
-      "source": "meta",
-      "meta": "weddingblocks_bride_name"
+      "type": "string"
     },
     "brideParents": {
-      "type": "string",
-      "source": "meta",
-      "meta": "weddingblocks_bride_parents"
+      "type": "string"
     },
     "bridePhoto": {
-      "type": "string",
-      "source": "meta",
-      "meta": "weddingblocks_bride_photo"
+      "type": "string"
     },
     "swapCouple": {
       "type": "boolean",

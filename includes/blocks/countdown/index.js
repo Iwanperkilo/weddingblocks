@@ -24,7 +24,11 @@
       var setAttributes = props.setAttributes;
 
       var meta = wp.data.useSelect(function (select) {
-        return select("core/editor").getEditedPostAttribute("meta") || {};
+        var editor = select("core/editor");
+        if (!editor || typeof editor.getEditedPostAttribute !== "function") {
+          return {};
+        }
+        return editor.getEditedPostAttribute("meta") || {};
       });
 
       var weddingDate = meta.weddingblocks_wedding_date || "2026-12-31T09:00";

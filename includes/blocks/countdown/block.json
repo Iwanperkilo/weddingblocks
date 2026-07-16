@@ -9,9 +9,7 @@
   "textdomain": "weddingblocks",
   "attributes": {
     "targetDate": {
-      "type": "string",
-      "source": "meta",
-      "meta": "weddingblocks_wedding_date"
+      "type": "string"
     },
     "textColor": {
       "type": "string",

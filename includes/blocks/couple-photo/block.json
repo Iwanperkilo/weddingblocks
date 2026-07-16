@@ -9,24 +9,16 @@
   "textdomain": "weddingblocks",
   "attributes": {
     "groomPhoto": {
-      "type": "string",
-      "source": "meta",
-      "meta": "weddingblocks_groom_photo"
+      "type": "string"
     },
     "bridePhoto": {
-      "type": "string",
-      "source": "meta",
-      "meta": "weddingblocks_bride_photo"
+      "type": "string"
     },
     "groomName": {
-      "type": "string",
-      "source": "meta",
-      "meta": "weddingblocks_groom_name"
+      "type": "string"
     },
     "brideName": {
-      "type": "string",
-      "source": "meta",
-      "meta": "weddingblocks_bride_name"
+      "type": "string"
     },
     "role": {
       "type": "string",

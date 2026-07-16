@@ -54,6 +54,24 @@ dan plugin ini menganut [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.1.0] - 2026-07-16
+
+### Added (Ditambahkan)
+- Blok Event Info yang lengkap dengan berbagai variasi layout dan kustomisasi gaya editor.
+- Opsi kustomisasi tambahan pada blok Music Player.
+- Kolom jumlah tamu (*guest count*) pada form RSVP.
+- Pengaturan alignment (perataan), ukuran font, dan toggle prefiks pada blok Guest Name.
+- Berkas helper `includes/helpers.php` untuk memisahkan fungsi-fungsi umum.
+
+### Changed (Diubah)
+- Dukungan Editor Template & FSE: Blok sekarang dapat ditambahkan langsung ke dalam template editor WordPress, tidak terbatas hanya pada postingan Custom Post Type "Undangan".
+- Migrasi tata letak blok couple dan event info ke CSS Grid dan container queries untuk responsivitas yang lebih baik.
+- Penyederhanaan CSS frontend dan peningkatan transisi animasi.
+- Fitur auto-contrast pada warna teks blok Cover dan opsi boxed cover kustom.
+- Penguncian body pada cover kini menyimpan dan memulihkan posisi scroll (`window.scrollY`) dengan benar.
+
+---
+
 ## [Unreleased]
 
 ### Planned
@@ -67,5 +85,6 @@ dan plugin ini menganut [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+[1.1.0]: #110---2026-07-16
 [1.0.0]: #100---2025-01-xx
 [Unreleased]: #unreleased

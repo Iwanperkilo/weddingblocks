@@ -10,24 +10,16 @@
   "textdomain": "weddingblocks",
   "attributes": {
     "groomName": {
-      "type": "string",
-      "source": "meta",
-      "meta": "weddingblocks_groom_name"
+      "type": "string"
     },
     "groomNickname": {
-      "type": "string",
-      "source": "meta",
-      "meta": "weddingblocks_groom_nickname"
+      "type": "string"
     },
     "brideName": {
-      "type": "string",
-      "source": "meta",
-      "meta": "weddingblocks_bride_name"
+      "type": "string"
     },
     "brideNickname": {
-      "type": "string",
-      "source": "meta",
-      "meta": "weddingblocks_bride_nickname"
+      "type": "string"
     },
     "role": {
       "type": "string",

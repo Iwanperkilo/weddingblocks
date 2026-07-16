@@ -5,7 +5,7 @@
 [![License: GPL v2 or later](https://img.shields.io/badge/License-GPLv2+-blue.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 [![WordPress](https://img.shields.io/badge/WordPress-6.7%2B-21759b.svg)](https://wordpress.org/)
 [![PHP](https://img.shields.io/badge/PHP-7.4%2B-777bb4.svg)](https://www.php.net/)
-[![Version](https://img.shields.io/badge/version-1.0.0-success.svg)](#changelog)
+[![Version](https://img.shields.io/badge/version-1.1.0-success.svg)](#changelog)
 
 ## ✨ Fitur Utama
 

@@ -18,10 +18,15 @@
         }
 
         var meta = data.useSelect(function (select) {
-            return select('core/editor').getEditedPostAttribute('meta') || {};
+            var editor = select('core/editor');
+            if (!editor || typeof editor.getEditedPostAttribute !== 'function') {
+                return {};
+            }
+            return editor.getEditedPostAttribute('meta') || {};
         });
 
-        var editPostAction = data.useDispatch('core/editor').editPost;
+        var editorDispatch = data.useDispatch('core/editor');
+        var editPostAction = editorDispatch && editorDispatch.editPost ? editorDispatch.editPost : function () {};
 
         function updateMeta(key, value) {
             var newMeta = {};
@@ -30,7 +35,11 @@
         }
 
         var postType = data.useSelect(function (select) {
-            return select('core/editor').getCurrentPostType();
+            var editor = select('core/editor');
+            if (!editor || typeof editor.getCurrentPostType !== 'function') {
+                return null;
+            }
+            return editor.getCurrentPostType();
         });
 
         if (postType !== 'wdbl_undangan') {

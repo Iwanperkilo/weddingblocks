@@ -9,49 +9,31 @@
     "textdomain": "weddingblocks",
     "attributes": {
         "weddingDate": {
-            "type": "string",
-            "source": "meta",
-            "meta": "weddingblocks_wedding_date"
+            "type": "string"
         },
         "akadTimeLabel": {
-            "type": "string",
-            "source": "meta",
-            "meta": "weddingblocks_akad_time_label"
+            "type": "string"
         },
         "akadLocationName": {
-            "type": "string",
-            "source": "meta",
-            "meta": "weddingblocks_akad_location_name"
+            "type": "string"
         },
         "akadLocationAddress": {
-            "type": "string",
-            "source": "meta",
-            "meta": "weddingblocks_akad_location_address"
+            "type": "string"
         },
         "resepsiTimeLabel": {
-            "type": "string",
-            "source": "meta",
-            "meta": "weddingblocks_resepsi_time_label"
+            "type": "string"
         },
         "resepsiLocationName": {
-            "type": "string",
-            "source": "meta",
-            "meta": "weddingblocks_resepsi_location_name"
+            "type": "string"
         },
         "resepsiLocationAddress": {
-            "type": "string",
-            "source": "meta",
-            "meta": "weddingblocks_resepsi_location_address"
+            "type": "string"
         },
         "mapsCoords": {
-            "type": "string",
-            "source": "meta",
-            "meta": "weddingblocks_maps_coords"
+            "type": "string"
         },
         "whatsappNumber": {
-            "type": "string",
-            "source": "meta",
-            "meta": "weddingblocks_whatsapp_number"
+            "type": "string"
         },
         "layoutVariation": {
             "type": "string",

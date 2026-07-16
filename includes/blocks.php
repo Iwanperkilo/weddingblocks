@@ -133,10 +133,7 @@ function weddingblocks_register_blocks() {
         $block_path = WEDDINGBLOCKS_PATH . 'includes/blocks/' . $block;
         if ( file_exists( $block_path . '/block.json' ) ) {
             register_block_type( $block_path, [
-                'editor_script' => 'weddingblocks-editor-script',
-                'editor_style'  => 'weddingblocks-editor-style',
-                'style'         => 'weddingblocks-frontend-style',
-                'script'        => 'weddingblocks-frontend-script',
+                'editor_style' => 'weddingblocks-editor-style',
             ] );
         }
     }

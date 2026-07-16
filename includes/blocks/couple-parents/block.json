@@ -9,14 +9,10 @@
   "textdomain": "weddingblocks",
   "attributes": {
     "groomParents": {
-      "type": "string",
-      "source": "meta",
-      "meta": "weddingblocks_groom_parents"
+      "type": "string"
     },
     "brideParents": {
-      "type": "string",
-      "source": "meta",
-      "meta": "weddingblocks_bride_parents"
+      "type": "string"
     },
     "role": {
       "type": "string",

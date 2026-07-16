@@ -13,7 +13,11 @@
     edit: function (props) {
       var attributes = props.attributes;
       var meta = wp.data.useSelect(function (select) {
-        return select("core/editor").getEditedPostAttribute("meta") || {};
+        var editor = select("core/editor");
+        if (!editor || typeof editor.getEditedPostAttribute !== "function") {
+          return {};
+        }
+        return editor.getEditedPostAttribute("meta") || {};
       });
       var role = attributes.role || "groom";
       var shape = attributes.shape || "circle";

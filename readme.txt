@@ -4,7 +4,7 @@ Tags: wedding, invitation, gutenberg, fse, blocks
 Requires at least: 6.7
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Plugin URI: https://wordpress.org/plugins/weddingblocks/
@@ -91,6 +91,17 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 
 == Changelog ==
 
+= 1.1.0 =
+* FSE & Template Editor - Blocks can now be used in the WordPress template editor (previously only restricted to "undangan" CPT).
+* Comprehensive Settings - Added advanced control panel options for each block.
+* CSS & Transition improvements - Simplified block frontend styles and enhanced transitions.
+* Music Player - Added customization options to the Music Player block.
+* Guest Name - Added prefix toggle, text alignment, and font size options.
+* Event Info - Implemented the Event Info block with layout variations and custom editor styles.
+* Layout enhancements - Migrated couple and event info layouts to CSS Grid and container queries.
+* Cover block improvements - Auto-contrast text color, boxed cover width variant, and admin bar overlap prevention.
+* RSVP & Guestbook - Added guest count field, optimized frontend code, and restored scroll position when cover opens.
+
 = 1.0.0 =
 * 🎉 Initial release of WeddingBlocks
 * 11+ custom Gutenberg blocks (cover, countdown, couple info, event info, music player, RSVP, guestbook, etc.)
@@ -101,6 +112,9 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 * Zero external dependencies
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+This version adds template editor support, advanced block controls, grid layouts, and custom cover options. Upgrading is highly recommended.
 
 = 1.0.0 =
 Initial release of WeddingBlocks. No upgrades required.
