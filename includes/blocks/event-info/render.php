@@ -4,6 +4,10 @@
  * Server-side rendering for the Event Info block.
  *
  * @package WeddingBlocks
+ *
+ * @var array    $attributes Block attributes.
+ * @var string   $content    Block content.
+ * @var WP_Block $block      Block instance.
  */
 
 // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals
@@ -122,7 +126,7 @@ $wrapper_attributes = function_exists('get_block_wrapper_attributes')
                 'class' => 'weddingblocks-event-info weddingblocks-event-info--' . $layout_variation,
                 'style' => $inline_style_vars,
             ),
-            weddingblocks_get_animation_attrs( $attributes )
+            weddingblocks_get_animation_attrs($attributes)
         )
     )
     : 'class="weddingblocks-event-info weddingblocks-event-info--' . esc_attr($layout_variation) . '" style="' . esc_attr($inline_style_vars) . '"';

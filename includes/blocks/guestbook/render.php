@@ -3,6 +3,10 @@
  * Server-side rendering for the Guestbook block.
  *
  * @package WeddingBlocks
+ *
+ * @var array    $attributes Block attributes.
+ * @var string   $content    Block content.
+ * @var WP_Block $block      Block instance.
  */
 
 // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals

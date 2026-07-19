@@ -4,6 +4,10 @@
  * Server-side rendering for the Couple Info block.
  *
  * @package WeddingBlocks
+ *
+ * @var array    $attributes Block attributes.
+ * @var string   $content    Block content.
+ * @var WP_Block $block      Block instance.
  */
 
 // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals
@@ -151,8 +155,8 @@ $layout_class = $layout === 'vertical' ? 'weddingblocks-couple-columns--vertical
 $wrapper_attributes = function_exists('get_block_wrapper_attributes')
 	? get_block_wrapper_attributes(
 		array_merge(
-			array( 'class' => 'weddingblocks-couple-columns ' . $layout_class ),
-			weddingblocks_get_animation_attrs( $attributes )
+			array('class' => 'weddingblocks-couple-columns ' . $layout_class),
+			weddingblocks_get_animation_attrs($attributes)
 		)
 	)
 	: 'class="weddingblocks-couple-columns ' . esc_attr($layout_class) . '"';

@@ -4,6 +4,10 @@
  * Server-side rendering for the RSVP Form block.
  *
  * @package WeddingBlocks
+ *
+ * @var array    $attributes Block attributes.
+ * @var string   $content    Block content.
+ * @var WP_Block $block      Block instance.
  */
 
 // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals
@@ -52,7 +56,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
             'class' => 'weddingblocks-rsvp-form-container',
             'style' => $rsvp_color_vars,
         ),
-        weddingblocks_get_animation_attrs( $attributes )
+        weddingblocks_get_animation_attrs($attributes)
     )
 );
 
