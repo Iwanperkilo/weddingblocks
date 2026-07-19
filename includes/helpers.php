@@ -9,6 +9,36 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+if ( ! function_exists( 'weddingblocks_get_animation_attrs' ) ) {
+    /**
+     * Build data-* attributes for scroll-triggered animations.
+     *
+     * Returns an empty array when animation is disabled or not set,
+     * so callers can safely pass the result to get_block_wrapper_attributes()
+     * via array_merge without any side-effects.
+     *
+     * @param array $attributes Block attributes.
+     * @return array Associative array of HTML attributes, or empty array.
+     */
+    function weddingblocks_get_animation_attrs( $attributes ) {
+        $style = isset( $attributes['animationStyle'] ) ? $attributes['animationStyle'] : 'none';
+        if ( 'none' === $style || empty( $style ) ) {
+            return array();
+        }
+
+        $allowed = array( 'fadeUp', 'fadeIn', 'slideLeft', 'slideRight', 'zoomIn' );
+        if ( ! in_array( $style, $allowed, true ) ) {
+            return array();
+        }
+
+        return array(
+            'data-wb-anim'     => $style,
+            'data-wb-duration' => isset( $attributes['animationDuration'] ) ? absint( $attributes['animationDuration'] ) : 600,
+            'data-wb-delay'    => isset( $attributes['animationDelay'] ) ? absint( $attributes['animationDelay'] ) : 0,
+        );
+    }
+}
+
 if ( ! function_exists( 'weddingblocks_sanitize_color' ) ) {
     /**
      * Sanitize a color value, allowing hex (#fff / #ffffff / #ffffffff with alpha),

@@ -100,6 +100,10 @@
         titleStyle.fontSize = attributes.style.typography.fontSize;
       }
 
+      var animPanel = typeof window.weddingblocksAnimationPanel === "function"
+        ? window.weddingblocksAnimationPanel(attributes, setAttributes)
+        : null;
+
       return [
         el(
           BlockControls,
@@ -209,6 +213,7 @@
             }),
           ),
         ),
+        animPanel,
         el(
           "div",
           useBlockProps({ key: "preview" }),

@@ -150,8 +150,9 @@ $layout_class = $layout === 'vertical' ? 'weddingblocks-couple-columns--vertical
 
 $wrapper_attributes = function_exists('get_block_wrapper_attributes')
 	? get_block_wrapper_attributes(
-		array(
-			'class' => 'weddingblocks-couple-columns ' . $layout_class,
+		array_merge(
+			array( 'class' => 'weddingblocks-couple-columns ' . $layout_class ),
+			weddingblocks_get_animation_attrs( $attributes )
 		)
 	)
 	: 'class="weddingblocks-couple-columns ' . esc_attr($layout_class) . '"';

@@ -2,6 +2,86 @@
  * Frontend Interactive Scripts for WeddingBlocks.
  */
 document.addEventListener('DOMContentLoaded', function () {
+    var entranceAnimationsStarted = false;
+
+    function parseCountdownTarget(targetStr) {
+        if (!targetStr) {
+            return null;
+        }
+
+        var normalized = String(targetStr).trim();
+        if (!normalized) {
+            return null;
+        }
+
+        // Support both "YYYY-MM-DDTHH:MM" and "YYYY-MM-DD HH:MM".
+        if (normalized.indexOf('T') === -1 && /^\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}$/.test(normalized)) {
+            normalized = normalized.replace(/\s+/, 'T');
+        }
+
+        // If the author only entered a date, default to 09:00 WIB rather than
+        // feeding an incomplete value to Date() and producing NaN/NA in the UI.
+        if (/^\d{4}-\d{2}-\d{2}$/.test(normalized)) {
+            normalized += 'T09:00';
+        }
+
+        var parsed = new Date(normalized);
+        if (isNaN(parsed.getTime())) {
+            return null;
+        }
+
+        return parsed.getTime();
+    }
+
+    function initCoverAnimations() {
+        var coverNodes = document.querySelectorAll('#weddingblocks-cover[data-wb-anim], #weddingblocks-cover [data-wb-anim]');
+        coverNodes.forEach(function (el) {
+            var duration = el.getAttribute('data-wb-duration') || 600;
+            var delay = el.getAttribute('data-wb-delay') || 0;
+            el.style.setProperty('--wb-anim-duration', duration + 'ms');
+            el.style.setProperty('--wb-anim-delay', delay + 'ms');
+            el.classList.add('wb-anim--' + el.getAttribute('data-wb-anim'), 'wb-animated');
+        });
+    }
+
+    function initEntranceAnimations() {
+        if (entranceAnimationsStarted) {
+            return;
+        }
+        entranceAnimationsStarted = true;
+
+        var nodes = document.querySelectorAll('[data-wb-anim]');
+        if (!nodes.length) {
+            return;
+        }
+
+        if ('IntersectionObserver' in window) {
+            var animObserver = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (!entry.isIntersecting) return;
+                    var el = entry.target;
+                    var duration = el.getAttribute('data-wb-duration') || 600;
+                    var delay = el.getAttribute('data-wb-delay') || 0;
+                    el.style.setProperty('--wb-anim-duration', duration + 'ms');
+                    el.style.setProperty('--wb-anim-delay', delay + 'ms');
+                    el.classList.add('wb-anim--' + el.getAttribute('data-wb-anim'), 'wb-animated');
+                    animObserver.unobserve(el);
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+            nodes.forEach(function (el) {
+                if (el.classList.contains('wb-animated')) {
+                    return;
+                }
+                animObserver.observe(el);
+            });
+        } else {
+            // Fallback: tampilkan semua elemen tanpa animasi.
+            nodes.forEach(function (el) {
+                el.style.opacity = '1';
+            });
+        }
+    }
 
     // Lock scroll initially if cover is present.
     var cover = document.getElementById('weddingblocks-cover');
@@ -29,6 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.body.classList.remove('weddingblocks-locked');
             document.body.style.top = '';
             window.scrollTo(0, lockedScrollY);
+            window.dispatchEvent(new Event('weddingblocks:cover-opened'));
 
             // Play music.
             if (audio) {
@@ -80,15 +161,20 @@ document.addEventListener('DOMContentLoaded', function () {
     var countdowns = document.querySelectorAll('.weddingblocks-countdown');
     countdowns.forEach(function (countdown) {
         var targetStr = countdown.getAttribute('data-target');
-        if (!targetStr) return;
-
-        // Parse target date. Format expected: "YYYY-MM-DDTHH:MM" or standard ISO.
-        var targetDate = new Date(targetStr).getTime();
+        var targetDate = parseCountdownTarget(targetStr);
 
         var daysVal = countdown.querySelector('.days');
         var hoursVal = countdown.querySelector('.hours');
         var minutesVal = countdown.querySelector('.minutes');
         var secondsVal = countdown.querySelector('.seconds');
+
+        if (targetDate === null) {
+            if (daysVal) daysVal.innerText = '00';
+            if (hoursVal) hoursVal.innerText = '00';
+            if (minutesVal) minutesVal.innerText = '00';
+            if (secondsVal) secondsVal.innerText = '00';
+            return;
+        }
 
         function updateCountdown() {
             var now = new Date().getTime();
@@ -107,10 +193,25 @@ document.addEventListener('DOMContentLoaded', function () {
             var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            if (daysVal) daysVal.innerText = String(days).padStart(2, '0');
-            if (hoursVal) hoursVal.innerText = String(hours).padStart(2, '0');
-            if (minutesVal) minutesVal.innerText = String(minutes).padStart(2, '0');
-            if (secondsVal) secondsVal.innerText = String(seconds).padStart(2, '0');
+            function setVal(el, val) {
+                if (!el) return;
+            var formatted = String(val).padStart(2, '0');
+            if (formatted === 'NaN' || !isFinite(val)) {
+                formatted = '00';
+            }
+            if (el.innerText !== formatted) {
+                el.classList.remove('wb-tick');
+                // Force reflow agar animasi bisa diulang
+                void el.offsetWidth;
+                el.classList.add('wb-tick');
+                }
+                el.innerText = formatted;
+            }
+
+            setVal(daysVal, days);
+            setVal(hoursVal, hours);
+            setVal(minutesVal, minutes);
+            setVal(secondsVal, seconds);
         }
 
         updateCountdown();
@@ -276,4 +377,13 @@ document.addEventListener('DOMContentLoaded', function () {
         div.appendChild(document.createTextNode(str));
         return div.innerHTML;
     }
+
+    // --- 6. SCROLL-TRIGGERED ENTRANCE ANIMATIONS ---
+    if (!cover) {
+        initEntranceAnimations();
+    } else {
+        initCoverAnimations();
+    }
+
+    window.addEventListener('weddingblocks:cover-opened', initEntranceAnimations);
 });

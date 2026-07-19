@@ -54,6 +54,21 @@ dan plugin ini menganut [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.2.0] - 2026-07-17
+
+### Added (Ditambahkan)
+- **Animation System**: Sistem animasi terpusat berbasis CSS + IntersectionObserver tanpa dependency eksternal.
+  - 5 jenis entrance animation: `fadeUp`, `fadeIn`, `slideLeft`, `slideRight`, `zoomIn`
+  - Setiap block mendukung attribute `animationStyle`, `animationDuration`, `animationDelay`
+  - Helper terpusat `weddingblocks_get_animation_attrs()` di `includes/helpers.php`
+- **Continuous animations**: Cover button breathe, cover content entrance, countdown tick per detik.
+- **Interaction animations**: Avatar hover zoom, foto mempelai hover zoom, button ripple effect.
+- **State animations**: RSVP alert entrance, guestbook new item entrance.
+- **Accessibility**: Semua animasi dimatikan otomatis via `prefers-reduced-motion: reduce`.
+- **Fallback**: Browser tanpa IntersectionObserver tetap menampilkan konten normal.
+
+---
+
 ## [1.1.0] - 2026-07-16
 
 ### Added (Ditambahkan)

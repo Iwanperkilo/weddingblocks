@@ -509,6 +509,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
 .guestbook-list {
   max-height: 500px;
   overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -1275,5 +1276,250 @@ body.admin-bar .weddingblocks-cover-wrapper {
 
   .weddingblocks-event-info .weddingblocks-event-card h3 {
     font-size: 18px;
+  }
+}
+
+/* ================================
+   WeddingBlocks - Animation System
+   v1.2.0
+   ================================ */
+
+/* --- Base: Entrance Animations (Scroll-triggered) --- */
+[data-wb-anim] {
+  opacity: 0;
+  animation-duration: var(--wb-anim-duration, 600ms);
+  animation-delay: var(--wb-anim-delay, 0ms);
+  animation-fill-mode: both;
+  animation-play-state: paused;
+  will-change: opacity, transform;
+}
+
+[data-wb-anim].wb-animated {
+  animation-play-state: running;
+}
+
+.wb-anim--fadeUp {
+  animation-name: wbFadeUp;
+}
+
+.wb-anim--fadeIn {
+  animation-name: wbFadeIn;
+}
+
+.wb-anim--slideLeft {
+  animation-name: wbSlideLeft;
+}
+
+.wb-anim--slideRight {
+  animation-name: wbSlideRight;
+}
+
+.wb-anim--zoomIn {
+  animation-name: wbZoomIn;
+}
+
+@keyframes wbFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(48px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes wbFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes wbSlideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-48px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes wbSlideRight {
+  from {
+    opacity: 0;
+    transform: translateX(48px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes wbZoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* --- Continuous: Cover button breathe --- */
+#weddingblocks-open-btn {
+  animation: wbBreathe 2.8s ease-in-out infinite;
+}
+
+@keyframes wbBreathe {
+  0%, 100% {
+    box-shadow: 0 4px 15px rgba(181, 164, 109, 0.2);
+  }
+  50% {
+    box-shadow: 0 4px 30px rgba(181, 164, 109, 0.55);
+  }
+}
+
+/* --- Continuous: Cover content entrance --- */
+.weddingblocks-cover-content {
+  animation: wbCoverEntrance 1s ease 0.3s both;
+}
+
+@keyframes wbCoverEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Continuous: Countdown tick --- */
+.countdown-value {
+  display: inline-block;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.countdown-value.wb-tick {
+  animation: wbTick 0.45s ease;
+}
+
+@keyframes wbTick {
+  0%   { transform: translateY(0) scale(1);    opacity: 1; }
+  45%  { transform: translateY(-2px) scale(1.03); opacity: 0.9; }
+  100% { transform: translateY(0) scale(1);    opacity: 1; }
+}
+
+/* --- Interaction: Avatar hover zoom --- */
+.weddingblocks-avatar {
+  overflow: hidden;
+}
+
+.weddingblocks-avatar img {
+  transition: transform 0.4s ease;
+}
+
+.weddingblocks-avatar:hover img {
+  transform: scale(1.07);
+}
+
+/* --- Interaction: Couple photo hover zoom --- */
+.weddingblocks-atomic-couple-photo .atomic-photo img {
+  transition: transform 0.4s ease;
+}
+
+.weddingblocks-atomic-couple-photo .atomic-photo:hover img {
+  transform: scale(1.06);
+}
+
+/* --- Interaction: Button ripple --- */
+.weddingblocks-btn-gold {
+  position: relative;
+  overflow: hidden;
+}
+
+.weddingblocks-btn-gold::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.15);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.weddingblocks-btn-gold:hover::after {
+  opacity: 1;
+}
+
+/* --- State: RSVP alert entrance --- */
+.rsvp-alert.success,
+.rsvp-alert.error {
+  animation: wbAlertIn 0.35s ease;
+}
+
+@keyframes wbAlertIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- State: Guestbook new item --- */
+.guestbook-item.new-item {
+  animation: wbNewItem 0.5s ease;
+}
+
+@keyframes wbNewItem {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* --- Interaction: Guestbook item hover --- */
+.guestbook-item {
+  transition: transform 0.25s ease;
+}
+
+.guestbook-item:hover {
+  transform: translateX(4px);
+}
+
+/* ================================
+   prefers-reduced-motion — WAJIB
+   Semua animasi dimatikan untuk
+   pengguna yang memintanya.
+   ================================ */
+@media (prefers-reduced-motion: reduce) {
+  [data-wb-anim],
+  .weddingblocks-cover-content,
+  #weddingblocks-open-btn,
+  .countdown-value,
+  .rsvp-alert.success,
+  .rsvp-alert.error,
+  .guestbook-item.new-item {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .weddingblocks-avatar img,
+  .weddingblocks-atomic-couple-photo .atomic-photo img,
+  .weddingblocks-btn-gold::after,
+  .guestbook-item {
+    transition: none !important;
   }
 }

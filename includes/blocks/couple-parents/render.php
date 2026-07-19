@@ -55,8 +55,9 @@ $style_attr = sprintf(
 $wrapper_class = 'weddingblocks-atomic-couple-parents role-' . sanitize_html_class( $role ) . ' align-' . sanitize_html_class( $align );
 
 $wrapper_attributes = get_block_wrapper_attributes(
-    array(
-        'class' => $wrapper_class,
+    array_merge(
+        array( 'class' => $wrapper_class ),
+        weddingblocks_get_animation_attrs( $attributes )
     )
 );
 ?>

@@ -67,7 +67,7 @@ function weddingblocks_register_blocks() {
     wp_register_script(
         'weddingblocks-editor-script',
         WEDDINGBLOCKS_URL . 'assets/js/blocks-editor.js',
-        array( 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-i18n', 'wp-edit-post', 'wp-plugins' ),
+        array( 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-i18n', 'wp-edit-post', 'wp-plugins', 'wp-hooks', 'wp-compose' ),
         WEDDINGBLOCKS_VERSION,
         true
     );
@@ -148,3 +148,63 @@ function weddingblocks_enqueue_editor_preview_assets() {
     wp_enqueue_script( 'weddingblocks-editor-script' );
 }
 add_action( 'enqueue_block_editor_assets', 'weddingblocks_enqueue_editor_preview_assets' );
+
+/**
+ * Add noscript styles to ensure animated blocks are visible if Javascript is disabled.
+ */
+function weddingblocks_noscript_styles() {
+    echo '<noscript><style>[data-wb-anim] { opacity: 1 !important; transform: none !important; }</style></noscript>' . "\n";
+}
+add_action( 'wp_head', 'weddingblocks_noscript_styles' );
+
+/**
+ * Add scroll-triggered animation attributes to Core Blocks on rendering.
+ *
+ * @param string $block_content The HTML content of the block.
+ * @param array  $block         The block details.
+ * @return string Modified block HTML content.
+ */
+function weddingblocks_render_core_block_animations( $block_content, $block ) {
+    if ( empty( $block['blockName'] ) ) {
+        return $block_content;
+    }
+
+    $allowed_blocks = array(
+        'core/paragraph',
+        'core/heading',
+        'core/image',
+        'core/group',
+        'core/buttons',
+        'core/button',
+    );
+
+    if ( ! in_array( $block['blockName'], $allowed_blocks, true ) ) {
+        return $block_content;
+    }
+
+    $attrs = $block['attrs'];
+    if ( empty( $attrs['animationStyle'] ) || 'none' === $attrs['animationStyle'] ) {
+        return $block_content;
+    }
+
+    $anim_attrs = weddingblocks_get_animation_attrs( $attrs );
+    if ( empty( $anim_attrs ) ) {
+        return $block_content;
+    }
+
+    // Build the data attributes string
+    $data_str = '';
+    foreach ( $anim_attrs as $key => $val ) {
+        $data_str .= sprintf( ' %s="%s"', esc_attr( $key ), esc_attr( $val ) );
+    }
+
+    // Insert the data attributes into the first tag of $block_content
+    // e.g. <p class="wp-block-paragraph">... -> <p class="wp-block-paragraph" data-wb-anim="..." ...>...
+    $pattern = '/^(\s*<[a-z0-9-]+)/i';
+    if ( preg_match( $pattern, $block_content ) ) {
+        $block_content = preg_replace( $pattern, '$1' . $data_str, $block_content, 1 );
+    }
+
+    return $block_content;
+}
+add_filter( 'render_block', 'weddingblocks_render_core_block_animations', 10, 2 );

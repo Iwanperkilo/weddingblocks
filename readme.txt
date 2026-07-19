@@ -4,7 +4,7 @@ Tags: wedding, invitation, gutenberg, fse, blocks
 Requires at least: 6.7
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.2.0-beta
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Plugin URI: https://wordpress.org/plugins/weddingblocks/
@@ -90,6 +90,15 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 6. Mobile preview
 
 == Changelog ==
+
+= 1.2.0 =
+* Animation System - Sistem animasi terpusat dengan 5 jenis entrance animation (fadeUp, fadeIn, slideLeft, slideRight, zoomIn).
+* Scroll-triggered animations menggunakan IntersectionObserver native, zero external dependency.
+* Setiap block mendukung kontrol animationStyle, animationDuration, dan animationDelay.
+* Continuous animations: cover button breathe, cover content entrance, countdown tick.
+* Interaction animations: avatar hover zoom, button ripple effect.
+* State animations: RSVP alert entrance, guestbook new item entrance.
+* Aksesibilitas: semua animasi dimatikan otomatis via prefers-reduced-motion.
 
 = 1.1.0 =
 * FSE & Template Editor - Blocks can now be used in the WordPress template editor (previously only restricted to "undangan" CPT).

@@ -51,6 +51,18 @@
     "errorMessage": {
       "type": "string",
       "default": "Gagal mengirim konfirmasi. Silakan coba lagi."
+    },
+    "animationStyle": {
+      "type": "string",
+      "default": "fadeUp"
+    },
+    "animationDuration": {
+      "type": "number",
+      "default": 600
+    },
+    "animationDelay": {
+      "type": "number",
+      "default": 0
     }
   },
   "supports": {

@@ -117,9 +117,12 @@ if (! empty($text_color)) {
 
 $wrapper_attributes = function_exists('get_block_wrapper_attributes')
     ? get_block_wrapper_attributes(
-        array(
-            'class' => 'weddingblocks-event-info weddingblocks-event-info--' . $layout_variation,
-            'style' => $inline_style_vars,
+        array_merge(
+            array(
+                'class' => 'weddingblocks-event-info weddingblocks-event-info--' . $layout_variation,
+                'style' => $inline_style_vars,
+            ),
+            weddingblocks_get_animation_attrs( $attributes )
         )
     )
     : 'class="weddingblocks-event-info weddingblocks-event-info--' . esc_attr($layout_variation) . '" style="' . esc_attr($inline_style_vars) . '"';

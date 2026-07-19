@@ -85,10 +85,15 @@ if ( $text_shadow ) {
     $extra_classes .= ' has-text-shadow';
 }
 
-$wrapper_attributes = get_block_wrapper_attributes( array(
-    'class' => $extra_classes,
-    'style' => $inline_style,
-) );
+$wrapper_attributes = get_block_wrapper_attributes(
+    array_merge(
+        array(
+            'class' => $extra_classes,
+            'style' => $inline_style,
+        ),
+        weddingblocks_get_animation_attrs( $block_attributes )
+    )
+);
 ?>
 
 <h1 <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>

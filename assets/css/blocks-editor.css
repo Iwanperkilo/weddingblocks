@@ -49,3 +49,18 @@
 .weddingblocks-cover-wrapper[style*="background-image"] .weddingblocks-cover-title {
     color: #fff !important;
 }
+
+/* Disable entrance animations and ensure block content remains visible in editor */
+.wp-block[data-type^="weddingblocks/"] [data-wb-anim],
+.editor-styles-wrapper [data-wb-anim] {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+}
+
+/* Disable guestbook item hover effect in editor */
+.wp-block[data-type="weddingblocks/guestbook"] .guestbook-item:hover,
+.editor-styles-wrapper .guestbook-item:hover {
+    transform: none !important;
+}

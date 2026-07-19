@@ -25,6 +25,9 @@
             var messageMaxLength = attributes.messageMaxLength;
             var cardBackgroundColor = attributes.cardBackgroundColor;
             var cardBorderColor = attributes.cardBorderColor;
+            var animPanel = typeof window.weddingblocksAnimationPanel === 'function'
+                ? window.weddingblocksAnimationPanel(attributes, setAttributes)
+                : null;
 
             return el(Fragment, {},
                 el(InspectorControls, {},
@@ -88,6 +91,7 @@
                         })
                     )
                 ),
+                animPanel,
                 el('div', useBlockProps({ className: 'weddingblocks-guestbook-editor' }),
                     el('span', { className: 'wb-editor-badge wb-editor-badge--block' },
                         el('span', { className: 'wb-editor-badge-icon' }, '💬'),

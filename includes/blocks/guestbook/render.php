@@ -39,8 +39,9 @@ if ( 'oldest' === $order && ! empty( $rsvps ) ) {
 }
 
 $wrapper_attributes = get_block_wrapper_attributes(
-    array(
-        'class' => 'weddingblocks-guestbook-container',
+    array_merge(
+        array( 'class' => 'weddingblocks-guestbook-container' ),
+        weddingblocks_get_animation_attrs( $attributes )
     )
 );
 
@@ -68,7 +69,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
 
                 $message = $rsvp->message;
                 if ( $message_max_length > 0 && mb_strlen( $message ) > $message_max_length ) {
-                    $message = mb_substr( $message, 0, $message_max_length ) . '…';
+                    $message = mb_substr( $message, 0, $message_max_length ) . '...';
                 }
                 ?>
                 <div class="guestbook-item"<?php echo $card_style ? ' style="' . esc_attr( $card_style ) . '"' : ''; ?>>

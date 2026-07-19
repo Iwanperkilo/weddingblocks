@@ -76,10 +76,13 @@ $label_hours   = ! empty($block_attributes['labelHours']) ? sanitize_text_field(
 $label_minutes = ! empty($block_attributes['labelMinutes']) ? sanitize_text_field($block_attributes['labelMinutes']) : __('Menit', 'weddingblocks');
 $label_seconds = ! empty($block_attributes['labelSeconds']) ? sanitize_text_field($block_attributes['labelSeconds']) : __('Detik', 'weddingblocks');
 $wrapper_attributes = get_block_wrapper_attributes(
-    array(
-        'class'       => 'weddingblocks-countdown',
-        'style'       => $wrapper_style,
-        'data-target' => $target,
+    array_merge(
+        array(
+            'class'       => 'weddingblocks-countdown',
+            'style'       => $wrapper_style,
+            'data-target' => $target,
+        ),
+        weddingblocks_get_animation_attrs( $block_attributes )
     )
 );
 ?>

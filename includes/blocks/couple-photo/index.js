@@ -14,11 +14,10 @@
       var attributes = props.attributes;
       var meta = wp.data.useSelect(function (select) {
         var editor = select("core/editor");
-        if (!editor || typeof editor.getEditedPostAttribute !== "function") {
-          return {};
-        }
+        if (!editor || typeof editor.getEditedPostAttribute !== "function") return {};
         return editor.getEditedPostAttribute("meta") || {};
       });
+
       var role = attributes.role || "groom";
       var shape = attributes.shape || "circle";
       var size = attributes.size || 200;
@@ -41,171 +40,37 @@
       }
       if (!name) name = fallback;
 
-      var placeholderSvg =
-        'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23b5a46d"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
+      var placeholderSvg = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23b5a46d"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
       var displayPhoto = photo || placeholderSvg;
+      var imgStyle = { width: size + "px", height: size + "px" };
+      if (showFrame) { imgStyle.borderColor = frameColor; imgStyle.borderWidth = frameWidth + "px"; }
+      var wrapperClass = "weddingblocks-atomic-couple-photo role-" + role + " shape-" + shape + " align-" + align + (showFrame ? " has-frame" : " no-frame");
 
-      var imgStyle = {
-        width: size + "px",
-        height: size + "px",
-      };
-      if (showFrame) {
-        imgStyle.borderColor = frameColor;
-        imgStyle.borderWidth = frameWidth + "px";
-      }
-      var wrapperClass =
-        "weddingblocks-atomic-couple-photo role-" +
-        role +
-        " shape-" +
-        shape +
-        " align-" +
-        align +
-        (showFrame ? " has-frame" : " no-frame");
+      var animPanel = typeof window.weddingblocksAnimationPanel === "function"
+        ? window.weddingblocksAnimationPanel(attributes, props.setAttributes)
+        : null;
 
       return [
-        el(
-          InspectorControls,
-          { key: "inspector" },
-          el(
-            PanelBody,
-            {
-              title: __("Pengaturan Foto Mempelai", "weddingblocks"),
-              initialOpen: true,
-            },
-            el(SelectControl, {
-              label: __("Mempelai", "weddingblocks"),
-              value: role,
-              options: [
-                { label: __("Mempelai Pria", "weddingblocks"), value: "groom" },
-                {
-                  label: __("Mempelai Wanita", "weddingblocks"),
-                  value: "bride",
-                },
-              ],
-              onChange: function (v) {
-                props.setAttributes({ role: v });
-              },
-            }),
-            el(SelectControl, {
-              label: __("Perataan", "weddingblocks"),
-              value: align,
-              options: [
-                { label: __("Kiri", "weddingblocks"), value: "left" },
-                { label: __("Tengah", "weddingblocks"), value: "center" },
-                { label: __("Kanan", "weddingblocks"), value: "right" },
-              ],
-              onChange: function (v) {
-                props.setAttributes({ align: v });
-              },
-            }),
-            el(SelectControl, {
-              label: __("Style Foto", "weddingblocks"),
-              value: shape,
-              options: [
-                {
-                  label: __("Bulat (Circle)", "weddingblocks"),
-                  value: "circle",
-                },
-                {
-                  label: __("Sudut Membulat (Rounded)", "weddingblocks"),
-                  value: "rounded",
-                },
-                {
-                  label: __("Kotak (Square)", "weddingblocks"),
-                  value: "square",
-                },
-              ],
-              onChange: function (v) {
-                props.setAttributes({ shape: v });
-              },
-            }),
-            el(RangeControl, {
-              label: __("Ukuran Foto (px)", "weddingblocks"),
-              value: size,
-              min: 40,
-              max: 800,
-              onChange: function (v) {
-                props.setAttributes({ size: v });
-              },
-            }),
-            el(
-              Button,
-              {
-                isSecondary: showFrame,
-                isTertiary: !showFrame,
-                onClick: function () {
-                  props.setAttributes({ showFrame: !showFrame });
-                },
-              },
-              showFrame
-                ? __("Tampilkan Bingkai: ON", "weddingblocks")
-                : __("Tampilkan Bingkai: OFF", "weddingblocks"),
-            ),
+        el(InspectorControls, { key: "inspector" },
+          el(PanelBody, { title: __("Pengaturan Foto Mempelai", "weddingblocks"), initialOpen: true },
+            el(SelectControl, { label: __("Mempelai", "weddingblocks"), value: role, options: [{ label: __("Mempelai Pria", "weddingblocks"), value: "groom" }, { label: __("Mempelai Wanita", "weddingblocks"), value: "bride" }], onChange: function (v) { props.setAttributes({ role: v }); } }),
+            el(SelectControl, { label: __("Perataan", "weddingblocks"), value: align, options: [{ label: __("Kiri", "weddingblocks"), value: "left" }, { label: __("Tengah", "weddingblocks"), value: "center" }, { label: __("Kanan", "weddingblocks"), value: "right" }], onChange: function (v) { props.setAttributes({ align: v }); } }),
+            el(SelectControl, { label: __("Style Foto", "weddingblocks"), value: shape, options: [{ label: __("Bulat (Circle)", "weddingblocks"), value: "circle" }, { label: __("Sudut Membulat (Rounded)", "weddingblocks"), value: "rounded" }, { label: __("Kotak (Square)", "weddingblocks"), value: "square" }], onChange: function (v) { props.setAttributes({ shape: v }); } }),
+            el(RangeControl, { label: __("Ukuran Foto (px)", "weddingblocks"), value: size, min: 40, max: 800, onChange: function (v) { props.setAttributes({ size: v }); } }),
+            el(Button, { isSecondary: showFrame, isTertiary: !showFrame, onClick: function () { props.setAttributes({ showFrame: !showFrame }); } }, showFrame ? __("Tampilkan Bingkai: ON", "weddingblocks") : __("Tampilkan Bingkai: OFF", "weddingblocks"))
           ),
-          showFrame &&
-            el(PanelColorSettings, {
-              title: __("Warna Bingkai", "weddingblocks"),
-              initialOpen: true,
-              colorSettings: [
-                {
-                  value: frameColor,
-                  onChange: function (v) {
-                    props.setAttributes({ frameColor: v || "#b5a46d" });
-                  },
-                  label: __("Warna Border Foto", "weddingblocks"),
-                },
-              ],
-            }),
-          showFrame &&
-            el(
-              PanelBody,
-              {
-                initialOpen: true,
-              },
-              el(RangeControl, {
-                label: __("Border (px)", "weddingblocks"),
-                value: frameWidth,
-                min: 1,
-                max: 10,
-                onChange: function (v) {
-                  props.setAttributes({ frameWidth: v });
-                },
-              }),
-            ),
+          showFrame && el(PanelColorSettings, { title: __("Warna Bingkai", "weddingblocks"), initialOpen: true, colorSettings: [{ value: frameColor, onChange: function (v) { props.setAttributes({ frameColor: v || "#b5a46d" }); }, label: __("Warna Border Foto", "weddingblocks") }] }),
+          showFrame && el(PanelBody, { initialOpen: true }, el(RangeControl, { label: __("Border (px)", "weddingblocks"), value: frameWidth, min: 1, max: 10, onChange: function (v) { props.setAttributes({ frameWidth: v }); } }))
         ),
-        el(
-          "div",
-          useBlockProps({ key: "preview", className: wrapperClass }),
-          el('span', { className: 'wb-editor-badge' },
-              el('span', { className: 'wb-editor-badge-icon' }, '🖼️'),
-              __('Foto ' + roleLabel, 'weddingblocks')
-          ),
-          el(
-            "figure",
-            {
-              className:
-                "atomic-photo shape-" +
-                shape +
-                (showFrame ? " has-frame" : " no-frame"),
-              style: imgStyle,
-            },
-            el("img", {
-              src: displayPhoto,
-              alt: name,
-              className: photo ? "" : "atomic-photo-placeholder",
-            }),
-          ),
+        animPanel,
+        el("div", useBlockProps({ key: "preview", className: wrapperClass }),
+          el("span", { className: "wb-editor-badge" }, el("span", { className: "wb-editor-badge-icon" }, "\uD83D\uDDBC\uFE0F"), __("Foto " + roleLabel, "weddingblocks")),
+          el("figure", { className: "atomic-photo shape-" + shape + (showFrame ? " has-frame" : " no-frame"), style: imgStyle },
+            el("img", { src: displayPhoto, alt: name, className: photo ? "" : "atomic-photo-placeholder" })
+          )
         ),
       ];
     },
-    save: function () {
-      return null;
-    },
+    save: function () { return null; },
   });
-})(
-  window.wp.blocks,
-  window.wp.element,
-  window.wp.blockEditor,
-  window.wp.components,
-  window.wp.i18n,
-);
+})(window.wp.blocks, window.wp.element, window.wp.blockEditor, window.wp.components, window.wp.i18n);

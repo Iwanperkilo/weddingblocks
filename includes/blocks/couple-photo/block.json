@@ -47,6 +47,18 @@
     "align": {
       "type": "string",
       "default": "center"
+    },
+    "animationStyle": {
+      "type": "string",
+      "default": "zoomIn"
+    },
+    "animationDuration": {
+      "type": "number",
+      "default": 600
+    },
+    "animationDelay": {
+      "type": "number",
+      "default": 0
     }
   },
   "supports": {
@@ -58,5 +70,6 @@
   },
   "editorScript": "file:./index.js",
   "render": "file:./render.php",
-  "style": ["weddingblocks-frontend-style", "weddingblocks-atomic-style"]
+  "style": ["weddingblocks-frontend-style", "weddingblocks-atomic-style"],
+  "script": "weddingblocks-frontend-script"
 }

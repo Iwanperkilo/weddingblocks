@@ -48,6 +48,18 @@
     "textTransform": {
       "type": "string",
       "default": "none"
+    },
+    "animationStyle": {
+      "type": "string",
+      "default": "fadeIn"
+    },
+    "animationDuration": {
+      "type": "number",
+      "default": 600
+    },
+    "animationDelay": {
+      "type": "number",
+      "default": 0
     }
   },
   "supports": {
@@ -60,5 +72,6 @@
   "editorScript": "file:./index.js",
   "render": "file:./render.php",
   "style": "file:../../../assets/css/blocks-frontend.css",
+  "script": "weddingblocks-frontend-script",
   "editorStyle": "file:./index.css"
 }

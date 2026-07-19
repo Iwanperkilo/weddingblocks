@@ -40,6 +40,10 @@
       var errorMessage =
         attributes.errorMessage ||
         __("Gagal mengirim konfirmasi. Silakan coba lagi.", "weddingblocks");
+      var animPanel =
+        typeof window.weddingblocksAnimationPanel === "function"
+          ? window.weddingblocksAnimationPanel(attributes, setAttributes)
+          : null;
 
       var blockProps = useBlockProps({
         className: "weddingblocks-rsvp-form-editor",
@@ -160,6 +164,7 @@
             }),
           ),
         ),
+        animPanel,
         el(
           "div",
           blockProps,

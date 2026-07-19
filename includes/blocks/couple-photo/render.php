@@ -48,8 +48,9 @@ $wrapper_class = 'weddingblocks-atomic-couple-photo role-' . sanitize_html_class
 $figure_class  = 'atomic-photo' . $shape_class;
 
 $wrapper_attributes = get_block_wrapper_attributes(
-    array(
-        'class' => $wrapper_class,
+    array_merge(
+        array( 'class' => $wrapper_class ),
+        weddingblocks_get_animation_attrs( $attributes )
     )
 );
 

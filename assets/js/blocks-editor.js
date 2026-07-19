@@ -2,6 +2,77 @@
  * Gutenberg Document Setting Panel for WeddingBlocks.
  * Written in ES5 to eliminate compilation/build steps.
  */
+
+/**
+ * Shared Animation Panel Helper.
+ * Dipanggil dari index.js setiap block via window.weddingblocksAnimationPanel().
+ * Mengembalikan elemen InspectorControls PanelBody siap pakai.
+ */
+(function (element, blockEditor, components, i18n) {
+    var el = element.createElement;
+    var PanelBody = components.PanelBody;
+    var SelectControl = components.SelectControl;
+    var RangeControl = components.RangeControl;
+    var InspectorControls = blockEditor.InspectorControls;
+    var __ = i18n.__;
+
+    window.weddingblocksAnimationPanel = function (attributes, setAttributes) {
+        var animationStyle    = attributes.animationStyle    !== undefined ? attributes.animationStyle    : 'fadeUp';
+        var animationDuration = attributes.animationDuration !== undefined ? attributes.animationDuration : 600;
+        var animationDelay    = attributes.animationDelay    !== undefined ? attributes.animationDelay    : 0;
+
+        return el(
+            InspectorControls,
+            { key: 'wb-anim-panel', group: 'styles' },
+            el(
+                PanelBody,
+                {
+                    title: __('Animasi', 'weddingblocks'),
+                    initialOpen: false,
+                    className: 'wb-animation-panel'
+                },
+                el(SelectControl, {
+                    label: __('Jenis Animasi', 'weddingblocks'),
+                    value: animationStyle,
+                    options: [
+                        { label: __('Tanpa Animasi', 'weddingblocks'),      value: 'none'       },
+                        { label: __('Fade Up (Naik)',  'weddingblocks'),     value: 'fadeUp'     },
+                        { label: __('Fade In (Muncul)', 'weddingblocks'),    value: 'fadeIn'     },
+                        { label: __('Slide dari Kiri', 'weddingblocks'),     value: 'slideLeft'  },
+                        { label: __('Slide dari Kanan', 'weddingblocks'),    value: 'slideRight' },
+                        { label: __('Zoom In (Membesar)', 'weddingblocks'),  value: 'zoomIn'     }
+                    ],
+                    onChange: function (value) {
+                        setAttributes({ animationStyle: value });
+                    }
+                }),
+                animationStyle !== 'none' && el(RangeControl, {
+                    label: __('Durasi (ms)', 'weddingblocks'),
+                    value: animationDuration,
+                    min: 200,
+                    max: 1500,
+                    step: 100,
+                    onChange: function (value) {
+                        setAttributes({ animationDuration: value !== undefined ? value : 600 });
+                    }
+                }),
+                animationStyle !== 'none' && el(RangeControl, {
+                    label: __('Tunda / Delay (ms)', 'weddingblocks'),
+                    value: animationDelay,
+                    min: 0,
+                    max: 1000,
+                    step: 100,
+                    help: __('Berguna untuk efek stagger antar block.', 'weddingblocks'),
+                    onChange: function (value) {
+                        setAttributes({ animationDelay: value !== undefined ? value : 0 });
+                    }
+                })
+            )
+        );
+    };
+
+})(window.wp.element, window.wp.blockEditor, window.wp.components, window.wp.i18n);
+
 (function (element, blockEditor, components, i18n, editPost, plugins, data) {
     var el = element.createElement;
     var PanelBody = components.PanelBody;
@@ -203,3 +274,64 @@
     });
 
 })(window.wp.element, window.wp.blockEditor, window.wp.components, window.wp.i18n, window.wp.editPost, window.wp.plugins, window.wp.data);
+
+/**
+ * Register filters to extend Core Blocks (Heading, Paragraph, Group, Image, Button, Buttons)
+ * with the animation settings panel.
+ */
+(function (hooks, compose, element) {
+    if (!hooks || !compose || !element) {
+        return;
+    }
+
+    var el = element.createElement;
+    var allowedBlocks = [
+        'core/paragraph',
+        'core/heading',
+        'core/image',
+        'core/group',
+        'core/buttons',
+        'core/button'
+    ];
+
+    // 1. Add attributes to core blocks
+    function addAnimAttributes(settings, name) {
+        if (allowedBlocks.indexOf(name) !== -1) {
+            settings.attributes = Object.assign({}, settings.attributes, {
+                animationStyle: {
+                    type: 'string',
+                    default: 'none'
+                },
+                animationDuration: {
+                    type: 'number',
+                    default: 600
+                },
+                animationDelay: {
+                    type: 'number',
+                    default: 0
+                }
+            });
+        }
+        return settings;
+    }
+    hooks.addFilter('blocks.registerBlockType', 'weddingblocks/add-core-anim-attrs', addAnimAttributes);
+
+    // 2. Inject Animation Setting Panel in Gutenberg Sidebar
+    var withInspectorControls = compose.createHigherOrderComponent(function (BlockEdit) {
+        return function (props) {
+            if (allowedBlocks.indexOf(props.name) !== -1 && props.attributes) {
+                var animPanel = typeof window.weddingblocksAnimationPanel === 'function'
+                    ? window.weddingblocksAnimationPanel(props.attributes, props.setAttributes)
+                    : null;
+
+                return el(element.Fragment, {},
+                    el(BlockEdit, props),
+                    animPanel
+                );
+            }
+            return el(BlockEdit, props);
+        };
+    }, 'withInspectorControls');
+    hooks.addFilter('editor.BlockEdit', 'weddingblocks/add-core-anim-inspector', withInspectorControls);
+
+})(window.wp.hooks, window.wp.compose, window.wp.element);

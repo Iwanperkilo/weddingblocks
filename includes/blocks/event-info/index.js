@@ -78,6 +78,10 @@
       var primaryColor = attributes.primaryColor || "#b5a46d";
       var accentColor = attributes.accentColor || "#b5a46d";
       var textColor = attributes.textColor || "";
+      var animPanel =
+        typeof window.weddingblocksAnimationPanel === "function"
+          ? window.weddingblocksAnimationPanel(attributes, setAttributes)
+          : null;
 
       var akadEventLabel =
         attributes.akadEventLabel || __("Akad Nikah", "weddingblocks");
@@ -296,6 +300,7 @@
             ],
           }),
         ),
+        animPanel,
         el(
           "span",
           { className: "wb-editor-badge wb-editor-badge--block" },

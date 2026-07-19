@@ -108,6 +108,10 @@
           ? "weddingblocks-couple-columns--vertical"
           : "";
 
+      var animPanel = typeof window.weddingblocksAnimationPanel === "function"
+        ? window.weddingblocksAnimationPanel(attributes, setAttributes)
+        : null;
+
       return el(
         "div",
         useBlockProps({
@@ -262,6 +266,7 @@
             }),
           ),
         ),
+        animPanel,
         el(
           "div",
           { className: "weddingblocks-couple-column" },

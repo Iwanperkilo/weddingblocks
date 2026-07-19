@@ -10,6 +10,7 @@
     "editorScript": "file:./index.js",
     "render": "file:./render.php",
     "style": "weddingblocks-frontend-style",
+    "script": "weddingblocks-frontend-script",
     "attributes": {
         "entriesToShow": {
             "type": "number",
@@ -42,6 +43,18 @@
         "cardBorderColor": {
             "type": "string",
             "default": ""
+        },
+        "animationStyle": {
+            "type": "string",
+            "default": "fadeUp"
+        },
+        "animationDuration": {
+            "type": "number",
+            "default": 600
+        },
+        "animationDelay": {
+            "type": "number",
+            "default": 0
         }
     },
     "supports": {

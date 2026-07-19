@@ -46,10 +46,15 @@ $error_message       = ! empty($attributes['errorMessage']) ? $attributes['error
 
 // This now respects block supports (spacing/align/anchor from block.json)
 // instead of bypassing the block supports engine with a raw <div>.
-$wrapper_attributes = get_block_wrapper_attributes(array(
-    'class' => 'weddingblocks-rsvp-form-container',
-    'style' => $rsvp_color_vars,
-));
+$wrapper_attributes = get_block_wrapper_attributes(
+    array_merge(
+        array(
+            'class' => 'weddingblocks-rsvp-form-container',
+            'style' => $rsvp_color_vars,
+        ),
+        weddingblocks_get_animation_attrs( $attributes )
+    )
+);
 
 ?>
 <div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped by get_block_wrapper_attributes(). 

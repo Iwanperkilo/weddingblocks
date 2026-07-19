@@ -73,9 +73,22 @@
     "layout": {
       "type": "string",
       "default": "horizontal"
+    },
+    "animationStyle": {
+      "type": "string",
+      "default": "fadeUp"
+    },
+    "animationDuration": {
+      "type": "number",
+      "default": 600
+    },
+    "animationDelay": {
+      "type": "number",
+      "default": 0
     }
   },
   "editorScript": "file:./index.js",
   "render": "file:./render.php",
-  "style": "weddingblocks-frontend-style"
+  "style": "weddingblocks-frontend-style",
+  "script": "weddingblocks-frontend-script"
 }

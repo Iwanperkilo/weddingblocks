@@ -53,8 +53,13 @@ if (empty($text_color)) {
 if (empty($background_color)) {
     $background_color = 'transparent';
 }
+$anim_attrs = weddingblocks_get_animation_attrs( $attributes );
+$anim_data  = '';
+foreach ( $anim_attrs as $attr_key => $attr_val ) {
+    $anim_data .= ' ' . esc_attr( $attr_key ) . '="' . esc_attr( $attr_val ) . '"';
+}
 ?>
-<div class="weddingblocks-guest-name-block" style="background-color: <?php echo esc_attr($background_color); ?>; text-align: <?php echo esc_attr($text_align); ?>;">
+<div class="weddingblocks-guest-name-block" style="background-color: <?php echo esc_attr($background_color); ?>; text-align: <?php echo esc_attr($text_align); ?>;"<?php echo $anim_data; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
     <?php if ($show_prefix) : ?>
         <p class="guest-prefix-text" style="color: <?php echo esc_attr($text_color); ?>;"><?php echo esc_html($prefix); ?></p>
     <?php endif; ?>
