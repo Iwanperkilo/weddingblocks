@@ -611,9 +611,9 @@ body.admin-bar .weddingblocks-cover-wrapper {
 .guestbook-empty {
   text-align: center;
   padding: 40px;
-  color: #888;
+  color: #ffffff;
   font-style: italic;
-  background: rgba(255, 255, 255, 0.4);
+  background: rgb(109 109 109 / 30%);
   border-radius: 12px;
   border: 1px dashed rgba(181, 164, 109, 0.2);
 }
@@ -1323,6 +1323,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
     opacity: 0;
     transform: translateY(48px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -1330,8 +1331,13 @@ body.admin-bar .weddingblocks-cover-wrapper {
 }
 
 @keyframes wbFadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes wbSlideLeft {
@@ -1339,6 +1345,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
     opacity: 0;
     transform: translateX(-48px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -1350,6 +1357,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
     opacity: 0;
     transform: translateX(48px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -1361,6 +1369,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
     opacity: 0;
     transform: scale(0.85);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -1373,9 +1382,12 @@ body.admin-bar .weddingblocks-cover-wrapper {
 }
 
 @keyframes wbBreathe {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 4px 15px rgba(181, 164, 109, 0.2);
   }
+
   50% {
     box-shadow: 0 4px 30px rgba(181, 164, 109, 0.55);
   }
@@ -1391,6 +1403,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
     opacity: 0;
     transform: translateY(18px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -1408,9 +1421,20 @@ body.admin-bar .weddingblocks-cover-wrapper {
 }
 
 @keyframes wbTick {
-  0%   { transform: translateY(0) scale(1);    opacity: 1; }
-  45%  { transform: translateY(-2px) scale(1.03); opacity: 0.9; }
-  100% { transform: translateY(0) scale(1);    opacity: 1; }
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+
+  45% {
+    transform: translateY(-2px) scale(1.03);
+    opacity: 0.9;
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
 }
 
 /* --- Interaction: Avatar hover zoom --- */
@@ -1466,6 +1490,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
     opacity: 0;
     transform: translateY(-8px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -1482,6 +1507,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
     opacity: 0;
     transform: translateY(-10px) scale(0.97);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -1503,6 +1529,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
    pengguna yang memintanya.
    ================================ */
 @media (prefers-reduced-motion: reduce) {
+
   [data-wb-anim],
   .weddingblocks-cover-content,
   #weddingblocks-open-btn,
