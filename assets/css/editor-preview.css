@@ -6,12 +6,21 @@
 
 /* === Editor-only wrapper adjustments === */
 .editor-styles-wrapper .weddingblocks-atomic-couple-name,
-.editor-styles-wrapper .weddingblocks-atomic-couple-parents,
 .editor-styles-wrapper .weddingblocks-atomic-couple-photo {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0;
+}
+
+.editor-styles-wrapper .weddingblocks-atomic-couple-parents {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.3em;
     margin: 0;
 }
 

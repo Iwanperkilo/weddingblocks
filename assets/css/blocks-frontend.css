@@ -743,8 +743,9 @@ body.admin-bar .weddingblocks-cover-wrapper {
 .weddingblocks-atomic-couple-parents {
   display: flex;
   flex-wrap: wrap;
+  align-items: baseline;
   justify-content: center;
-  gap: 3px;
+  gap: 0.3em;
   width: 100%;
   margin: 0;
   text-align: center;
@@ -774,20 +775,10 @@ body.admin-bar .weddingblocks-cover-wrapper {
   display: block;
 }
 
-.weddingblocks-atomic-couple-parents .atomic-parents {
-  display: block;
-  width: 100%;
-}
-
 .weddingblocks-atomic-couple-parents .atomic-parents-label,
 .weddingblocks-atomic-couple-parents .atomic-parents-names {
-  display: block;
   line-height: 1.4;
   font-weight: 500;
-}
-
-.weddingblocks-atomic-couple-parents .atomic-parents-label {
-  margin-bottom: 0;
 }
 
 /* Couple Photo (Foto Mempelai) */
