@@ -99,7 +99,7 @@ function weddingblocks_register_blocks() {
         'weddingblocks-frontend-style',
         WEDDINGBLOCKS_URL . 'assets/css/blocks-frontend.css',
         array(),
-        WEDDINGBLOCKS_VERSION
+        file_exists( WEDDINGBLOCKS_PATH . 'assets/css/blocks-frontend.css' ) ? filemtime( WEDDINGBLOCKS_PATH . 'assets/css/blocks-frontend.css' ) : WEDDINGBLOCKS_VERSION
     );
     wp_register_style(
         'weddingblocks-atomic-style',

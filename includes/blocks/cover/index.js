@@ -12,6 +12,23 @@
   var useBlockProps = blockEditor.useBlockProps;
   var __ = i18n.__;
 
+  // Helper to determine contrast color based on luminance
+  function getContrastColor(hexColor) {
+    if (!hexColor) return "#ffffff";
+    var hex = hexColor.replace("#", "");
+    if (hex.length === 3) {
+      hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+    }
+    if (hex.length !== 6) {
+      return "#ffffff";
+    }
+    var r = parseInt(hex.substring(0, 2), 16);
+    var g = parseInt(hex.substring(2, 4), 16);
+    var b = parseInt(hex.substring(4, 6), 16);
+    var luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    return luminance > 0.6 ? "#1c1d1d" : "#ffffff";
+  }
+
   blocks.registerBlockType("weddingblocks/cover", {
     edit: function (props) {
       var attributes = props.attributes;
@@ -275,7 +292,7 @@
                     display: "inline-block",
                     padding: "12px 28px",
                     backgroundColor: attributes.accentColor || "#b5a46d",
-                    color: "#ffffff",
+                    color: getContrastColor(attributes.accentColor || "#b5a46d"),
                     borderRadius: buttonBorderRadius + "px",
                     fontSize: "14px",
                     fontWeight: "600",

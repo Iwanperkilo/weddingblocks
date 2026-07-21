@@ -72,3 +72,29 @@ if ( ! function_exists( 'weddingblocks_sanitize_color' ) ) {
         return '';
     }
 }
+
+if ( ! function_exists( 'weddingblocks_get_contrast_color' ) ) {
+    /**
+     * Auto-contrast text color for buttons, so light accent colors
+     * don't render invisible white-on-white text.
+     *
+     * @param string $hex_color
+     * @return string
+     */
+    function weddingblocks_get_contrast_color( $hex_color ) {
+        $hex_color = ltrim( (string) $hex_color, '#' );
+        if ( strlen( $hex_color ) === 3 ) {
+            $hex_color = $hex_color[0] . $hex_color[0] . $hex_color[1] . $hex_color[1] . $hex_color[2] . $hex_color[2];
+        }
+        if ( strlen( $hex_color ) !== 6 ) {
+            return '#ffffff';
+        }
+        $r = hexdec( substr( $hex_color, 0, 2 ) );
+        $g = hexdec( substr( $hex_color, 2, 2 ) );
+        $b = hexdec( substr( $hex_color, 4, 2 ) );
+        // Relative luminance (per WCAG).
+        $luminance = ( 0.299 * $r + 0.587 * $g + 0.114 * $b ) / 255;
+        return $luminance > 0.6 ? '#1c1d1d' : '#ffffff';
+    }
+}
+

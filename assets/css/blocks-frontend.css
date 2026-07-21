@@ -647,7 +647,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
   display: inline-block;
   padding: 12px 28px;
   background-color: var(--wb-rsvp-button-color, #b5a46d);
-  color: #ffffff !important;
+  color: #ffffff;
   border: none;
   border-radius: 30px;
   font-family: "Montserrat", sans-serif;
