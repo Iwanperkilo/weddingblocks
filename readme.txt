@@ -95,6 +95,7 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 * Animation System - Sistem animasi terpusat dengan 5 jenis entrance animation (fadeUp, fadeIn, slideLeft, slideRight, zoomIn).
 * Scroll-triggered animations menggunakan IntersectionObserver native, zero external dependency.
 * Setiap block mendukung kontrol animationStyle, animationDuration, dan animationDelay.
+• Mendukung block bawaan WordPress seperti Heading, Paragraph, Image, dan Group.
 * Continuous animations: cover button breathe, cover content entrance, countdown tick.
 * Interaction animations: avatar hover zoom, button ripple effect.
 * State animations: RSVP alert entrance, guestbook new item entrance.
