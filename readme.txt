@@ -92,14 +92,14 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 == Changelog ==
 
 = 1.2.0 =
-* Animation System - Sistem animasi terpusat dengan 5 jenis entrance animation (fadeUp, fadeIn, slideLeft, slideRight, zoomIn).
-* Scroll-triggered animations menggunakan IntersectionObserver native, zero external dependency.
-* Setiap block mendukung kontrol animationStyle, animationDuration, dan animationDelay.
-• Mendukung block bawaan WordPress seperti Heading, Paragraph, Image, dan Group.
-* Continuous animations: cover button breathe, cover content entrance, countdown tick.
-* Interaction animations: avatar hover zoom, button ripple effect.
-* State animations: RSVP alert entrance, guestbook new item entrance.
-* Aksesibilitas: semua animasi dimatikan otomatis via prefers-reduced-motion.
+* Animation System - Added a centralized animation system with 5 entrance animation styles (fadeUp, fadeIn, slideLeft, slideRight, zoomIn).
+* Scroll-triggered animations powered by native IntersectionObserver with zero external dependencies.
+* Added animationStyle, animationDuration, and animationDelay controls to all custom blocks.
+* Extended animation support to core WordPress blocks (Heading, Paragraph, Image, and Group).
+* Added continuous animations for cover button breathe effect, cover content entrance, and countdown ticking.
+* Added interactive visual feedback including avatar hover zoom and button ripple effects.
+* Added state animations for RSVP alerts and guestbook item entrances.
+* Accessibility - Automatically disables all animations when prefers-reduced-motion is enabled.
 
 = 1.1.0 =
 * FSE & Template Editor - Blocks can now be used in the WordPress template editor (previously only restricted to "undangan" CPT).
