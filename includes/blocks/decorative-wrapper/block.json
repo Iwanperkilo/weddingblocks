@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "weddingblocks/decorative-wrapper",
+  "title": "WB Wrapper Dekorasi",
+  "category": "weddingblocks",
+  "description": "Bungkus area konten dengan lapisan dekorasi (kupu-kupu, burung, salju) yang melayang tanpa mengganggu layout.",
+  "icon": "art",
+  "supports": {
+    "align": [
+      "wide",
+      "full"
+    ],
+    "spacing": {
+      "padding": true,
+      "margin": true
+    },
+    "anchor": true
+  },
+  "attributes": {
+    "decorationType": {
+      "type": "string",
+      "default": "dots"
+    },
+    "density": {
+      "type": "string",
+      "default": "medium"
+    },
+    "layer": {
+      "type": "string",
+      "default": "behind"
+    },
+    "enableOnMobile": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "providesContext": {
+    "weddingblocks/decorationType": "decorationType",
+    "weddingblocks/density": "density",
+    "weddingblocks/layer": "layer",
+    "weddingblocks/enableOnMobile": "enableOnMobile"
+  },
+  "textdomain": "weddingblocks",
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php",
+  "style": "file:./style.css"
+}

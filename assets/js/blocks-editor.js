@@ -17,9 +17,9 @@
     var __ = i18n.__;
 
     window.weddingblocksAnimationPanel = function (attributes, setAttributes) {
-        var animationStyle    = attributes.animationStyle    !== undefined ? attributes.animationStyle    : 'fadeUp';
+        var animationStyle = attributes.animationStyle !== undefined ? attributes.animationStyle : 'fadeUp';
         var animationDuration = attributes.animationDuration !== undefined ? attributes.animationDuration : 600;
-        var animationDelay    = attributes.animationDelay    !== undefined ? attributes.animationDelay    : 0;
+        var animationDelay = attributes.animationDelay !== undefined ? attributes.animationDelay : 0;
 
         return el(
             InspectorControls,
@@ -35,12 +35,12 @@
                     label: __('Jenis Animasi', 'weddingblocks'),
                     value: animationStyle,
                     options: [
-                        { label: __('Tanpa Animasi', 'weddingblocks'),      value: 'none'       },
-                        { label: __('Fade Up (Naik)',  'weddingblocks'),     value: 'fadeUp'     },
-                        { label: __('Fade In (Muncul)', 'weddingblocks'),    value: 'fadeIn'     },
-                        { label: __('Slide dari Kiri', 'weddingblocks'),     value: 'slideLeft'  },
-                        { label: __('Slide dari Kanan', 'weddingblocks'),    value: 'slideRight' },
-                        { label: __('Zoom In (Membesar)', 'weddingblocks'),  value: 'zoomIn'     }
+                        { label: __('Tanpa Animasi', 'weddingblocks'), value: 'none' },
+                        { label: __('Fade Up (Naik)', 'weddingblocks'), value: 'fadeUp' },
+                        { label: __('Fade In (Muncul)', 'weddingblocks'), value: 'fadeIn' },
+                        { label: __('Slide dari Kiri', 'weddingblocks'), value: 'slideLeft' },
+                        { label: __('Slide dari Kanan', 'weddingblocks'), value: 'slideRight' },
+                        { label: __('Zoom In (Membesar)', 'weddingblocks'), value: 'zoomIn' }
                     ],
                     onChange: function (value) {
                         setAttributes({ animationStyle: value });
@@ -73,6 +73,105 @@
 
 })(window.wp.element, window.wp.blockEditor, window.wp.components, window.wp.i18n);
 
+/**
+ * Shared Attention (continuous/looping) Animation Panel Helper.
+ * Terpisah dari panel "Animasi" di atas: efek di sini berjalan terus-menerus
+ * selama block terlihat di layar, bukan sekali jalan saat discroll.
+ * Dipanggil dari index.js setiap block via window.weddingblocksAttentionPanel().
+ */
+(function (element, blockEditor, components, i18n) {
+    var el = element.createElement;
+    var PanelBody = components.PanelBody;
+    var SelectControl = components.SelectControl;
+    var InspectorControls = blockEditor.InspectorControls;
+    var __ = i18n.__;
+
+    window.weddingblocksAttentionPanel = function (attributes, setAttributes) {
+        var attentionEffect = attributes.attentionEffect !== undefined ? attributes.attentionEffect : 'none';
+        var attentionSpeed = attributes.attentionSpeed !== undefined ? attributes.attentionSpeed : 'normal';
+        var attentionIntensity = attributes.attentionIntensity !== undefined ? attributes.attentionIntensity : 'normal';
+        var attentionOrigin = attributes.attentionOrigin !== undefined ? attributes.attentionOrigin : 'center';
+
+        // Titik poros hanya relevan untuk efek berbasis rotate/scale.
+        // float & shake pakai translate, jadi transform-origin tidak berpengaruh.
+        var originAware = ['sway', 'wobble', 'pulse'].indexOf(attentionEffect) !== -1;
+
+        return el(
+            InspectorControls,
+            { key: 'wb-attn-panel', group: 'styles' },
+            el(
+                PanelBody,
+                {
+                    title: __('Animasi Berkelanjutan', 'weddingblocks'),
+                    initialOpen: false,
+                    className: 'wb-attention-panel'
+                },
+                el(SelectControl, {
+                    label: __('Efek', 'weddingblocks'),
+                    value: attentionEffect,
+                    options: [
+                        { label: __('Tanpa Efek', 'weddingblocks'), value: 'none' },
+                        { label: __('Sway (Bergoyang)', 'weddingblocks'), value: 'sway' },
+                        { label: __('Float (Melayang)', 'weddingblocks'), value: 'float' },
+                        { label: __('Pulse (Berdenyut)', 'weddingblocks'), value: 'pulse' },
+                        { label: __('Wobble (Goyang Playful)', 'weddingblocks'), value: 'wobble' },
+                        { label: __('Shake (Bergetar)', 'weddingblocks'), value: 'shake' }
+                    ],
+                    help: __('Berjalan terus-menerus selama block terlihat di layar, terpisah dari Animasi (scroll) di atas. Bisa dipakai bersamaan.', 'weddingblocks'),
+                    onChange: function (value) {
+                        setAttributes({ attentionEffect: value });
+                    }
+                }),
+                attentionEffect !== 'none' && el(SelectControl, {
+                    label: __('Kecepatan', 'weddingblocks'),
+                    value: attentionSpeed,
+                    options: [
+                        { label: __('Pelan', 'weddingblocks'), value: 'slow' },
+                        { label: __('Normal', 'weddingblocks'), value: 'normal' },
+                        { label: __('Cepat', 'weddingblocks'), value: 'fast' }
+                    ],
+                    onChange: function (value) {
+                        setAttributes({ attentionSpeed: value !== undefined ? value : 'normal' });
+                    }
+                }),
+                attentionEffect !== 'none' && el(SelectControl, {
+                    label: __('Intensitas', 'weddingblocks'),
+                    value: attentionIntensity,
+                    options: [
+                        { label: __('Halus', 'weddingblocks'), value: 'subtle' },
+                        { label: __('Normal', 'weddingblocks'), value: 'normal' },
+                        { label: __('Kuat', 'weddingblocks'), value: 'strong' }
+                    ],
+                    help: __('Seberapa jauh gerakan efeknya.', 'weddingblocks'),
+                    onChange: function (value) {
+                        setAttributes({ attentionIntensity: value !== undefined ? value : 'normal' });
+                    }
+                }),
+                originAware && el(SelectControl, {
+                    label: __('Titik Goyang', 'weddingblocks'),
+                    value: attentionOrigin,
+                    options: [
+                        { label: __('Tengah (default)', 'weddingblocks'), value: 'center' },
+                        { label: __('Atas', 'weddingblocks'), value: 'top' },
+                        { label: __('Bawah', 'weddingblocks'), value: 'bottom' },
+                        { label: __('Kiri', 'weddingblocks'), value: 'left' },
+                        { label: __('Kanan', 'weddingblocks'), value: 'right' },
+                        { label: __('Atas Kiri', 'weddingblocks'), value: 'top-left' },
+                        { label: __('Atas Kanan', 'weddingblocks'), value: 'top-right' },
+                        { label: __('Bawah Kiri', 'weddingblocks'), value: 'bottom-left' },
+                        { label: __('Bawah Kanan', 'weddingblocks'), value: 'bottom-right' }
+                    ],
+                    help: __('Titik poros gerakan. Misalnya "Bawah" membuat elemen bergoyang seperti berporos di kakinya, bukan di tengah.', 'weddingblocks'),
+                    onChange: function (value) {
+                        setAttributes({ attentionOrigin: value !== undefined ? value : 'center' });
+                    }
+                })
+            )
+        );
+    };
+
+})(window.wp.element, window.wp.blockEditor, window.wp.components, window.wp.i18n);
+
 (function (element, blockEditor, components, i18n, editPost, plugins, data) {
     var el = element.createElement;
     var PanelBody = components.PanelBody;
@@ -97,7 +196,7 @@
         });
 
         var editorDispatch = data.useDispatch('core/editor');
-        var editPostAction = editorDispatch && editorDispatch.editPost ? editorDispatch.editPost : function () {};
+        var editPostAction = editorDispatch && editorDispatch.editPost ? editorDispatch.editPost : function () { };
 
         function updateMeta(key, value) {
             var newMeta = {};
@@ -309,6 +408,22 @@
                 animationDelay: {
                     type: 'number',
                     default: 0
+                },
+                attentionEffect: {
+                    type: 'string',
+                    default: 'none'
+                },
+                attentionSpeed: {
+                    type: 'string',
+                    default: 'normal'
+                },
+                attentionIntensity: {
+                    type: 'string',
+                    default: 'normal'
+                },
+                attentionOrigin: {
+                    type: 'string',
+                    default: 'center'
                 }
             });
         }
@@ -323,10 +438,14 @@
                 var animPanel = typeof window.weddingblocksAnimationPanel === 'function'
                     ? window.weddingblocksAnimationPanel(props.attributes, props.setAttributes)
                     : null;
+                var attnPanel = typeof window.weddingblocksAttentionPanel === 'function'
+                    ? window.weddingblocksAttentionPanel(props.attributes, props.setAttributes)
+                    : null;
 
                 return el(element.Fragment, {},
                     el(BlockEdit, props),
-                    animPanel
+                    animPanel,
+                    attnPanel
                 );
             }
             return el(BlockEdit, props);

@@ -142,6 +142,17 @@ function weddingblocks_handle_rsvp_submission($request)
         'message'      => $message,
     );
 
+    /**
+     * Extension point: Pro can enrich the RSVP payload before it's saved —
+     * e.g. resolving a guest_token param (sent by Pro's personal-link
+     * feature) into a guest_id to attach. Free doesn't need to know this
+     * happens; it just passes $request along for Pro to read from.
+     *
+     * @param array           $rsvp_data Data about to be saved.
+     * @param WP_REST_Request $request   The full REST request (for extra params).
+     */
+    $rsvp_data = apply_filters('weddingblocks_rsvp_data_before_save', $rsvp_data, $request);
+
     $inserted_id = weddingblocks_save_rsvp($rsvp_data);
 
     if (! $inserted_id) {

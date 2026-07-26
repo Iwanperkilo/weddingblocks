@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "weddingblocks/decorative-layer",
+  "title": "WB Layer Dekorasi",
+  "category": "weddingblocks",
+  "description": "Elemen animasi dekoratif (otomatis mengambil pengaturan dari Wrapper Dekorasi).",
+  "icon": "art",
+  "parent": ["weddingblocks/decorative-wrapper"],
+  "usesContext": [
+    "weddingblocks/decorationType",
+    "weddingblocks/density",
+    "weddingblocks/layer",
+    "weddingblocks/enableOnMobile"
+  ],
+  "supports": {
+    "html": false,
+    "reusable": false,
+    "inserter": false
+  },
+  "textdomain": "weddingblocks",
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php",
+  "style": "file:./style.css"
+}

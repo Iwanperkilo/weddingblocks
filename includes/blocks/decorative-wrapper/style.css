@@ -1,0 +1,20 @@
+/* decorative-wrapper/style.css */
+
+.wb-decor-wrapper {
+  position: relative;
+  overflow: hidden;
+  min-height: 50px;
+}
+
+/* Pastikan konten anak (nama mempelai, dll) selalu di atas dekorasi "behind", tapi JANGAN menimpa .wb-decor-layer */
+.wb-decor-wrapper > :not(.wb-decor-layer) {
+  position: relative;
+  z-index: 1;
+}
+
+/* Toggle enableOnMobile — disable seluruh layer dekorasi di breakpoint WP */
+@media (max-width: 782px) {
+  .wb-decor-wrapper.wb-decor-hide-mobile .wb-decor-layer {
+    display: none !important;
+  }
+}

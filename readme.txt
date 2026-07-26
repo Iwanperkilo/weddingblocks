@@ -4,7 +4,7 @@ Tags: wedding, invitation, gutenberg, fse, blocks
 Requires at least: 6.7
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.3.0-beta
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Plugin URI: https://wordpress.org/plugins/weddingblocks/
@@ -91,6 +91,14 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 
 == Changelog ==
 
+= 1.3.0 =
+* Continuous / Attention Animations - Added a second, independent animation layer for looping effects: Sway, Float, Pulse, Wobble, and Shake.
+* Each block can combine an entrance animation and a continuous effect at the same time without conflicting (the continuous effect waits for the entrance animation to finish first).
+* Added Speed and Intensity controls for every continuous animation, plus a Pivot Point (Titik Goyang) control for Sway, Wobble, and Pulse to change where the motion is anchored.
+* Continuous animations pause automatically when a block scrolls out of view, and are fully disabled under prefers-reduced-motion, matching the existing entrance-animation accessibility behavior.
+* Decorative Layer & Decorative Wrapper - Two new blocks for wrapping any content area with floating decorative elements (butterflies, birds, snow) without affecting the underlying layout.
+* Extensibility - Added internal action/filter hook points across block registration, RSVP saving, and the admin RSVP table, laying the groundwork for future add-ons.
+
 = 1.2.0 =
 * Animation System - Added a centralized animation system with 5 entrance animation styles (fadeUp, fadeIn, slideLeft, slideRight, zoomIn).
 * Scroll-triggered animations powered by native IntersectionObserver with zero external dependencies.
@@ -122,6 +130,9 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 * Zero external dependencies
 
 == Upgrade Notice ==
+
+= 1.3.0 =
+This version adds continuous/looping animations (Sway, Float, Pulse, Wobble, Shake) and new Decorative Layer/Wrapper blocks. Safe to upgrade, no breaking changes.
 
 = 1.1.0 =
 This version adds template editor support, advanced block controls, grid layouts, and custom cover options. Upgrading is highly recommended.

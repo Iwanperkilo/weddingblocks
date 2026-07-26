@@ -1367,6 +1367,125 @@ body.admin-bar .weddingblocks-cover-wrapper {
   }
 }
 
+/* ================================
+   WeddingBlocks - Attention (Continuous) Animation System
+   v1.3.0
+   Terpisah dari sistem "Entrance" di atas: efek di sini loop terus-menerus
+   selama block ada di layar, bukan sekali jalan saat discroll. Class
+   wb-attn-active baru ditambahkan oleh JS (lihat initAttentionAnimations di
+   blocks-frontend.js), jadi kalau JS nonaktif, block tetap tampil statis
+   apa adanya — tidak ada risiko konten "tersembunyi" seperti pada entrance.
+   ================================ */
+[data-wb-attn] {
+  animation-duration: var(--wb-attn-duration, 3000ms);
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-play-state: paused;
+  transform-origin: var(--wb-attn-origin, center);
+  will-change: transform;
+}
+
+[data-wb-attn].wb-attn-active {
+  animation-play-state: running;
+}
+
+.wb-attn--sway {
+  animation-name: wbSway;
+  animation-direction: alternate;
+}
+
+.wb-attn--float {
+  animation-name: wbFloat;
+  animation-direction: alternate;
+}
+
+.wb-attn--pulse {
+  animation-name: wbPulse;
+  animation-direction: alternate;
+}
+
+.wb-attn--wobble {
+  animation-name: wbWobble;
+}
+
+.wb-attn--shake {
+  animation-name: wbShake;
+}
+
+@keyframes wbSway {
+  from {
+    transform: rotate(calc(var(--wb-attn-amplitude, 4deg) * -1));
+  }
+
+  to {
+    transform: rotate(var(--wb-attn-amplitude, 4deg));
+  }
+}
+
+@keyframes wbFloat {
+  from {
+    transform: translateY(calc(var(--wb-attn-amplitude, 10px) * -1));
+  }
+
+  to {
+    transform: translateY(var(--wb-attn-amplitude, 10px));
+  }
+}
+
+@keyframes wbPulse {
+  from {
+    transform: scale(calc(1 - var(--wb-attn-amplitude, 0.045)));
+  }
+
+  to {
+    transform: scale(calc(1 + var(--wb-attn-amplitude, 0.045)));
+  }
+}
+
+@keyframes wbWobble {
+
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  15% {
+    transform: rotate(var(--wb-attn-amplitude, 4deg));
+  }
+
+  30% {
+    transform: rotate(calc(var(--wb-attn-amplitude, 4deg) * -0.7));
+  }
+
+  45% {
+    transform: rotate(calc(var(--wb-attn-amplitude, 4deg) * 0.5));
+  }
+
+  60% {
+    transform: rotate(calc(var(--wb-attn-amplitude, 4deg) * -0.3));
+  }
+
+  75% {
+    transform: rotate(calc(var(--wb-attn-amplitude, 4deg) * 0.15));
+  }
+}
+
+@keyframes wbShake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(calc(var(--wb-attn-amplitude, 4px) * -1));
+  }
+
+  75% {
+    transform: translateX(var(--wb-attn-amplitude, 4px));
+  }
+}
+
 /* --- Continuous: Cover button breathe --- */
 #weddingblocks-open-btn {
   animation: wbBreathe 2.8s ease-in-out infinite;
@@ -1522,6 +1641,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
 @media (prefers-reduced-motion: reduce) {
 
   [data-wb-anim],
+  [data-wb-attn],
   .weddingblocks-cover-content,
   #weddingblocks-open-btn,
   .countdown-value,

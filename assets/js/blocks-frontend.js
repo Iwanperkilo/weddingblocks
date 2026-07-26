@@ -83,6 +83,96 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // --- CONTINUOUS / ATTENTION ANIMATIONS (sway, float, pulse, wobble, shake) ---
+    // Unlike the entrance animations above (one-shot, scroll-triggered), these
+    // loop for as long as the element is on screen. Kept fully separate so a
+    // block can use both an entrance effect and a continuous effect together
+    // without them fighting over the same CSS `transform` property.
+    var attnObserver = null;
+    if ('IntersectionObserver' in window) {
+        attnObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                // Only toggles the "running" state; never unobserve, since the
+                // effect needs to resume every time the element re-enters view.
+                entry.target.classList.toggle('wb-attn-active', entry.isIntersecting);
+            });
+        }, { threshold: 0.05 });
+    }
+
+    function initAttentionAnimations() {
+        var nodes = document.querySelectorAll('[data-wb-attn]');
+        if (!nodes.length) {
+            return;
+        }
+
+        var speedMsMap = { slow: 4500, normal: 3000, fast: 1800 };
+        // Shake reads best noticeably quicker than sway/float/pulse at the same "speed" label.
+        var shakeMsMap = { slow: 2200, normal: 1400, fast: 800 };
+
+        var intensityMap = {
+            sway:   { subtle: 2,    normal: 4,     strong: 7,    unit: 'deg' },
+            wobble: { subtle: 2,    normal: 4,     strong: 7,    unit: 'deg' },
+            float:  { subtle: 6,    normal: 10,    strong: 16,   unit: 'px'  },
+            pulse:  { subtle: 0.02, normal: 0.045, strong: 0.08, unit: ''    },
+            shake:  { subtle: 2,    normal: 4,     strong: 7,    unit: 'px'  }
+        };
+
+        var originMap = {
+            'center':       'center',
+            'top':          'top',
+            'bottom':       'bottom',
+            'left':         'left',
+            'right':        'right',
+            'top-left':     'top left',
+            'top-right':    'top right',
+            'bottom-left':  'bottom left',
+            'bottom-right': 'bottom right'
+        };
+
+        nodes.forEach(function (el) {
+            var effect = el.getAttribute('data-wb-attn');
+            var speedKey = el.getAttribute('data-wb-attn-speed') || 'normal';
+            var intensityKey = el.getAttribute('data-wb-attn-intensity') || 'normal';
+            var originKey = el.getAttribute('data-wb-attn-origin') || 'center';
+
+            var msMap = (effect === 'shake') ? shakeMsMap : speedMsMap;
+            var duration = msMap[speedKey] || msMap.normal;
+            el.style.setProperty('--wb-attn-duration', duration + 'ms');
+            el.style.setProperty('--wb-attn-origin', originMap[originKey] || 'center');
+
+            var scale = intensityMap[effect];
+            if (scale) {
+                var amount = scale[intensityKey] !== undefined ? scale[intensityKey] : scale.normal;
+                el.style.setProperty('--wb-attn-amplitude', amount + scale.unit);
+            }
+
+            el.classList.add('wb-attn--' + effect);
+
+            function activate() {
+                if (attnObserver) {
+                    attnObserver.observe(el);
+                } else {
+                    // No IntersectionObserver support: just run continuously.
+                    el.classList.add('wb-attn-active');
+                }
+            }
+
+            // If this element ALSO has an entrance animation, don't start the
+            // continuous effect until the entrance animation has finished —
+            // running both at once would fight over the transform property.
+            if (el.hasAttribute('data-wb-anim') && !el.classList.contains('wb-animated')) {
+                el.addEventListener('animationend', function onEntranceEnd() {
+                    if (el.classList.contains('wb-animated')) {
+                        el.removeEventListener('animationend', onEntranceEnd);
+                        activate();
+                    }
+                });
+            } else {
+                activate();
+            }
+        });
+    }
+
     // Lock scroll initially if cover is present.
     var cover = document.getElementById('weddingblocks-cover');
     var lockedScrollY = 0;
@@ -386,4 +476,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     window.addEventListener('weddingblocks:cover-opened', initEntranceAnimations);
+
+    // --- 7. CONTINUOUS / ATTENTION ANIMATIONS ---
+    // Independent of the cover lock: these aren't scroll-triggered, so they
+    // can be set up immediately for any block already in the DOM.
+    initAttentionAnimations();
 });

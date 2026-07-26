@@ -1,19 +1,21 @@
 <?php
+
 /**
  * Database operations for WeddingBlocks.
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
 /**
  * Create custom RSVP table on plugin activation.
  */
-function weddingblocks_db_install() {
+function weddingblocks_db_install()
+{
     global $wpdb;
     $table_name = $wpdb->prefix . 'weddingblocks_rsvps';
-    
+
     $charset_collate = $wpdb->get_charset_collate();
 
     $sql = "CREATE TABLE $table_name (
@@ -29,7 +31,7 @@ function weddingblocks_db_install() {
     ) $charset_collate;";
 
     require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-    dbDelta( $sql );
+    dbDelta($sql);
 }
 
 /**
@@ -38,26 +40,47 @@ function weddingblocks_db_install() {
  * @param array $data Submission data.
  * @return int|bool Inserted ID or false on failure.
  */
-function weddingblocks_save_rsvp( $data ) {
+function weddingblocks_save_rsvp($data)
+{
     global $wpdb;
     $table_name = $wpdb->prefix . 'weddingblocks_rsvps';
 
-    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-    $inserted = $wpdb->insert(
-        $table_name,
-        array(
-            'post_id'      => intval( $data['post_id'] ),
-            'guest_name'   => sanitize_text_field( $data['guest_name'] ),
-            'attendance'   => sanitize_text_field( $data['attendance'] ),
-            'guests_count' => intval( $data['guests_count'] ),
-            'message'      => sanitize_textarea_field( $data['message'] ),
-            'created_at'   => current_time( 'mysql' ),
-        ),
-        array( '%d', '%s', '%s', '%d', '%s', '%s' )
+    $insert_data = array(
+        'post_id'      => intval($data['post_id']),
+        'guest_name'   => sanitize_text_field($data['guest_name']),
+        'attendance'   => sanitize_text_field($data['attendance']),
+        'guests_count' => intval($data['guests_count']),
+        'message'      => sanitize_textarea_field($data['message']),
+        'created_at'   => current_time('mysql'),
     );
+    $insert_format = array('%d', '%s', '%s', '%d', '%s', '%s');
 
-    if ( $inserted ) {
-        weddingblocks_clear_rsvps_count_cache( intval( $data['post_id'] ) );
+    /**
+     * Extension point: Pro can add extra columns to the RSVP insert
+     * (e.g. guest_id, linking the submission back to an imported guest
+     * record) without Free needing to know that column exists. Pro is
+     * responsible for adding the column itself (via dbDelta on its own
+     * activation) before relying on this filter.
+     *
+     * @param array $insert_data Column => value pairs to insert.
+     * @param array $data        Original raw RSVP submission data.
+     */
+    $insert_data = apply_filters('weddingblocks_rsvp_insert_data', $insert_data, $data);
+
+    /**
+     * Matching %d/%s/%f format specifiers for $insert_data, in the same
+     * order. Must be kept in sync by whoever adds a column above.
+     *
+     * @param array $insert_format Format specifiers.
+     * @param array $insert_data   Column => value pairs being inserted.
+     */
+    $insert_format = apply_filters('weddingblocks_rsvp_insert_format', $insert_format, $insert_data);
+
+    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+    $inserted = $wpdb->insert($table_name, $insert_data, $insert_format);
+
+    if ($inserted) {
+        weddingblocks_clear_rsvps_count_cache(intval($data['post_id']));
         return $wpdb->insert_id;
     }
 
@@ -72,24 +95,25 @@ function weddingblocks_save_rsvp( $data ) {
  * @param int $offset Offset for pagination.
  * @return array List of RSVPs.
  */
-function weddingblocks_get_rsvps( $post_id = 0, $limit = 100, $offset = 0 ) {
+function weddingblocks_get_rsvps($post_id = 0, $limit = 100, $offset = 0)
+{
     global $wpdb;
     $table_name = $wpdb->prefix . 'weddingblocks_rsvps';
 
     $sql = "SELECT * FROM $table_name";
     $params = array();
 
-    if ( $post_id > 0 ) {
+    if ($post_id > 0) {
         $sql .= " WHERE post_id = %d";
         $params[] = $post_id;
     }
 
     $sql .= " ORDER BY created_at DESC LIMIT %d OFFSET %d";
-    $params[] = intval( $limit );
-    $params[] = intval( $offset );
+    $params[] = intval($limit);
+    $params[] = intval($offset);
 
     // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
-    return $wpdb->get_results( $wpdb->prepare( $sql, $params ) );
+    return $wpdb->get_results($wpdb->prepare($sql, $params));
 }
 
 /**
@@ -98,27 +122,28 @@ function weddingblocks_get_rsvps( $post_id = 0, $limit = 100, $offset = 0 ) {
  * @param int $post_id Optional filter by invitation post ID.
  * @return int Total RSVP count.
  */
-function weddingblocks_get_rsvps_count( $post_id = 0 ) {
+function weddingblocks_get_rsvps_count($post_id = 0)
+{
     global $wpdb;
     $table_name = $wpdb->prefix . 'weddingblocks_rsvps';
 
-    $cache_key   = 'weddingblocks_rsvps_count_' . intval( $post_id );
+    $cache_key   = 'weddingblocks_rsvps_count_' . intval($post_id);
     $cache_group = 'weddingblocks';
 
-    $cached = wp_cache_get( $cache_key, $cache_group );
-    if ( false !== $cached ) {
-        return intval( $cached );
+    $cached = wp_cache_get($cache_key, $cache_group);
+    if (false !== $cached) {
+        return intval($cached);
     }
 
-    if ( $post_id > 0 ) {
+    if ($post_id > 0) {
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
-        $count = intval( $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $table_name WHERE post_id = %d", $post_id ) ) );
+        $count = intval($wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $table_name WHERE post_id = %d", $post_id)));
     } else {
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
-        $count = intval( $wpdb->get_var( "SELECT COUNT(*) FROM $table_name" ) );
+        $count = intval($wpdb->get_var("SELECT COUNT(*) FROM $table_name"));
     }
 
-    wp_cache_set( $cache_key, $count, $cache_group, 5 * MINUTE_IN_SECONDS );
+    wp_cache_set($cache_key, $count, $cache_group, 5 * MINUTE_IN_SECONDS);
 
     return $count;
 }
@@ -128,10 +153,11 @@ function weddingblocks_get_rsvps_count( $post_id = 0 ) {
  *
  * @param int $post_id Invitation post ID.
  */
-function weddingblocks_clear_rsvps_count_cache( $post_id ) {
+function weddingblocks_clear_rsvps_count_cache($post_id)
+{
     $cache_group = 'weddingblocks';
-    wp_cache_delete( 'weddingblocks_rsvps_count_' . intval( $post_id ), $cache_group );
-    wp_cache_delete( 'weddingblocks_rsvps_count_0', $cache_group );
+    wp_cache_delete('weddingblocks_rsvps_count_' . intval($post_id), $cache_group);
+    wp_cache_delete('weddingblocks_rsvps_count_0', $cache_group);
 }
 
 /**
@@ -140,24 +166,25 @@ function weddingblocks_clear_rsvps_count_cache( $post_id ) {
  * @param int $id RSVP ID.
  * @return bool True on success, false on failure.
  */
-function weddingblocks_delete_rsvp( $id ) {
+function weddingblocks_delete_rsvp($id)
+{
     global $wpdb;
     $table_name = $wpdb->prefix . 'weddingblocks_rsvps';
 
     // Fetch the related post_id first so we know which cached count to invalidate.
     // This is a one-off lookup immediately followed by a delete, so caching it is not useful.
     // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
-    $post_id = $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM %i WHERE id = %d", $table_name, intval( $id ) ) );
+    $post_id = $wpdb->get_var($wpdb->prepare("SELECT post_id FROM %i WHERE id = %d", $table_name, intval($id)));
 
     // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
     $deleted = $wpdb->delete(
         $table_name,
-        array( 'id' => intval( $id ) ),
-        array( '%d' )
+        array('id' => intval($id)),
+        array('%d')
     );
 
-    if ( $deleted !== false ) {
-        weddingblocks_clear_rsvps_count_cache( intval( $post_id ) );
+    if ($deleted !== false) {
+        weddingblocks_clear_rsvps_count_cache(intval($post_id));
     }
 
     return $deleted !== false;
