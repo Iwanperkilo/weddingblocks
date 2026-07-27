@@ -110,22 +110,22 @@ document.addEventListener('DOMContentLoaded', function () {
         var shakeMsMap = { slow: 2200, normal: 1400, fast: 800 };
 
         var intensityMap = {
-            sway:   { subtle: 2,    normal: 4,     strong: 7,    unit: 'deg' },
-            wobble: { subtle: 2,    normal: 4,     strong: 7,    unit: 'deg' },
-            float:  { subtle: 6,    normal: 10,    strong: 16,   unit: 'px'  },
-            pulse:  { subtle: 0.02, normal: 0.045, strong: 0.08, unit: ''    },
-            shake:  { subtle: 2,    normal: 4,     strong: 7,    unit: 'px'  }
+            sway: { subtle: 2, normal: 4, strong: 7, unit: 'deg' },
+            wobble: { subtle: 2, normal: 4, strong: 7, unit: 'deg' },
+            float: { subtle: 6, normal: 10, strong: 16, unit: 'px' },
+            pulse: { subtle: 0.02, normal: 0.045, strong: 0.08, unit: '' },
+            shake: { subtle: 2, normal: 4, strong: 7, unit: 'px' }
         };
 
         var originMap = {
-            'center':       'center',
-            'top':          'top',
-            'bottom':       'bottom',
-            'left':         'left',
-            'right':        'right',
-            'top-left':     'top left',
-            'top-right':    'top right',
-            'bottom-left':  'bottom left',
+            'center': 'center',
+            'top': 'top',
+            'bottom': 'bottom',
+            'left': 'left',
+            'right': 'right',
+            'top-left': 'top left',
+            'top-right': 'top right',
+            'bottom-left': 'bottom left',
             'bottom-right': 'bottom right'
         };
 
@@ -285,15 +285,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
             function setVal(el, val) {
                 if (!el) return;
-            var formatted = String(val).padStart(2, '0');
-            if (formatted === 'NaN' || !isFinite(val)) {
-                formatted = '00';
-            }
-            if (el.innerText !== formatted) {
-                el.classList.remove('wb-tick');
-                // Force reflow agar animasi bisa diulang
-                void el.offsetWidth;
-                el.classList.add('wb-tick');
+                var formatted = String(val).padStart(2, '0');
+                if (formatted === 'NaN' || !isFinite(val)) {
+                    formatted = '00';
+                }
+                if (el.innerText !== formatted) {
+                    el.classList.remove('wb-tick');
+                    // Force reflow agar animasi bisa diulang
+                    void el.offsetWidth;
+                    el.classList.add('wb-tick');
                 }
                 el.innerText = formatted;
             }
@@ -349,6 +349,8 @@ document.addEventListener('DOMContentLoaded', function () {
             var guestsField = document.getElementById('rsvp-guests');
             var guestsCount = guestsField ? guestsField.value : 1;
             var message = document.getElementById('rsvp-message').value;
+            var guestTokenField = document.getElementById('rsvp-guest-token');
+            var guestToken = guestTokenField ? guestTokenField.value : '';
 
             // Custom success/error messages set via block attributes (data-* on the form).
             // Falls back to whatever the REST API responds with if not set.
@@ -361,6 +363,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 attendance: attendance,
                 guests_count: guestsCount,
                 message: message,
+                guest_token: guestToken,
                 max_guests: rsvpForm.getAttribute('data-max-guests') || 10
             };
 

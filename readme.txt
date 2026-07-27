@@ -98,6 +98,7 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 * Continuous animations pause automatically when a block scrolls out of view, and are fully disabled under prefers-reduced-motion, matching the existing entrance-animation accessibility behavior.
 * Decorative Layer & Decorative Wrapper - Two new blocks for wrapping any content area with floating decorative elements (butterflies, birds, snow) without affecting the underlying layout.
 * Extensibility - Added internal action/filter hook points across block registration, RSVP saving, and the admin RSVP table, laying the groundwork for future add-ons.
+* RSVP Form - Added an optional hidden guest-token field, passed through to the RSVP submission when present in the URL. No effect on its own; lays the groundwork for an upcoming add-on to link RSVP submissions back to an imported guest list.
 
 = 1.2.0 =
 * Animation System - Added a centralized animation system with 5 entrance animation styles (fadeUp, fadeIn, slideLeft, slideRight, zoomIn).

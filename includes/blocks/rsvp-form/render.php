@@ -19,6 +19,8 @@ if (! defined('ABSPATH')) {
 $current_post_id = get_the_ID();
 // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 $guest_name = isset($_GET['to']) ? sanitize_text_field(wp_unslash($_GET['to'])) : '';
+// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+$guest_token = isset($_GET['g']) ? sanitize_text_field(wp_unslash($_GET['g'])) : '';
 
 // Use the shared color sanitizer (already used by the countdown block) so we
 // never trust raw attribute values as CSS, while still allowing rgba()/alpha.
@@ -70,6 +72,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
         data-max-guests="<?php echo esc_attr($max_guests); ?>"
         data-success-message="<?php echo esc_attr($success_message); ?>"
         data-error-message="<?php echo esc_attr($error_message); ?>">
+        <input type="hidden" id="rsvp-guest-token" value="<?php echo esc_attr($guest_token); ?>">
         <div class="form-group">
             <label for="rsvp-name"><?php echo esc_html($label_name); ?></label>
             <input type="text" id="rsvp-name" name="guest_name" value="<?php echo esc_attr($guest_name); ?>" placeholder="<?php esc_attr_e('Ketik nama lengkap...', 'weddingblocks'); ?>" required>
