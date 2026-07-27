@@ -37,6 +37,31 @@
     { label: __("Custom...", "weddingblocks"), value: "__custom__" },
   ];
 
+  var HEART_PRESETS = ["\u2764\ufe0f", "\u2764"];
+
+  function isHeartSeparator(value) {
+    return HEART_PRESETS.indexOf(value) !== -1;
+  }
+
+  function renderHeartIcon(el) {
+    return el(
+      "svg",
+      {
+        className: "weddingblocks-heart-icon",
+        viewBox: "0 0 32 29",
+        width: "1em",
+        height: "1em",
+        "aria-hidden": "true",
+        focusable: "false",
+        xmlns: "http://www.w3.org/2000/svg",
+      },
+      el("path", {
+        fill: "#E0303F",
+        d: "M23.6 0c-3 0-5.8 1.5-7.6 3.9C14.2 1.5 11.4 0 8.4 0 3.8 0 0 3.7 0 8.4c0 8.5 10.5 14.6 15.1 18.8.5.5 1.3.5 1.8 0C21.5 23 32 16.9 32 8.4 32 3.7 28.2 0 23.6 0z",
+      }),
+    );
+  }
+
   blocks.registerBlockType("weddingblocks/couple-title", {
     edit: function (props) {
       var attributes = props.attributes;
@@ -90,7 +115,6 @@
 
       var titleStyle = {
         color: textColor,
-        textTransform: textTransform,
         textAlign: textAlign,
       };
       if (textShadow) {
@@ -226,14 +250,20 @@
           el(
             "h2",
             {
-              className: "weddingblocks-couple-title-text",
+              className: "weddingblocks-couple-title-text weddingblocks-cover-title",
               style: titleStyle,
             },
-            transformText(groomDisplay) +
-            " " +
-            separator +
-            " " +
-            transformText(brideDisplay),
+            transformText(groomDisplay) + " ",
+            el(
+              "span",
+              {
+                className:
+                  "weddingblocks-separator" +
+                  (isHeartSeparator(separator) ? " weddingblocks-separator--icon" : ""),
+              },
+              isHeartSeparator(separator) ? renderHeartIcon(el) : separator,
+            ),
+            " " + transformText(brideDisplay),
           ),
         ),
       ];

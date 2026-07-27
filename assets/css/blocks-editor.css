@@ -46,6 +46,26 @@
     color: #333;
 }
 
+.weddingblocks-cover-title .weddingblocks-separator,
+.weddingblocks-separator {
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif !important;
+    text-transform: none !important;
+    display: inline-block;
+}
+
+/* Samakan dengan blocks-frontend.css: preset hati dirender sebagai SVG
+   inline agar identik dengan tampilan frontend. */
+.weddingblocks-separator--icon {
+    vertical-align: -0.08em;
+    line-height: 1;
+}
+
+.weddingblocks-heart-icon {
+    display: inline-block;
+    width: 0.85em;
+    height: 0.85em;
+}
+
 .weddingblocks-cover-wrapper[style*="background-image"] .weddingblocks-cover-title {
     color: #fff !important;
 }
