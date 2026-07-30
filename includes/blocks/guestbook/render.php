@@ -38,6 +38,15 @@ $card_style = ! empty( $card_style_parts ) ? implode( ';', $card_style_parts ) .
 $current_post_id = get_the_ID();
 $rsvps            = weddingblocks_get_rsvps( $current_post_id, $entries_to_show, 0 );
 
+/**
+ * Filter guestbook entries before rendering — Pro uses this to
+ * restrict to approved-only entries when moderation is active.
+ *
+ * @param array $rsvps    List of RSVP row objects.
+ * @param int   $current_post_id The invitation post ID.
+ */
+$rsvps = apply_filters( 'weddingblocks_guestbook_entries', $rsvps, $current_post_id );
+
 if ( 'oldest' === $order && ! empty( $rsvps ) ) {
     $rsvps = array_reverse( $rsvps );
 }
