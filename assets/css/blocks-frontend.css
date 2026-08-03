@@ -534,6 +534,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  padding: 10px;
 }
 
 /* Custom Scrollbar for Guestbook */
