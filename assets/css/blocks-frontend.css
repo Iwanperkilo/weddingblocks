@@ -1334,7 +1334,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
 @keyframes wbFadeUp {
   from {
     opacity: 0;
-    transform: translateY(48px);
+    transform: translateY(78px);
   }
 
   to {
@@ -1356,7 +1356,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
 @keyframes wbSlideLeft {
   from {
     opacity: 0;
-    transform: translateX(-48px);
+    transform: translateX(-78px);
   }
 
   to {
@@ -1368,7 +1368,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
 @keyframes wbSlideRight {
   from {
     opacity: 0;
-    transform: translateX(48px);
+    transform: translateX(78px);
   }
 
   to {

@@ -101,6 +101,9 @@
         borderWidth: avatarBorderWidth + "px",
         borderStyle: "solid",
       };
+      var ampersandStyle = {
+        color: avatarBorderColor,
+      };
 
       // Layout class
       var layoutClass =
@@ -305,7 +308,7 @@
             className:
               "weddingblocks-couple-column weddingblocks-separator-column",
           },
-          el("p", { className: "weddingblocks-ampersand" }, "&"),
+          el("p", { className: "weddingblocks-ampersand", style: ampersandStyle }, "&"),
         ),
         el(
           "div",

@@ -148,6 +148,10 @@ $avatar_style_attr = sprintf(
 	esc_attr($avatar_border_color),
 	$avatar_border_width
 );
+$ampersand_style_attr = sprintf(
+	'color: %s !important;',
+	esc_attr($avatar_border_color)
+);
 
 // Layout class
 $layout_class = $layout === 'vertical' ? 'weddingblocks-couple-columns--vertical' : '';
@@ -178,7 +182,7 @@ $wrapper_attributes = function_exists('get_block_wrapper_attributes')
 		<?php endif; ?>
 	</div>
 	<div class="weddingblocks-couple-column weddingblocks-separator-column">
-		<p class="weddingblocks-ampersand">&</p>
+		<p class="weddingblocks-ampersand" style="<?php echo esc_attr($ampersand_style_attr); ?>">&</p>
 	</div>
 	<div class="weddingblocks-couple-column">
 		<div class="weddingblocks-avatar" style="<?php echo esc_attr($avatar_style_attr); ?>">
