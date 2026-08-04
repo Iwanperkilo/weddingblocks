@@ -64,7 +64,7 @@
     },
     "avatarBorderColor": {
       "type": "string",
-      "default": "#b5a46d"
+      "default": ""
     },
     "avatarBorderWidth": {
       "type": "number",

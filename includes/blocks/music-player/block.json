@@ -22,11 +22,11 @@
         },
         "buttonColor": {
             "type": "string",
-            "default": "#b5a46d"
+            "default": ""
         },
         "buttonBgColor": {
             "type": "string",
-            "default": "rgba(255, 255, 255, 0.85)"
+            "default": ""
         }
     },
     "editorScript": "file:./index.js",

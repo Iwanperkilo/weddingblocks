@@ -1,0 +1,145 @@
+/* ================================
+   WeddingBlocks - Design Tokens & Typography Bawaan
+
+   Arsitektur warna (setelah cleanup):
+   - Seluruh warna brand di blocks-frontend.css / editor-preview.css /
+     atomic-blocks.css sudah memakai token var(--wb-color-*) DENGAN
+     fallback ke warna lama, jadi tetap aman jika token tidak ter-set.
+   - Token hanya didefinisikan di dua tempat: .weddingblocks-site
+     (frontend) dan .editor-styles-wrapper (editor).
+   - Per-undangan bisa menimpa token via inline <style> di wp_head
+     (dari post meta warna). Setting per block tetap menang via inline style.
+   - File ini hanya memuat: (1) definisi token, (2) typography bawaan
+     untuk core Heading/Paragraph, dan (3) pelindung komponen yang
+     memang perlu menang atas typography generic.
+
+   Penting: typography generic HANYA menyasar core block class
+   (.wp-block-heading / .wp-block-paragraph). Elemen markup polos dari
+   render.php block TIDAK tersentuh, jadi styling komponennya tetap utuh.
+   ================================ */
+
+/* ================================
+   1. DESIGN TOKENS (default bawaan)
+   ================================ */
+.weddingblocks-site,
+.editor-styles-wrapper {
+  --wb-color-primary: #b5a46d;               /* emas utama */
+  --wb-color-accent: #b5a46d;                /* emas aksen */
+  --wb-color-ink: #2c2c2c;                   /* teks utama */
+  --wb-color-muted: #655f55;                 /* teks sekunder */
+  --wb-color-bg: #fdfbf7;                    /* latar halaman */
+  --wb-color-surface: #ffffff;               /* latar kartu/box */
+  --wb-color-surface-tint: #f6f2e8;          /* latar foto/placeholder */
+  --wb-color-soft: rgba(181, 164, 109, 0.12);   /* tint lembut */
+  --wb-color-border: rgba(181, 164, 109, 0.18); /* border */
+  --wb-color-cover-bg: #1c1d1d;              /* latar cover penuh */
+}
+
+/* Base font & latar halaman undangan */
+.weddingblocks-site {
+  background-color: var(--wb-color-bg);
+  color: var(--wb-color-ink);
+  font-family: "Montserrat", sans-serif;
+  line-height: 1.7;
+}
+
+.editor-styles-wrapper {
+  font-family: "Montserrat", sans-serif;
+  line-height: 1.7;
+}
+
+/* ================================
+   2. TYPOGRAPHY BAWAAN (core blocks)
+   ================================ */
+.weddingblocks-site .wp-block-heading,
+.editor-styles-wrapper .wp-block-heading {
+  font-family: "Playfair Display", "Georgia", serif;
+  color: var(--wb-color-ink);
+}
+
+.weddingblocks-site .wp-block-heading:is(h1),
+.editor-styles-wrapper .wp-block-heading:is(h1) {
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--wb-color-primary);
+}
+
+.weddingblocks-site .wp-block-heading:is(h2),
+.editor-styles-wrapper .wp-block-heading:is(h2) {
+  font-size: clamp(26px, 4vw, 36px);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.weddingblocks-site .wp-block-heading:is(h3),
+.editor-styles-wrapper .wp-block-heading:is(h3) {
+  font-size: clamp(20px, 3vw, 26px);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.weddingblocks-site .wp-block-heading:is(h4),
+.editor-styles-wrapper .wp-block-heading:is(h4) {
+  font-size: clamp(17px, 2.4vw, 20px);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.weddingblocks-site .wp-block-paragraph,
+.editor-styles-wrapper .wp-block-paragraph {
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--wb-color-ink);
+}
+
+/* Link default di dalam undangan. Pakai :where() supaya kelas komponen
+   (tombol, map-link, dll) tetap menang. */
+:where(.weddingblocks-site) a,
+:where(.editor-styles-wrapper) a {
+  color: var(--wb-color-primary);
+}
+
+/* ================================
+   3. PELINDUNG KOMPONEN
+   Hanya untuk elemen yang merupakan core block (.wp-block-paragraph /
+   .wp-block-heading) sekaligus memakai class komponen. Di sini dijaga
+   ukuran/layout bawaan plugin agar menang atas generic typography di atas.
+   (Warna komponen sudah ditokenkan langsung di blocks-frontend.css, jadi
+   tidak perlu diduplikasi.) Specificity harus lebih tinggi dari generic.
+   ================================ */
+.weddingblocks-site .wp-block-paragraph.weddingblocks-subheading,
+.editor-styles-wrapper .wp-block-paragraph.weddingblocks-subheading {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--wb-color-muted);
+}
+
+.weddingblocks-site .wp-block-paragraph.weddingblocks-cover-welcome,
+.editor-styles-wrapper .wp-block-paragraph.weddingblocks-cover-welcome {
+  font-size: 13px;
+  letter-spacing: 4px;
+  color: #d4c59a;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+/* Judul utama cover — tetap hero besar di atas latar gelap. */
+.weddingblocks-site .wp-block-heading.weddingblocks-cover-title,
+.editor-styles-wrapper .wp-block-heading.weddingblocks-cover-title {
+  font-size: clamp(38px, 7vw, 70px);
+  line-height: 1.2;
+}
+
+/* ================================
+   4. AKSESIBILITAS
+   ================================ */
+@media (prefers-reduced-motion: reduce) {
+
+  .weddingblocks-site *,
+  .editor-styles-wrapper * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

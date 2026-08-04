@@ -85,6 +85,7 @@
   width: 36px;
   transform: scale(var(--wb-scale));
   animation: wb-fly var(--wb-dur) linear var(--wb-delay) infinite;
+  opacity: 0;
   will-change: transform, opacity;
 }
 
@@ -391,6 +392,15 @@
 }
 
 @media (max-width: 782px) {
+
+  /* Di layar sempit, 120vw jauh lebih pendek jaraknya, jadi burung tampak
+     merangkak. Percepat durasi lintasan burung (bukan delay) supaya kecepatan
+     terasa wajar di mobile. Default opacity:0 mencegah burung "antri" di
+     tepi kiri selama menunggu delay-nya. */
+  .wb-flyer,
+  .wb-flyer--bird {
+    animation-duration: calc(var(--wb-dur) * 0.45);
+  }
 
   .wb-decor-hide-mobile .wb-decor-layer,
   .wb-decor-hide-mobile .wb-decor-butterflies {

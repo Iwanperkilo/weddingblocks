@@ -25,7 +25,7 @@
         },
         "accentColor": {
             "type": "string",
-            "default": "#b5a46d"
+            "default": ""
         },
         "buttonText": {
             "type": "string",

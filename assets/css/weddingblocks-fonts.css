@@ -1,0 +1,75 @@
+/* ================================
+   WeddingBlocks - Local Fonts
+   Font-family self-hosted (woff2, subset latin) supaya plugin punya
+   typography bawaan yang konsisten TANPA bergantung pada CDN eksternal
+   (sesuai rekomendasi wordpress.org: tidak memuat sumber daya dari luar).
+
+   Keluarga & bobot yang dipakai plugin:
+   - Montserrat     400/500/600/700  (teks dasar & tombol)
+   - Playfair Display 400/500/600    (judul heading)
+   - Great Vibes      400            (opsi font calligraphy di couple-name)
+   ================================ */
+
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/montserrat-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/montserrat-500.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/montserrat-600.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/montserrat-700.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Playfair Display";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/playfair-display-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Playfair Display";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/playfair-display-500.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Playfair Display";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/playfair-display-600.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Great Vibes";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/great-vibes-400.woff2") format("woff2");
+}

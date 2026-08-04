@@ -45,12 +45,22 @@
           ? window.weddingblocksAnimationPanel(attributes, setAttributes)
           : null;
 
+      // Hanya mengirim token warna yang dikustom; jika kosong, form mengikuti
+      // tema warna undangan (--wb-color-*) dari CSS.
+      function buildColorVars() {
+        var vars = {};
+        if (buttonColor) {
+          vars["--wb-rsvp-button-color"] = buttonColor;
+        }
+        if (inputBorderColor) {
+          vars["--wb-rsvp-input-border-color"] = inputBorderColor;
+        }
+        return vars;
+      }
+
       var blockProps = useBlockProps({
         className: "weddingblocks-rsvp-form-editor",
-        style: {
-          "--wb-rsvp-button-color": buttonColor,
-          "--wb-rsvp-input-border-color": inputBorderColor,
-        },
+        style: buildColorVars(),
       });
 
       return el(
@@ -67,16 +77,14 @@
               {
                 value: buttonColor,
                 onChange: function (color) {
-                  setAttributes({ buttonColor: color || "#b5a46d" });
+                  setAttributes({ buttonColor: color || "" });
                 },
                 label: __("Warna Tombol", "weddingblocks"),
               },
               {
                 value: inputBorderColor,
                 onChange: function (color) {
-                  setAttributes({
-                    inputBorderColor: color || "rgba(181, 164, 109, 0.3)",
-                  });
+                  setAttributes({ inputBorderColor: color || "" });
                 },
                 label: __("Warna Border Input", "weddingblocks"),
               },

@@ -22,7 +22,7 @@ $align      = isset($attributes['align']) ? sanitize_key($attributes['align']) :
 
 $font_size      = isset($attributes['fontSize']) ? intval($attributes['fontSize']) : 32;
 $font_family    = isset($attributes['fontFamily']) ? sanitize_text_field($attributes['fontFamily']) : 'playfair';
-$text_color     = isset($attributes['textColor']) ? sanitize_hex_color($attributes['textColor']) : '#b5a46d';
+$text_color     = isset($attributes['textColor']) ? sanitize_hex_color($attributes['textColor']) : '';
 $text_transform = isset($attributes['textTransform']) ? sanitize_key($attributes['textTransform']) : 'none';
 
 $full_name = '';
@@ -62,11 +62,16 @@ if ('playfair' === $font_family) {
     $font_family_css = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
 }
 
+$color_style = '';
+if ('' !== $text_color) {
+    $color_style = ' color:' . $text_color . ';';
+}
+
 $style_attr = sprintf(
-    'font-size:%1$dpx; font-family:%2$s; color:%3$s; text-transform:%4$s;',
+    'font-size:%1$dpx; font-family:%2$s;%3$s text-transform:%4$s;',
     $font_size,
     $font_family_css,
-    $text_color,
+    $color_style,
     $text_transform
 );
 

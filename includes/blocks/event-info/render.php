@@ -34,21 +34,19 @@ $sanitize_color = function_exists('weddingblocks_sanitize_color')
     ? 'weddingblocks_sanitize_color'
     : 'sanitize_hex_color';
 
-$primary_color = ! empty($attributes['primaryColor']) ? call_user_func($sanitize_color, $attributes['primaryColor']) : '#b5a46d';
-$accent_color  = ! empty($attributes['accentColor']) ? call_user_func($sanitize_color, $attributes['accentColor']) : '#b5a46d';
+// Color attributes default to empty so the block follows the invitation
+// theme (--wb-color-*) unless the user customizes them per block.
+$primary_color = ! empty($attributes['primaryColor']) ? call_user_func($sanitize_color, $attributes['primaryColor']) : '';
+$accent_color  = ! empty($attributes['accentColor']) ? call_user_func($sanitize_color, $attributes['accentColor']) : '';
 $text_color    = ! empty($attributes['textColor']) ? call_user_func($sanitize_color, $attributes['textColor']) : '';
 
-if (empty($primary_color)) {
-    $primary_color = '#b5a46d';
-}
+// Effective colors used for computed values (e.g. button contrast), falling
+// back to the brand default while the block follows the theme.
+$resolved_primary = ! empty($primary_color) ? $primary_color : '#b5a46d';
 
-if (empty($accent_color)) {
-    $accent_color = '#b5a46d';
-}
-
-// Auto-calculate WCAG-safe button text color based on the chosen primary color.
+// Auto-calculate WCAG-safe button text color based on the effective primary color.
 $button_text_color = function_exists('weddingblocks_get_contrast_color')
-    ? weddingblocks_get_contrast_color($primary_color)
+    ? weddingblocks_get_contrast_color($resolved_primary)
     : '#ffffff';
 
 $allowed_variants = array('vertical', 'horizontal', 'timeline');
@@ -113,11 +111,25 @@ $events = array(
     ),
 );
 
-$inline_style_vars = '--wb-event-primary-color: ' . $primary_color . '; --wb-event-accent-color: ' . $accent_color . '; --wb-event-button-text-color: ' . $button_text_color . ';';
+// Only emit the color variables the user actually customized; otherwise the
+// block inherits the invitation theme tokens (--wb-color-*) from CSS.
+$inline_style_parts = array();
+
+if (! empty($primary_color)) {
+    $inline_style_parts[] = '--wb-event-primary-color: ' . $primary_color;
+}
+
+if (! empty($accent_color)) {
+    $inline_style_parts[] = '--wb-event-accent-color: ' . $accent_color;
+}
+
+$inline_style_parts[] = '--wb-event-button-text-color: ' . $button_text_color;
 
 if (! empty($text_color)) {
-    $inline_style_vars .= ' --wb-event-ink: ' . $text_color . ';';
+    $inline_style_parts[] = '--wb-event-ink: ' . $text_color;
 }
+
+$inline_style_vars = implode(';', $inline_style_parts) . ';';
 
 $wrapper_attributes = function_exists('get_block_wrapper_attributes')
     ? get_block_wrapper_attributes(

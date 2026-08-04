@@ -52,14 +52,14 @@
                             {
                                 value: attributes.buttonColor,
                                 onChange: function (value) {
-                                    props.setAttributes({ buttonColor: value || '#b5a46d' });
+                                    props.setAttributes({ buttonColor: value || '' });
                                 },
                                 label: __('Warna Ikon', 'weddingblocks')
                             },
                             {
                                 value: attributes.buttonBgColor,
                                 onChange: function (value) {
-                                    props.setAttributes({ buttonBgColor: value || 'rgba(255, 255, 255, 0.85)' });
+                                    props.setAttributes({ buttonBgColor: value || '' });
                                 },
                                 label: __('Warna Background', 'weddingblocks')
                             }

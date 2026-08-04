@@ -31,7 +31,7 @@
       var align = attributes.align || "center";
       var fontSize = attributes.fontSize || 32;
       var fontFamily = attributes.fontFamily || "playfair";
-      var textColor = attributes.textColor || "#b5a46d";
+      var textColor = attributes.textColor || "";
       var textTransform = attributes.textTransform || "none";
 
       var groomName = attributes.groomName || meta.weddingblocks_groom_name || "";
@@ -61,7 +61,8 @@
       else if (fontFamily === "georgia") fontFamilyCSS = "Georgia, serif";
       else if (fontFamily === "sans-serif") fontFamilyCSS = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
 
-      var previewStyle = { fontSize: fontSize + "px", fontFamily: fontFamilyCSS, color: textColor, textTransform: textTransform };
+      var previewStyle = { fontSize: fontSize + "px", fontFamily: fontFamilyCSS, textTransform: textTransform };
+      if (textColor) { previewStyle.color = textColor; }
 
       var animPanel = typeof window.weddingblocksAnimationPanel === "function"
         ? window.weddingblocksAnimationPanel(attributes, props.setAttributes)
@@ -77,7 +78,7 @@
             el(SelectControl, { label: __("Jenis Font", "weddingblocks"), value: fontFamily, options: [{ label: "Playfair Display (Serif Elegant)", value: "playfair" }, { label: "Great Vibes (Calligraphy)", value: "greatvibes" }, { label: "Montserrat (Modern Sans-serif)", value: "montserrat" }, { label: "Georgia (Classic Serif)", value: "georgia" }, { label: "System Sans-serif", value: "sans-serif" }], onChange: function (v) { props.setAttributes({ fontFamily: v }); } }),
             el(SelectControl, { label: __("Transformasi Teks", "weddingblocks"), value: textTransform, options: [{ label: __("Normal", "weddingblocks"), value: "none" }, { label: __("HURUF BESAR (UPPERCASE)", "weddingblocks"), value: "uppercase" }, { label: __("Huruf Besar Di Awal (Capitalize)", "weddingblocks"), value: "capitalize" }, { label: __("huruf kecil (lowercase)", "weddingblocks"), value: "lowercase" }], onChange: function (v) { props.setAttributes({ textTransform: v }); } })
           ),
-          el(PanelColorSettings, { title: __("Pengaturan Warna", "weddingblocks"), initialOpen: false, colorSettings: [{ value: textColor, colors: customColors, label: __("Warna Nama", "weddingblocks"), onChange: function (v) { props.setAttributes({ textColor: v || "#b5a46d" }); } }] })
+          el(PanelColorSettings, { title: __("Pengaturan Warna", "weddingblocks"), initialOpen: false, colorSettings: [{ value: textColor, colors: customColors, label: __("Warna Nama", "weddingblocks"), onChange: function (v) { props.setAttributes({ textColor: v || "" }); } }] })
         ),
         animPanel,
         el("div", useBlockProps({ key: "preview", className: "weddingblocks-atomic-couple-name role-" + role + " type-" + nameType + " align-" + align }),

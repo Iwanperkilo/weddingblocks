@@ -20,19 +20,32 @@ if (empty($music_url)) {
 
 $loop_music      = ! isset($attributes['loopMusic']) || ! empty($attributes['loopMusic']);
 $button_position = (isset($attributes['buttonPosition']) && 'left' === $attributes['buttonPosition']) ? 'left' : 'right';
-$button_color    = ! empty($attributes['buttonColor']) ? weddingblocks_sanitize_color($attributes['buttonColor']) : '#b5a46d';
-$button_bg_color = ! empty($attributes['buttonBgColor']) ? weddingblocks_sanitize_color($attributes['buttonBgColor']) : 'rgba(255, 255, 255, 0.85)';
+// Default kosong = ikut tema warna undangan (--wb-color-*) dari CSS.
+$button_color    = ! empty($attributes['buttonColor']) ? weddingblocks_sanitize_color($attributes['buttonColor']) : '';
+$button_bg_color = ! empty($attributes['buttonBgColor']) ? weddingblocks_sanitize_color($attributes['buttonBgColor']) : '';
 
 $button_class = 'weddingblocks-music-btn paused';
 if ('left' === $button_position) {
     $button_class .= ' weddingblocks-music-btn--left';
 }
+
+$button_style_parts = array('display: none');
+
+if (! empty($button_color)) {
+    $button_style_parts[] = '--wb-music-color: ' . esc_attr($button_color);
+}
+
+if (! empty($button_bg_color)) {
+    $button_style_parts[] = '--wb-music-bg-color: ' . esc_attr($button_bg_color);
+}
+
+$button_style = implode(';', $button_style_parts) . ';';
 ?>
 <div class="weddingblocks-music-container" data-music-url="<?php echo esc_attr($music_url); ?>">
     <audio id="weddingblocks-audio" <?php echo $loop_music ? 'loop' : ''; ?> preload="auto">
         <source src="<?php echo esc_attr($music_url); ?>" type="audio/mpeg">
     </audio>
-    <button id="weddingblocks-music-toggle" class="<?php echo esc_attr($button_class); ?>" aria-label="Toggle Music" style="display: none; --wb-music-color: <?php echo esc_attr($button_color); ?>; --wb-music-bg-color: <?php echo esc_attr($button_bg_color); ?>;">
+    <button id="weddingblocks-music-toggle" class="<?php echo esc_attr($button_class); ?>" aria-label="Toggle Music" style="<?php echo esc_attr($button_style); ?>">
         <svg class="icon-play" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
             <path d="M8 5v14l11-7z" />
         </svg>

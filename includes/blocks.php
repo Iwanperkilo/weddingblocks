@@ -31,14 +31,34 @@ function weddingblocks_register_post_meta()
         'weddingblocks_resepsi_location_address'  => 'string',
         'weddingblocks_maps_coords'               => 'string',
         'weddingblocks_whatsapp_number'           => 'string',
+        // Warna tema undangan (CSS custom properties / design tokens).
+        'weddingblocks_color_primary'             => 'string',
+        'weddingblocks_color_accent'              => 'string',
+        'weddingblocks_color_ink'                 => 'string',
+        'weddingblocks_color_bg'                  => 'string',
+    );
+
+    // Meta warna perlu di-sanitize dengan sanitizer warna khusus (hex/rgba).
+    $color_keys = array(
+        'weddingblocks_color_primary',
+        'weddingblocks_color_accent',
+        'weddingblocks_color_ink',
+        'weddingblocks_color_bg',
     );
 
     foreach ($meta_fields as $meta_key => $type) {
+        $sanitize = 'sanitize_text_field';
+        if (in_array($meta_key, $color_keys, true)) {
+            $sanitize = function_exists('weddingblocks_sanitize_color') ? 'weddingblocks_sanitize_color' : 'sanitize_text_field';
+        } elseif ($meta_key === 'weddingblocks_akad_location_address' || $meta_key === 'weddingblocks_resepsi_location_address') {
+            $sanitize = 'sanitize_textarea_field';
+        }
+
         register_post_meta('wdbl_undangan', $meta_key, array(
             'show_in_rest'      => true,
             'single'            => true,
             'type'              => $type,
-            'sanitize_callback' => ($meta_key === 'weddingblocks_akad_location_address' || $meta_key === 'weddingblocks_resepsi_location_address') ? 'sanitize_textarea_field' : 'sanitize_text_field',
+            'sanitize_callback' => $sanitize,
         ));
     }
 }
@@ -102,7 +122,7 @@ function weddingblocks_register_blocks()
     wp_register_style(
         'weddingblocks-frontend-style',
         WEDDINGBLOCKS_URL . 'assets/css/blocks-frontend.css',
-        array(),
+        array('weddingblocks-fonts-style'),
         file_exists(WEDDINGBLOCKS_PATH . 'assets/css/blocks-frontend.css') ? filemtime(WEDDINGBLOCKS_PATH . 'assets/css/blocks-frontend.css') : WEDDINGBLOCKS_VERSION
     );
     wp_register_style(
@@ -110,6 +130,18 @@ function weddingblocks_register_blocks()
         WEDDINGBLOCKS_URL . 'assets/css/atomic-blocks.css',
         array(),
         WEDDINGBLOCKS_VERSION
+    );
+    wp_register_style(
+        'weddingblocks-fonts-style',
+        WEDDINGBLOCKS_URL . 'assets/css/weddingblocks-fonts.css',
+        array(),
+        file_exists(WEDDINGBLOCKS_PATH . 'assets/css/weddingblocks-fonts.css') ? filemtime(WEDDINGBLOCKS_PATH . 'assets/css/weddingblocks-fonts.css') : WEDDINGBLOCKS_VERSION
+    );
+    wp_register_style(
+        'weddingblocks-theme-style',
+        WEDDINGBLOCKS_URL . 'assets/css/weddingblocks-theme.css',
+        array('weddingblocks-frontend-style', 'weddingblocks-fonts-style'),
+        file_exists(WEDDINGBLOCKS_PATH . 'assets/css/weddingblocks-theme.css') ? filemtime(WEDDINGBLOCKS_PATH . 'assets/css/weddingblocks-theme.css') : WEDDINGBLOCKS_VERSION
     );
     wp_register_style(
         'weddingblocks-editor-preview-style',
@@ -229,3 +261,90 @@ function weddingblocks_render_core_block_animations($block_content, $block)
     return $block_content;
 }
 add_filter('render_block', 'weddingblocks_render_core_block_animations', 10, 2);
+
+/**
+ * Enqueue the WeddingBlocks theme stylesheet on invitation pages only.
+ * Loaded after the base frontend style so the design tokens can override it.
+ */
+function weddingblocks_enqueue_invitation_theme_style()
+{
+    if (is_singular('wdbl_undangan')) {
+        wp_enqueue_style('weddingblocks-theme-style');
+    }
+}
+add_action('wp_enqueue_scripts', 'weddingblocks_enqueue_invitation_theme_style', 20);
+
+/**
+ * Enqueue the theme stylesheet inside the block editor for invitations,
+ * so the editor preview matches the frontend (WYSIWYG).
+ */
+function weddingblocks_enqueue_editor_theme_assets()
+{
+    $screen    = function_exists('get_current_screen') ? get_current_screen() : null;
+    $post_type = ($screen && isset($screen->post_type)) ? $screen->post_type : '';
+
+    if ('wdbl_undangan' === $post_type) {
+        wp_enqueue_style('weddingblocks-theme-style');
+    }
+}
+add_action('enqueue_block_editor_assets', 'weddingblocks_enqueue_editor_theme_assets');
+
+/**
+ * Inject the plugin's default color palette into the editor (theme.json).
+ * This makes the WeddingBlocks brand colors appear as swatches in the
+ * color picker for core blocks too, and exposes --wp--preset--color--wb-*.
+ *
+ * @param array $theme_json Theme JSON data.
+ * @return array
+ */
+function weddingblocks_theme_json_palette($theme_json)
+{
+    $palette = array(
+        array('name' => 'WB Emas',   'slug' => 'wb-gold',    'color' => '#b5a46d'),
+        array('name' => 'WB Aksen',  'slug' => 'wb-accent',  'color' => '#b5a46d'),
+        array('name' => 'WB Teks',   'slug' => 'wb-ink',     'color' => '#2c2c2c'),
+        array('name' => 'WB Muted',  'slug' => 'wb-muted',   'color' => '#655f55'),
+        array('name' => 'WB Latar',  'slug' => 'wb-bg',      'color' => '#fdfbf7'),
+        array('name' => 'WB Kartu',  'slug' => 'wb-surface', 'color' => '#ffffff'),
+    );
+
+    $existing = isset($theme_json['settings']['color']['palette']) ? $theme_json['settings']['color']['palette'] : array();
+    $theme_json['settings']['color']['palette'] = array_merge($existing, $palette);
+
+    return $theme_json;
+}
+add_filter('wp_theme_json_theme', 'weddingblocks_theme_json_palette');
+
+/**
+ * Output per-invitation color overrides (from post meta) as inline CSS
+ * variables on the .weddingblocks-site wrapper.
+ */
+function weddingblocks_output_invitation_theme()
+{
+    if (! is_singular('wdbl_undangan')) {
+        return;
+    }
+
+    $post_id = get_queried_object_id();
+    $map     = array(
+        '--wb-color-primary' => 'weddingblocks_color_primary',
+        '--wb-color-accent'  => 'weddingblocks_color_accent',
+        '--wb-color-ink'     => 'weddingblocks_color_ink',
+        '--wb-color-bg'      => 'weddingblocks_color_bg',
+    );
+
+    $vars = array();
+    foreach ($map as $var => $meta_key) {
+        $value = get_post_meta($post_id, $meta_key, true);
+        if (! empty($value)) {
+            $vars[] = $var . ':' . $value;
+        }
+    }
+
+    if (empty($vars)) {
+        return;
+    }
+
+    echo '<style id="weddingblocks-invitation-theme">.weddingblocks-site{' . esc_attr(implode(';', $vars)) . '}</style>' . "\n";
+}
+add_action('wp_head', 'weddingblocks_output_invitation_theme', 5);

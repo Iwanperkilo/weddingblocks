@@ -75,8 +75,10 @@
         meta.weddingblocks_resepsi_location_address || "Jl. Melati No. 45";
 
       var layoutVariation = attributes.layoutVariation || "horizontal";
-      var primaryColor = attributes.primaryColor || "#b5a46d";
-      var accentColor = attributes.accentColor || "#b5a46d";
+      // Default kosong = ikut tema warna undangan (--wb-color-*). Baru ditulis
+      // inline setelah user mengatur warna di block ini.
+      var primaryColor = attributes.primaryColor || "";
+      var accentColor = attributes.accentColor || "";
       var textColor = attributes.textColor || "";
       var animPanel =
         typeof window.weddingblocksAnimationPanel === "function"
@@ -103,11 +105,15 @@
       var wrapperClassName =
         "weddingblocks-event-info-editor weddingblocks-event-info-editor--" +
         layoutVariation;
-      var wrapperStyle = {
-        "--wb-event-primary-color": primaryColor,
-        "--wb-event-accent-color": accentColor,
-        "--wb-event-button-text-color": getContrastColor(primaryColor),
-      };
+      var wrapperStyle = {};
+      if (primaryColor) {
+        wrapperStyle["--wb-event-primary-color"] = primaryColor;
+      }
+      if (accentColor) {
+        wrapperStyle["--wb-event-accent-color"] = accentColor;
+      }
+      wrapperStyle["--wb-event-button-text-color"] =
+        getContrastColor(primaryColor || "#b5a46d");
 
       if (textColor) {
         wrapperStyle["--wb-event-ink"] = textColor;
@@ -278,7 +284,7 @@
                 colors: colorPalette,
                 label: __("Warna Judul", "weddingblocks"),
                 onChange: function (value) {
-                  setAttributes({ primaryColor: value || "#b5a46d" });
+                  setAttributes({ primaryColor: value || "" });
                 },
               },
               {
@@ -286,7 +292,7 @@
                 colors: colorPalette,
                 label: __("Warna Timeline", "weddingblocks"),
                 onChange: function (value) {
-                  setAttributes({ accentColor: value || "#b5a46d" });
+                  setAttributes({ accentColor: value || "" });
                 },
               },
               {

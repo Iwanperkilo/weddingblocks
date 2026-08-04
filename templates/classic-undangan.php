@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <?php wp_head(); ?>
 </head>
 <body <?php body_class( 'weddingblocks-clean-canvas' ); ?>>
-    <div id="weddingblocks-invitation-container" class="weddingblocks-canvas-wrapper">
+    <div id="weddingblocks-invitation-container" class="weddingblocks-canvas-wrapper weddingblocks-site">
         <?php
         while ( have_posts() ) :
             the_post();

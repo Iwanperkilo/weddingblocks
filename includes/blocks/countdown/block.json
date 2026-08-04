@@ -13,19 +13,19 @@
     },
     "textColor": {
       "type": "string",
-      "default": "#b5a46d"
+      "default": ""
     },
     "labelColor": {
       "type": "string",
-      "default": "#888888"
+      "default": ""
     },
     "boxBackgroundColor": {
       "type": "string",
-      "default": "#ffffff"
+      "default": ""
     },
     "borderColor": {
       "type": "string",
-      "default": "#b5a46d"
+      "default": ""
     },
     "borderWidth": {
       "type": "number",

@@ -376,6 +376,142 @@
 })(window.wp.element, window.wp.blockEditor, window.wp.components, window.wp.i18n, window.wp.editPost, window.wp.plugins, window.wp.data);
 
 /**
+ * Panel "Warna & Tema" — skema warna per undangan.
+ * Menyimpan nilai ke post meta; dikeluarkan frontend sebagai token CSS
+ * (--wb-color-*) oleh weddingblocks_output_invitation_theme() di blocks.php.
+ * Kosongkan semua = pakai warna bawaan plugin.
+ */
+(function (element, components, editPost, plugins, data, i18n) {
+    var el = element.createElement;
+    var __ = i18n.__;
+    var PanelBody = components.PanelBody;
+    var Button = components.Button;
+    var ColorPalette = components.ColorPalette;
+    var BaseControl = components.BaseControl;
+    var PluginDocumentSettingPanel = editPost.PluginDocumentSettingPanel;
+    var registerPlugin = plugins.registerPlugin;
+
+    var WEDDINGBLOCKS_THEME_META_KEYS = [
+        'weddingblocks_color_primary',
+        'weddingblocks_color_accent',
+        'weddingblocks_color_ink',
+        'weddingblocks_color_bg'
+    ];
+
+    // Swatch pilihan cepat (tema populer untuk undangan).
+    var WEDDINGBLOCKS_THEME_SWATCHES = [
+        { name: __('Emas (Default)', 'weddingblocks'), color: '#b5a46d' },
+        { name: __('Gold Muda', 'weddingblocks'), color: '#d4b96a' },
+        { name: __('Burgundy', 'weddingblocks'), color: '#8e3b46' },
+        { name: __('Navy', 'weddingblocks'), color: '#1f3a5f' },
+        { name: __('Hutan', 'weddingblocks'), color: '#2f6b4f' },
+        { name: __('Mawar', 'weddingblocks'), color: '#c9707e' },
+        { name: __('Hitam & Emas', 'weddingblocks'), color: '#1c1d1d' }
+    ];
+
+    function WeddingBlocksThemePanel() {
+        var meta = data.useSelect(function (select) {
+            var editor = select('core/editor');
+            if (!editor || typeof editor.getEditedPostAttribute !== 'function') {
+                return {};
+            }
+            return editor.getEditedPostAttribute('meta') || {};
+        });
+
+        var editorDispatch = data.useDispatch('core/editor');
+        var editPostAction = editorDispatch && editorDispatch.editPost ? editorDispatch.editPost : function () { };
+
+        function updateMeta(key, value) {
+            var newMeta = {};
+            newMeta[key] = value;
+            editPostAction({ meta: newMeta });
+        }
+
+        function resetTheme() {
+            for (var i = 0; i < WEDDINGBLOCKS_THEME_META_KEYS.length; i++) {
+                updateMeta(WEDDINGBLOCKS_THEME_META_KEYS[i], '');
+            }
+        }
+
+        var postType = data.useSelect(function (select) {
+            var editor = select('core/editor');
+            if (!editor || typeof editor.getCurrentPostType !== 'function') {
+                return null;
+            }
+            return editor.getCurrentPostType();
+        });
+
+        if (postType !== 'wdbl_undangan') {
+            return null;
+        }
+
+        var hasCustomColors = false;
+        for (var k = 0; k < WEDDINGBLOCKS_THEME_META_KEYS.length; k++) {
+            if (meta[WEDDINGBLOCKS_THEME_META_KEYS[k]]) {
+                hasCustomColors = true;
+                break;
+            }
+        }
+
+        return el(PluginDocumentSettingPanel, {
+            name: 'weddingblocks-theme-colors',
+            title: __('Tema Warna (WeddingBlocks)', 'weddingblocks'),
+            icon: 'color-picker',
+            initialOpen: false
+        },
+            el('p', {
+                style: { fontSize: '12px', color: '#777', marginTop: '0' }
+            }, __('Atur skema warna undangan ini. Kosongkan semua untuk memakai warna bawaan plugin. Setting warna di masing-masing block tetap menang.', 'weddingblocks')),
+            el(PanelBody, { initialOpen: true, title: __('Skema Warna', 'weddingblocks') },
+                el(BaseControl, { label: __('Warna Utama (judul, tombol, aksen)', 'weddingblocks') },
+                    el(ColorPalette, {
+                        value: meta.weddingblocks_color_primary || undefined,
+                        colors: WEDDINGBLOCKS_THEME_SWATCHES,
+                        clearable: true,
+                        onChange: function (value) { updateMeta('weddingblocks_color_primary', value || ''); }
+                    })
+                ),
+                el(BaseControl, { label: __('Warna Aksen (sekunder)', 'weddingblocks') },
+                    el(ColorPalette, {
+                        value: meta.weddingblocks_color_accent || undefined,
+                        colors: WEDDINGBLOCKS_THEME_SWATCHES,
+                        clearable: true,
+                        onChange: function (value) { updateMeta('weddingblocks_color_accent', value || ''); }
+                    })
+                ),
+                el(BaseControl, { label: __('Warna Teks', 'weddingblocks') },
+                    el(ColorPalette, {
+                        value: meta.weddingblocks_color_ink || undefined,
+                        clearable: true,
+                        onChange: function (value) { updateMeta('weddingblocks_color_ink', value || ''); }
+                    })
+                ),
+                el(BaseControl, { label: __('Warna Latar Halaman', 'weddingblocks') },
+                    el(ColorPalette, {
+                        value: meta.weddingblocks_color_bg || undefined,
+                        clearable: true,
+                        onChange: function (value) { updateMeta('weddingblocks_color_bg', value || ''); }
+                    })
+                ),
+                el('div', { style: { marginTop: '16px' } },
+                    el(Button, {
+                        isSecondary: true,
+                        isDestructive: hasCustomColors,
+                        disabled: !hasCustomColors,
+                        onClick: resetTheme
+                    }, __('Kembalikan ke Warna Bawaan', 'weddingblocks'))
+                )
+            )
+        );
+    }
+
+    registerPlugin('weddingblocks-theme-settings', {
+        render: WeddingBlocksThemePanel
+    });
+
+})(window.wp.element, window.wp.components, window.wp.editPost, window.wp.plugins, window.wp.data, window.wp.i18n);
+
+/**
  * Register filters to extend Core Blocks (Heading, Paragraph, Group, Image, Button, Buttons)
  * with the animation settings panel.
  */

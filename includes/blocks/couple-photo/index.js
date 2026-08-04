@@ -22,7 +22,7 @@
       var shape = attributes.shape || "circle";
       var size = attributes.size || 200;
       var showFrame = attributes.showFrame !== false;
-      var frameColor = attributes.frameColor || "#b5a46d";
+      var frameColor = attributes.frameColor || "";
       var frameWidth = attributes.frameWidth || 3;
       var align = attributes.align || "center";
 
@@ -43,7 +43,10 @@
       var placeholderSvg = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23b5a46d"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
       var displayPhoto = photo || placeholderSvg;
       var imgStyle = { width: size + "px", height: size + "px" };
-      if (showFrame) { imgStyle.borderColor = frameColor; imgStyle.borderWidth = frameWidth + "px"; }
+      if (showFrame) {
+        if (frameColor) { imgStyle.borderColor = frameColor; }
+        imgStyle.borderWidth = frameWidth + "px";
+      }
       var wrapperClass = "weddingblocks-atomic-couple-photo role-" + role + " shape-" + shape + " align-" + align + (showFrame ? " has-frame" : " no-frame");
 
       var animPanel = typeof window.weddingblocksAnimationPanel === "function"
@@ -59,7 +62,7 @@
             el(RangeControl, { label: __("Ukuran Foto (px)", "weddingblocks"), value: size, min: 40, max: 800, onChange: function (v) { props.setAttributes({ size: v }); } }),
             el(Button, { isSecondary: showFrame, isTertiary: !showFrame, onClick: function () { props.setAttributes({ showFrame: !showFrame }); } }, showFrame ? __("Tampilkan Bingkai: ON", "weddingblocks") : __("Tampilkan Bingkai: OFF", "weddingblocks"))
           ),
-          showFrame && el(PanelColorSettings, { title: __("Warna Bingkai", "weddingblocks"), initialOpen: true, colorSettings: [{ value: frameColor, onChange: function (v) { props.setAttributes({ frameColor: v || "#b5a46d" }); }, label: __("Warna Border Foto", "weddingblocks") }] }),
+          showFrame && el(PanelColorSettings, { title: __("Warna Bingkai", "weddingblocks"), initialOpen: true, colorSettings: [{ value: frameColor, onChange: function (v) { props.setAttributes({ frameColor: v || "" }); }, label: __("Warna Border Foto", "weddingblocks") }] }),
           showFrame && el(PanelBody, { initialOpen: true }, el(RangeControl, { label: __("Border (px)", "weddingblocks"), value: frameWidth, min: 1, max: 10, onChange: function (v) { props.setAttributes({ frameWidth: v }); } }))
         ),
         animPanel,

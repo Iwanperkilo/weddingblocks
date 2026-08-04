@@ -38,11 +38,6 @@ $label_color          = ! empty($block_attributes['labelColor']) ? weddingblocks
 $box_background_color = ! empty($block_attributes['boxBackgroundColor']) ? weddingblocks_sanitize_color($block_attributes['boxBackgroundColor']) : '';
 $border_color          = ! empty($block_attributes['borderColor']) ? weddingblocks_sanitize_color($block_attributes['borderColor']) : '';
 
-$text_color           = $text_color ? $text_color : '#b5a46d';
-$label_color          = $label_color ? $label_color : '#888888';
-$box_background_color = $box_background_color ? $box_background_color : '#ffffff';
-$border_color          = $border_color ? $border_color : '#b5a46d';
-
 // Box style controls.
 $border_width  = isset($block_attributes['borderWidth']) ? absint($block_attributes['borderWidth']) : 1;
 $border_radius = isset($block_attributes['borderRadius']) ? absint($block_attributes['borderRadius']) : 15;
@@ -55,10 +50,10 @@ $box_padding_horizontal = isset($block_attributes['boxPaddingHorizontal']) ? abs
 
 $box_shadow_css = $box_shadow ? '3px 6px 8px rgb(145 145 145 / 54%)' : 'none';
 
+// Warna hanya ditulis inline bila dikustom; jika kosong, block mengikuti
+// tema warna undangan (--wb-color-*) dari CSS.
 $item_style = sprintf(
-    'background-color: %1$s; border-color: %2$s; border-width: %3$dpx; border-style: solid; border-radius: %4$dpx; box-shadow: %5$s; padding: %6$dpx %7$dpx;',
-    esc_attr($box_background_color),
-    esc_attr($border_color),
+    'border-width: %1$dpx; border-style: solid; border-radius: %2$dpx; box-shadow: %3$s; padding: %4$dpx %5$dpx;',
     $border_width,
     $border_radius,
     esc_attr($box_shadow_css),
@@ -66,8 +61,24 @@ $item_style = sprintf(
     $box_padding_horizontal
 );
 
-$value_style = sprintf('color: %1$s; font-size: %2$dpx;', esc_attr($text_color), $value_font_size);
-$label_style = sprintf('color: %1$s; font-size: %2$dpx;', esc_attr($label_color), $label_font_size);
+if (! empty($box_background_color)) {
+    $item_style .= ' background-color: ' . esc_attr($box_background_color) . ';';
+}
+
+if (! empty($border_color)) {
+    $item_style .= ' border-color: ' . esc_attr($border_color) . ';';
+}
+
+$value_style = 'font-size: ' . $value_font_size . 'px;';
+if (! empty($text_color)) {
+    $value_style .= ' color: ' . esc_attr($text_color) . ';';
+}
+
+$label_style = 'font-size: ' . $label_font_size . 'px;';
+if (! empty($label_color)) {
+    $label_style .= ' color: ' . esc_attr($label_color) . ';';
+}
+
 $wrapper_style = sprintf('gap: %1$dpx;', $gap);
 
 // Label texts.

@@ -27,7 +27,7 @@ if ($size > 800) {
     $size = 800;
 }
 $show_frame  = isset($attributes['showFrame']) ? (bool) $attributes['showFrame'] : true;
-$frame_color = isset($attributes['frameColor']) && preg_match('/^#[0-9a-fA-F]{3,8}$/', $attributes['frameColor']) ? $attributes['frameColor'] : '#b5a46d';
+$frame_color = isset($attributes['frameColor']) && preg_match('/^#[0-9a-fA-F]{3,8}$/', $attributes['frameColor']) ? $attributes['frameColor'] : '';
 $frame_width = isset($attributes['frameWidth']) ? (int) $attributes['frameWidth'] : 3;
 if ($frame_width < 1) {
     $frame_width = 1;
@@ -55,7 +55,10 @@ $placeholder_svg = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/s
 
 $inline_style = sprintf('width:%1$dpx;height:%1$dpx;', $size);
 if ($show_frame) {
-    $inline_style .= sprintf('border-color:%s;border-width:%dpx;', $frame_color, $frame_width);
+    if ('' !== $frame_color) {
+        $inline_style .= sprintf('border-color:%s;', $frame_color);
+    }
+    $inline_style .= sprintf('border-width:%dpx;', $frame_width);
 }
 $frame_class  = $show_frame ? ' has-frame' : ' no-frame';
 $shape_class  = ' shape-' . sanitize_html_class($shape);

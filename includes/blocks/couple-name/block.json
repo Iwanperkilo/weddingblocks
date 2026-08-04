@@ -43,7 +43,7 @@
     },
     "textColor": {
       "type": "string",
-      "default": "#b5a46d"
+      "default": ""
     },
     "textTransform": {
       "type": "string",

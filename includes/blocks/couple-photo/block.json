@@ -38,7 +38,7 @@
     },
     "frameColor": {
       "type": "string",
-      "default": "#b5a46d"
+      "default": ""
     },
     "frameWidth": {
       "type": "number",

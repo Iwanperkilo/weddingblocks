@@ -27,7 +27,7 @@ $parents_label_font_family = 'georgia';
 $parents_label_text_color = '#000000';
 $name_font_size = 20;
 $name_text_color = '#2c2c2c';
-$avatar_border_color = '#b5a46d';
+$avatar_border_color = '';
 $avatar_border_width = 4;
 
 if (isset($attributes['swapCouple'])) {
@@ -143,15 +143,14 @@ $name_style_attr = sprintf(
 	$name_font_size,
 	esc_attr($name_text_color)
 );
-$avatar_style_attr = sprintf(
-	'border-color: %s; border-width: %dpx; border-style: solid;',
-	esc_attr($avatar_border_color),
-	$avatar_border_width
-);
-$ampersand_style_attr = sprintf(
-	'color: %s !important;',
-	esc_attr($avatar_border_color)
-);
+$avatar_style_attr = 'border-width: ' . $avatar_border_width . 'px; border-style: solid;';
+if ('' !== $avatar_border_color) {
+    $avatar_style_attr = 'border-color: ' . esc_attr($avatar_border_color) . '; ' . $avatar_style_attr;
+}
+$ampersand_style_attr = '';
+if ('' !== $avatar_border_color) {
+    $ampersand_style_attr = 'color: ' . esc_attr($avatar_border_color) . ' !important;';
+}
 
 // Layout class
 $layout_class = $layout === 'vertical' ? 'weddingblocks-couple-columns--vertical' : '';

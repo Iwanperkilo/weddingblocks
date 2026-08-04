@@ -203,11 +203,11 @@
                 },
               },
               {
-                value: attributes.accentColor || "#b5a46d",
+                value: attributes.accentColor || "",
                 colors: customColors,
                 label: __("Warna Aksen & Tombol", "weddingblocks"),
                 onChange: function (value) {
-                  props.setAttributes({ accentColor: value || "#b5a46d" });
+                  props.setAttributes({ accentColor: value || "" });
                 },
               },
             ],
@@ -221,7 +221,7 @@
             style: {
               position: "relative",
               padding: "60px 20px",
-              border: "1px solid " + (attributes.accentColor || "#b5a46d"),
+              border: "1px solid var(--wb-color-primary, #b5a46d)",
               borderRadius: "12px",
               margin: "10px auto",
               maxWidth:
@@ -291,7 +291,7 @@
                   style: {
                     display: "inline-block",
                     padding: "12px 28px",
-                    backgroundColor: attributes.accentColor || "#b5a46d",
+                    backgroundColor: attributes.accentColor || "var(--wb-color-primary, #b5a46d)",
                     color: getContrastColor(attributes.accentColor || "#b5a46d"),
                     borderRadius: buttonBorderRadius + "px",
                     fontSize: "14px",

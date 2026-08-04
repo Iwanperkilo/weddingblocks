@@ -163,7 +163,7 @@ if (! function_exists('weddingblocks_render_flyer')) {
     function weddingblocks_render_flyer($type)
     {
         $top   = wp_rand(5, 75);
-        $dur   = wp_rand(16, 28);
+        $dur   = wp_rand(11, 16);
         $delay = wp_rand(0, 14);
         $scale = wp_rand(75, 125) / 100;
         $flap_dur = wp_rand(35, 50) / 100;

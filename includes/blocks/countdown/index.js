@@ -32,10 +32,11 @@
       });
 
       var weddingDate = meta.weddingblocks_wedding_date || "2026-12-31T09:00";
-      var textColor = attributes.textColor || "#b5a46d";
-      var labelColor = attributes.labelColor || "#888888";
-      var boxBackgroundColor = attributes.boxBackgroundColor || "#ffffff";
-      var borderColor = attributes.borderColor || "#b5a46d";
+      // Default kosong = ikut tema warna undangan (--wb-color-*).
+      var textColor = attributes.textColor || "";
+      var labelColor = attributes.labelColor || "";
+      var boxBackgroundColor = attributes.boxBackgroundColor || "";
+      var borderColor = attributes.borderColor || "";
       var borderWidth = typeof attributes.borderWidth === "number" ? attributes.borderWidth : 1;
       var borderRadius = typeof attributes.borderRadius === "number" ? attributes.borderRadius : 15;
       var boxShadow = typeof attributes.boxShadow === "boolean" ? attributes.boxShadow : true;
@@ -50,21 +51,33 @@
       var labelSeconds = attributes.labelSeconds || __("Detik", "weddingblocks");
 
       var itemStyle = {
-        backgroundColor: boxBackgroundColor,
-        borderColor: borderColor,
         borderWidth: borderWidth + "px",
         borderStyle: "solid",
         borderRadius: borderRadius + "px",
         boxShadow: boxShadow ? "3px 6px 8px rgb(145 145 145 / 54%)" : "none",
         padding: boxPaddingVertical + "px " + boxPaddingHorizontal + "px",
       };
+      if (boxBackgroundColor) {
+        itemStyle.backgroundColor = boxBackgroundColor;
+      }
+      if (borderColor) {
+        itemStyle.borderColor = borderColor;
+      }
 
       var makeItem = function (label) {
+        var valueStyle = { fontSize: valueFontSize + "px" };
+        if (textColor) {
+          valueStyle.color = textColor;
+        }
+        var labelStyle = { fontSize: labelFontSize + "px" };
+        if (labelColor) {
+          labelStyle.color = labelColor;
+        }
         return el(
           "div",
           { className: "countdown-item", style: itemStyle },
-          el("span", { className: "countdown-value", style: { color: textColor, fontSize: valueFontSize + "px" } }, "00"),
-          el("span", { className: "countdown-label", style: { color: labelColor, fontSize: labelFontSize + "px" } }, label)
+          el("span", { className: "countdown-value", style: valueStyle }, "00"),
+          el("span", { className: "countdown-label", style: labelStyle }, label)
         );
       };
 
@@ -80,10 +93,10 @@
             title: __("Pengaturan Warna Countdown", "weddingblocks"),
             initialOpen: true,
             colorSettings: [
-              { value: textColor, colors: colorPalette, label: __("Warna Angka", "weddingblocks"), enableAlpha: true, onChange: function (v) { setAttributes({ textColor: v || "#b5a46d" }); } },
-              { value: labelColor, colors: colorPalette, label: __("Warna Label", "weddingblocks"), enableAlpha: true, onChange: function (v) { setAttributes({ labelColor: v || "#888888" }); } },
-              { value: boxBackgroundColor, colors: colorPalette, label: __("Warna Background Box", "weddingblocks"), enableAlpha: true, onChange: function (v) { setAttributes({ boxBackgroundColor: v || "#ffffff" }); } },
-              { value: borderColor, colors: colorPalette, label: __("Warna Border", "weddingblocks"), enableAlpha: true, onChange: function (v) { setAttributes({ borderColor: v || "#b5a46d" }); } },
+              { value: textColor, colors: colorPalette, label: __("Warna Angka", "weddingblocks"), enableAlpha: true, onChange: function (v) { setAttributes({ textColor: v || "" }); } },
+              { value: labelColor, colors: colorPalette, label: __("Warna Label", "weddingblocks"), enableAlpha: true, onChange: function (v) { setAttributes({ labelColor: v || "" }); } },
+              { value: boxBackgroundColor, colors: colorPalette, label: __("Warna Background Box", "weddingblocks"), enableAlpha: true, onChange: function (v) { setAttributes({ boxBackgroundColor: v || "" }); } },
+              { value: borderColor, colors: colorPalette, label: __("Warna Border", "weddingblocks"), enableAlpha: true, onChange: function (v) { setAttributes({ borderColor: v || "" }); } },
             ],
           }),
           el(PanelBody, { title: __("Pengaturan Box & Tipografi", "weddingblocks"), initialOpen: false },

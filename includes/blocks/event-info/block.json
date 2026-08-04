@@ -41,11 +41,11 @@
         },
         "primaryColor": {
             "type": "string",
-            "default": "#b5a46d"
+            "default": ""
         },
         "accentColor": {
             "type": "string",
-            "default": "#b5a46d"
+            "default": ""
         },
         "textColor": {
             "type": "string",

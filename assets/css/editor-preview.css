@@ -43,7 +43,7 @@
 }
 
 .editor-styles-wrapper .weddingblocks-atomic-couple-photo .atomic-photo {
-    background: #f5f0e6;
+    background: var(--wb-color-surface-tint, #f5f0e6);
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -69,7 +69,7 @@
 }
 
 .editor-styles-wrapper .weddingblocks-atomic-couple-photo.has-frame .atomic-photo {
-    border: 5px solid #b5a46d;
+    border: 5px solid var(--wb-color-primary, #b5a46d);
     background: rgba(255, 255, 255, 0.7);
 }
 
@@ -118,9 +118,9 @@
     border-radius: 50%;
     margin: 0 auto 12px;
     overflow: hidden;
-    border: 3px solid #b5a46d;
+    border: 3px solid var(--wb-color-primary, #b5a46d);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    background: #f5f0e6;
+    background: var(--wb-color-surface-tint, #f5f0e6);
 }
 
 .editor-styles-wrapper .weddingblocks-couple-column .weddingblocks-avatar img {
@@ -133,7 +133,7 @@
 .editor-styles-wrapper .weddingblocks-couple-column h3 {
     font-family: 'Playfair Display', 'Georgia', serif;
     font-size: 18px;
-    color: #2c2c2c;
+    color: var(--wb-color-ink, #2c2c2c);
     margin: 8px 0 4px;
     font-weight: 600;
 }
@@ -141,7 +141,7 @@
 .editor-styles-wrapper .weddingblocks-couple-column p {
     font-family: 'Playfair Display', 'Georgia', serif;
     font-size: 12px;
-    color: #666;
+    color: var(--wb-color-muted, #666);
     margin: 0;
     line-height: 1.4;
 }
@@ -161,7 +161,7 @@
 .editor-styles-wrapper .weddingblocks-ampersand {
     font-family: 'Playfair Display', 'Georgia', serif;
     font-size: 32px;
-    color: #b5a46d;
+    color: var(--wb-color-primary, #b5a46d);
     font-style: italic;
     margin: 0;
 }
@@ -171,8 +171,8 @@
     position: relative;
     container-type: inline-size;
     container-name: wb-event-info;
-    --wb-event-primary-color: #b5a46d;
-    --wb-event-accent-color: #b5a46d;
+    --wb-event-primary-color: var(--wb-color-primary, #b5a46d);
+    --wb-event-accent-color: var(--wb-color-accent, #b5a46d);
 }
 
 .editor-styles-wrapper .weddingblocks-event-info-editor .weddingblocks-event-columns {
@@ -182,7 +182,7 @@
     padding: 20px;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(251, 250, 247, 1) 100%);
     border-radius: 18px;
-    border: 1px solid rgba(181, 164, 109, 0.2);
+    border: 1px solid color-mix(in srgb, var(--wb-color-primary, #b5a46d) 20%, transparent);
     box-shadow: 0 8px 20px rgba(84, 69, 34, 0.06);
 }
 
@@ -191,7 +191,7 @@
     min-width: 0;
     padding: 18px 16px;
     background: #ffffff;
-    border: 1px solid rgba(181, 164, 109, 0.22);
+    border: 1px solid color-mix(in srgb, var(--wb-color-primary, #b5a46d) 22%, transparent);
     border-radius: 14px;
     text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
@@ -221,12 +221,12 @@
     font-family: 'Playfair Display', 'Georgia', serif;
     font-size: 13px;
     margin: 0;
-    color: #555;
+    color: var(--wb-color-muted, #555);
     line-height: 1.7;
 }
 
 .editor-styles-wrapper .weddingblocks-event-info-editor .weddingblocks-event-card p strong {
-    color: #2c2c2c;
+    color: var(--wb-color-ink, #2c2c2c);
     display: block;
     margin-bottom: 6px;
 }
@@ -388,7 +388,7 @@
 
 .editor-styles-wrapper .weddingblocks-countdown .countdown-item {
     background: #ffffff;
-    border: 1px solid rgba(181, 164, 109, 0.3);
+    border: 1px solid color-mix(in srgb, var(--wb-color-primary, #b5a46d) 30%, transparent);
     border-radius: 6px;
     padding: 12px 14px;
     max-width: 60px;
@@ -400,7 +400,7 @@
     font-family: 'Playfair Display', 'Georgia', serif;
     font-size: 22px;
     font-weight: 700;
-    color: #b5a46d;
+    color: var(--wb-color-primary, #b5a46d);
     line-height: 1;
 }
 
@@ -423,7 +423,7 @@
 
 .editor-styles-wrapper .weddingblocks-cover-preview .wb-cover-inner {
     background: #fbfaf7;
-    border: 1px solid rgba(181, 164, 109, 0.2);
+    border: 1px solid color-mix(in srgb, var(--wb-color-primary, #b5a46d) 20%, transparent);
     border-radius: 8px;
     padding: 24px 20px;
     text-align: center;
@@ -432,7 +432,7 @@
 /* === Music Player preview: clean === */
 .editor-styles-wrapper .weddingblocks-music-preview {
     background: #fbfaf7;
-    border: 1px solid rgba(181, 164, 109, 0.2);
+    border: 1px solid color-mix(in srgb, var(--wb-color-primary, #b5a46d) 20%, transparent);
     border-radius: 8px;
     padding: 20px;
     text-align: center;
@@ -443,8 +443,8 @@
     width: 48px;
     height: 48px;
     line-height: 48px;
-    background: rgba(181, 164, 109, 0.12);
-    color: #b5a46d;
+    background: color-mix(in srgb, var(--wb-color-primary, #b5a46d) 12%, transparent);
+    color: var(--wb-color-primary, #b5a46d);
     border-radius: 50%;
     font-size: 22px;
     margin-bottom: 8px;
@@ -452,7 +452,7 @@
 
 .editor-styles-wrapper .weddingblocks-music-preview .wb-music-title {
     font-family: 'Playfair Display', 'Georgia', serif;
-    color: #2c2c2c;
+    color: var(--wb-color-ink, #2c2c2c);
     font-size: 14px;
     font-weight: 600;
     margin: 4px 0;
@@ -467,7 +467,7 @@
 .editor-styles-wrapper .weddingblocks-rsvp-preview,
 .editor-styles-wrapper .weddingblocks-guestbook-preview {
     background: #fbfaf7;
-    border: 1px solid rgba(181, 164, 109, 0.2);
+    border: 1px solid color-mix(in srgb, var(--wb-color-primary, #b5a46d) 20%, transparent);
     border-radius: 8px;
     padding: 20px;
     text-align: center;
@@ -482,7 +482,7 @@
 .editor-styles-wrapper .weddingblocks-rsvp-preview .wb-form-row {
     height: 36px;
     background: #ffffff;
-    border: 1px solid rgba(181, 164, 109, 0.25);
+    border: 1px solid color-mix(in srgb, var(--wb-color-primary, #b5a46d) 25%, transparent);
     border-radius: 6px;
     margin-bottom: 10px;
 }
@@ -494,7 +494,7 @@
 .editor-styles-wrapper .weddingblocks-rsvp-preview .wb-form-button {
     display: inline-block;
     padding: 10px 24px;
-    background: #b5a46d;
+    background: var(--wb-color-primary, #b5a46d);
     color: #fff;
     border-radius: 24px;
     font-size: 12px;
@@ -506,7 +506,7 @@
 
 .editor-styles-wrapper .weddingblocks-guestbook-preview .wb-guestbook-item {
     background: #fff;
-    border: 1px solid rgba(181, 164, 109, 0.2);
+    border: 1px solid color-mix(in srgb, var(--wb-color-primary, #b5a46d) 20%, transparent);
     border-radius: 8px;
     padding: 12px 14px;
     margin-bottom: 8px;
@@ -523,7 +523,7 @@
 .editor-styles-wrapper .weddingblocks-guestbook-preview .wb-guestbook-item .wb-gb-name {
     font-weight: 600;
     font-size: 12px;
-    color: #2c2c2c;
+    color: var(--wb-color-ink, #2c2c2c);
 }
 
 .editor-styles-wrapper .weddingblocks-guestbook-preview .wb-guestbook-item .wb-gb-badge {
@@ -538,7 +538,7 @@
 
 .editor-styles-wrapper .weddingblocks-guestbook-preview .wb-guestbook-item .wb-gb-msg {
     font-size: 11px;
-    color: #555;
+    color: var(--wb-color-muted, #555);
     line-height: 1.5;
     margin: 0 0 4px;
 }
@@ -554,7 +554,7 @@
     padding: 16px;
     text-align: center;
     background: #fbfaf7;
-    border: 1px solid rgba(181, 164, 109, 0.2);
+    border: 1px solid color-mix(in srgb, var(--wb-color-primary, #b5a46d) 20%, transparent);
     border-radius: 8px;
 }
 
@@ -568,7 +568,7 @@
 
 .editor-styles-wrapper .weddingblocks-guest-name-block .guest-name-text {
     font-family: 'Playfair Display', 'Georgia', serif;
-    color: #b5a46d;
+    color: var(--wb-color-primary, #b5a46d);
     margin: 0;
     font-size: 18px;
     font-weight: 600;

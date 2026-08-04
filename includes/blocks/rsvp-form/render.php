@@ -24,20 +24,27 @@ $guest_token = isset($_GET['g']) ? sanitize_text_field(wp_unslash($_GET['g'])) :
 
 // Use the shared color sanitizer (already used by the countdown block) so we
 // never trust raw attribute values as CSS, while still allowing rgba()/alpha.
+// Default kosong = ikut tema warna undangan (--wb-color-*) dari CSS.
 if (function_exists('weddingblocks_sanitize_color')) {
-    $button_color       = ! empty($attributes['buttonColor']) ? weddingblocks_sanitize_color($attributes['buttonColor']) : '#b5a46d';
-    $input_border_color = ! empty($attributes['inputBorderColor']) ? weddingblocks_sanitize_color($attributes['inputBorderColor']) : 'rgba(181, 164, 109, 0.3)';
+    $button_color       = ! empty($attributes['buttonColor']) ? weddingblocks_sanitize_color($attributes['buttonColor']) : '';
+    $input_border_color = ! empty($attributes['inputBorderColor']) ? weddingblocks_sanitize_color($attributes['inputBorderColor']) : '';
 } else {
     // Fallback if the helper isn't loaded yet for some reason.
-    $button_color       = ! empty($attributes['buttonColor']) ? sanitize_text_field($attributes['buttonColor']) : '#b5a46d';
-    $input_border_color = ! empty($attributes['inputBorderColor']) ? sanitize_text_field($attributes['inputBorderColor']) : 'rgba(181, 164, 109, 0.3)';
+    $button_color       = ! empty($attributes['buttonColor']) ? sanitize_text_field($attributes['buttonColor']) : '';
+    $input_border_color = ! empty($attributes['inputBorderColor']) ? sanitize_text_field($attributes['inputBorderColor']) : '';
 }
 
-$rsvp_color_vars = sprintf(
-    '--wb-rsvp-button-color: %s; --wb-rsvp-input-border-color: %s;',
-    esc_attr($button_color),
-    esc_attr($input_border_color)
-);
+$rsvp_color_parts = array();
+
+if (! empty($button_color)) {
+    $rsvp_color_parts[] = '--wb-rsvp-button-color: ' . esc_attr($button_color);
+}
+
+if (! empty($input_border_color)) {
+    $rsvp_color_parts[] = '--wb-rsvp-input-border-color: ' . esc_attr($input_border_color);
+}
+
+$rsvp_color_vars = implode(';', $rsvp_color_parts) . ';';
 
 // Text customization attributes, with sane fallbacks if omitted.
 $show_guests_field   = ! isset($attributes['showGuestsField']) || ! empty($attributes['showGuestsField']);

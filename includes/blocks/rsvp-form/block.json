@@ -10,11 +10,11 @@
   "attributes": {
     "buttonColor": {
       "type": "string",
-      "default": "#b5a46d"
+      "default": ""
     },
     "inputBorderColor": {
       "type": "string",
-      "default": "rgba(181, 164, 109, 0.3)"
+      "default": ""
     },
     "showGuestsField": {
       "type": "boolean",

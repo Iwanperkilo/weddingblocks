@@ -19,7 +19,7 @@ $button_border_radius = isset($attributes['buttonBorderRadius']) ? intval($attri
 // Style attributes
 $overlay_opacity = isset($attributes['overlayOpacity']) ? intval($attributes['overlayOpacity']) : 35;
 $overlay_color = ! empty($attributes['overlayColor']) ? sanitize_hex_color($attributes['overlayColor']) : '#000000';
-$accent_color = ! empty($attributes['accentColor']) ? sanitize_hex_color($attributes['accentColor']) : '#b5a46d';
+$accent_color = ! empty($attributes['accentColor']) ? sanitize_hex_color($attributes['accentColor']) : '';
 
 $bg_style = $bg_image ? "background-image: url('$bg_image');" : "";
 
@@ -46,6 +46,11 @@ if ('mobile' === $cover_width_mode) {
 
 $button_text_color = weddingblocks_get_contrast_color($accent_color);
 
+$button_style = 'border-radius:' . $button_border_radius . 'px;';
+if ('' !== $accent_color) {
+    $button_style .= ' background-color:' . $accent_color . '; border-color:' . $accent_color . '; color:' . $button_text_color . ';';
+}
+
 $wrapper_attributes = get_block_wrapper_attributes(
     array(
         'id'    => 'weddingblocks-cover',
@@ -60,7 +65,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
     <div class="weddingblocks-cover-content">
         <?php echo wp_kses_post($content); ?>
 
-        <button id="weddingblocks-open-btn" type="button" class="weddingblocks-btn-gold" style="background-color: <?php echo esc_attr($accent_color); ?>; border-color: <?php echo esc_attr($accent_color); ?>; color: <?php echo esc_attr($button_text_color); ?>; border-radius: <?php echo esc_attr($button_border_radius); ?>px;">
+        <button id="weddingblocks-open-btn" type="button" class="weddingblocks-btn-gold" style="<?php echo esc_attr($button_style); ?>">
             <svg class="icon-mail" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="margin-right: 8px; vertical-align: middle;">
                 <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
             </svg>
