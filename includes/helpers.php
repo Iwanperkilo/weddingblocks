@@ -46,7 +46,9 @@ if (! function_exists('weddingblocks_get_animation_attrs')) {
             return array();
         }
 
-        $allowed = array('fadeUp', 'fadeIn', 'slideLeft', 'slideRight', 'zoomIn');
+        // Extensible: an add-on (e.g. WeddingBlocks Pro) can register new
+        // entrance animation styles by hooking 'weddingblocks_animation_styles'.
+        $allowed = apply_filters('weddingblocks_animation_styles', array('fadeUp', 'fadeIn', 'slideLeft', 'slideRight', 'zoomIn'));
         if (! in_array($style, $allowed, true)) {
             return array();
         }

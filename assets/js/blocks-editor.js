@@ -34,14 +34,14 @@
                 el(SelectControl, {
                     label: __('Jenis Animasi', 'weddingblocks'),
                     value: animationStyle,
-                    options: [
+                    options: [].concat([
                         { label: __('Tanpa Animasi', 'weddingblocks'), value: 'none' },
                         { label: __('Fade Up (Naik)', 'weddingblocks'), value: 'fadeUp' },
                         { label: __('Fade In (Muncul)', 'weddingblocks'), value: 'fadeIn' },
                         { label: __('Slide dari Kiri', 'weddingblocks'), value: 'slideLeft' },
                         { label: __('Slide dari Kanan', 'weddingblocks'), value: 'slideRight' },
                         { label: __('Zoom In (Membesar)', 'weddingblocks'), value: 'zoomIn' }
-                    ],
+                    ], window.wbdingAnimationsOptions || []),
                     onChange: function (value) {
                         setAttributes({ animationStyle: value });
                     }
@@ -50,8 +50,9 @@
                     label: __('Durasi (ms)', 'weddingblocks'),
                     value: animationDuration,
                     min: 200,
-                    max: 1500,
+                    max: 6000,
                     step: 100,
+                    help: __('Semakin besar nilainya, semakin lambat animasinya.', 'weddingblocks'),
                     onChange: function (value) {
                         setAttributes({ animationDuration: value !== undefined ? value : 600 });
                     }
@@ -60,7 +61,7 @@
                     label: __('Tunda / Delay (ms)', 'weddingblocks'),
                     value: animationDelay,
                     min: 0,
-                    max: 1000,
+                    max: 3000,
                     step: 100,
                     help: __('Berguna untuk efek stagger antar block.', 'weddingblocks'),
                     onChange: function (value) {
