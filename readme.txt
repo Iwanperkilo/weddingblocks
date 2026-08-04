@@ -101,7 +101,6 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 * RSVP Form - Added an optional hidden guest-token field, passed through to the RSVP submission when present in the URL. No effect on its own; lays the groundwork for an upcoming add-on to link RSVP submissions back to an imported guest list.
 * Design Tokens & Theme-Independent Styling - The invitation now ships with its own default color tokens and typography (h1-h4, paragraph) that no longer depend on the active theme, while remaining editable per-invitation (via a new "Tema Warna" panel) and per-block. Brand colors were migrated to CSS custom properties so a theme color change cascades consistently across all blocks.
 * Self-Hosted Local Fonts - Montserrat, Playfair Display, and Great Vibes are now bundled locally (woff2, latin subset) so the plugin's typography renders consistently without relying on any external CDN, matching WordPress.org best practices.
-* Decorative Bird Animation - Fixed the flying-bird animation so birds no longer wait/queue visibly at the screen edge during their delay, and sped up their flight on both desktop and mobile.
 
 = 1.2.0 =
 * Animation System - Added a centralized animation system with 5 entrance animation styles (fadeUp, fadeIn, slideLeft, slideRight, zoomIn).
