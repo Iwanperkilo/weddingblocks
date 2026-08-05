@@ -27,6 +27,10 @@ if (! empty($block_attributes['targetDate'])) {
 } else {
     $target = get_post_meta(get_the_ID(), 'weddingblocks_wedding_date', true);
 }
+// Fallback: izinkan add-on menyediakan tanggal
+if (empty($target)) {
+    $target = apply_filters('weddingblocks_countdown_fallback_target', '', get_the_ID());
+}
 if (empty($target)) {
     $target = '2026-12-31T09:00';
 }
@@ -93,7 +97,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
             'style'       => $wrapper_style,
             'data-target' => $target,
         ),
-        weddingblocks_get_animation_attrs( $block_attributes )
+        weddingblocks_get_animation_attrs($block_attributes)
     )
 );
 ?>
