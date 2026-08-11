@@ -146,3 +146,5 @@ Initial release of WeddingBlocks. No upgrades required.
 == Credits ==
 
 Made with ❤️ by **Perkilo** ([github.com/iwanperkilo](https://github.com/iwanperkilo)) for the wedding community.
+
+Bundled fonts (Montserrat, Playfair Display, and Great Vibes) are licensed under the SIL Open Font License 1.1 — see `assets/fonts/OFL.txt` for the license text and copyright notices. The plugin itself is licensed under GPL v2 or later.

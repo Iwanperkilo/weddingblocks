@@ -16,3 +16,16 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 Full license text: https://www.gnu.org/licenses/gpl-2.0.txt
+
+------------------------------------------------------------
+
+Bundled Fonts
+
+The font files shipped with this plugin (assets/fonts/*.woff2 —
+Montserrat, Playfair Display, and Great Vibes) are NOT covered by the
+GPL license above. They are licensed under the SIL Open Font License,
+Version 1.1, and are redistributed unmodified as downloaded from Google
+Fonts.
+
+See assets/fonts/OFL.txt for the full license text and the copyright
+notices of each font.

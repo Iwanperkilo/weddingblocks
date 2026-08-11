@@ -23,8 +23,8 @@ $empty_state_text   = isset( $attributes['emptyStateText'] ) && '' !== $attribut
     ? $attributes['emptyStateText']
     : __( 'Belum ada ucapan. Jadilah yang pertama memberikan doa restu!', 'weddingblocks' );
 $message_max_length = isset( $attributes['messageMaxLength'] ) ? absint( $attributes['messageMaxLength'] ) : 0;
-$card_background     = isset( $attributes['cardBackgroundColor'] ) ? $attributes['cardBackgroundColor'] : '';
-$card_border_color   = isset( $attributes['cardBorderColor'] ) ? $attributes['cardBorderColor'] : '';
+$card_background     = isset( $attributes['cardBackgroundColor'] ) ? weddingblocks_sanitize_color( $attributes['cardBackgroundColor'] ) : '';
+$card_border_color   = isset( $attributes['cardBorderColor'] ) ? weddingblocks_sanitize_color( $attributes['cardBorderColor'] ) : '';
 
 $card_style_parts = array();
 if ( '' !== $card_background ) {

@@ -38,9 +38,6 @@
     text-align: center;
 }
 
-/* Ensure typography imports and sizes are correct in editor */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Great+Vibes&display=swap');
-
 .weddingblocks-cover-title {
     font-family: 'Playfair Display', serif !important;
     color: #333;
