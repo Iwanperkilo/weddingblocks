@@ -4,7 +4,7 @@
  * Plugin Name: WeddingBlocks
  * Plugin URI: https://wordpress.org/plugins/weddingblocks/
  * Description: A digital invitation plugin based on Gutenberg & Full Site Editing (FSE) with a modern, interactive, and easily customizable design.
- * Version: 1.3.0
+ * Version: 1.4.0
  * Author: Perkilo
  * Author URI: https://github.com/iwanperkilo
  * License: GPLv2 or later
@@ -16,7 +16,7 @@ if (! defined('ABSPATH')) {
 }
 
 // Define Constants.
-define('WEDDINGBLOCKS_VERSION', '1.3.0');
+define('WEDDINGBLOCKS_VERSION', '1.4.0');
 define('WEDDINGBLOCKS_PATH', plugin_dir_path(__FILE__));
 define('WEDDINGBLOCKS_URL', plugin_dir_url(__FILE__));
 

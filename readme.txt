@@ -2,9 +2,9 @@
 Contributors: iwanperkilo
 Tags: wedding, invitation, gutenberg, fse, blocks
 Requires at least: 6.7
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.3.0
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Plugin URI: https://wordpress.org/plugins/weddingblocks/
@@ -91,6 +91,12 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 
 == Changelog ==
 
+= 1.4.0 =
+* WordPress 7.1 compatibility - Tested with WordPress 7.1 including the iframed editor, the updated @wordpress/components, and the persistent editor toolbar.
+* Couple Title Font Picker - New "Jenis Font Nama Cover" control in the Typography panel for the couple-title block: Playfair Display, Great Vibes, Montserrat, Georgia, System, Sans-serif, and Monospace — all bundled locally or system-based, so no extra webfonts are loaded.
+* Theme & WordPress Font Library support - The picker automatically lists fonts registered by the theme (theme.json) and fonts installed through the WordPress Font Library (e.g. uploaded custom fonts), stored as their raw CSS stack and rendered by WordPress on the frontend.
+* Live editor preview - The cover title updates instantly when you change the font, with output that matches the guest view (font-family applied with !important to stay consistent with the cover theme styles).
+
 = 1.3.0 =
 * Continuous / Attention Animations - Added a second, independent animation layer for looping effects: Sway, Float, Pulse, Wobble, and Shake.
 * Each block can combine an entrance animation and a continuous effect at the same time without conflicting (the continuous effect waits for the entrance animation to finish first).
@@ -133,6 +139,9 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 * Zero external dependencies
 
 == Upgrade Notice ==
+
+= 1.4.0 =
+Adds full WordPress 7.1 compatibility (Tested up to: 7.1) and a font picker to the WB Nama Cover block (couple-title) with built-in, theme, and WordPress Font Library fonts. Safe to upgrade, no breaking changes. Recommended for all installations.
 
 = 1.3.0 =
 This version adds continuous/looping animations (Sway, Float, Pulse, Wobble, Shake) and new Decorative Layer/Wrapper blocks. Safe to upgrade, no breaking changes.

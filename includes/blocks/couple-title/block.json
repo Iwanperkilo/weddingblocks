@@ -40,6 +40,10 @@
             "type": "boolean",
             "default": false
         },
+        "fontFamily": {
+            "type": "string",
+            "default": ""
+        },
         "animationStyle": {
             "type": "string",
             "default": "fadeIn"

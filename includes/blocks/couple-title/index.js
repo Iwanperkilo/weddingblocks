@@ -31,6 +31,76 @@
     { name: __("Sangat Besar", "weddingblocks"), slug: "x-large", size: "64px" },
   ];
 
+  // Font bawaan (tanpa webfont tambahan — semuanya sudah dibundel plugin
+  // atau memakai stack sistem WordPress). Kunci -> CSS font-family.
+  var coupleTitleFonts = {
+    playfair: "'Playfair Display', Georgia, serif",
+    greatvibes: "'Great Vibes', cursive",
+    montserrat: "'Montserrat', sans-serif",
+    georgia: "Georgia, 'Times New Roman', serif",
+    system: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+    "sans-serif": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    monospace: "'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace",
+  };
+
+  var coupleTitleFontLabels = {
+    playfair: __("Playfair Display (Serif Elegan)", "weddingblocks"),
+    greatvibes: __("Great Vibes (Kaligrafi)", "weddingblocks"),
+    montserrat: __("Montserrat (Sans-serif Modern)", "weddingblocks"),
+    georgia: __("Georgia (Serif Klasik)", "weddingblocks"),
+    system: __("System (Bawaan WordPress)", "weddingblocks"),
+    "sans-serif": __("Sans-serif", "weddingblocks"),
+    monospace: __("Monospace", "weddingblocks"),
+  };
+
+  // Font yang terdaftar dari tema (theme.json) dan Font Library WordPress.
+  // Nilainya adalah CSS font-family mentah (mis. var(--wp--preset--font-family--x)).
+  function mergeCoupleTitleWpFonts(fonts) {
+    var out = [];
+    if (!Array.isArray(fonts)) {
+      return out;
+    }
+    var builtins = [];
+    Object.keys(coupleTitleFonts).forEach(function (key) {
+      builtins.push(coupleTitleFonts[key].toLowerCase().replace(/\s+/g, " "));
+    });
+    for (var i = 0; i < fonts.length; i++) {
+      var f = fonts[i];
+      if (!f || !f.name || !f.fontFamily) {
+        continue;
+      }
+      var normalized = String(f.fontFamily).toLowerCase().replace(/\s+/g, " ");
+      if (builtins.indexOf(normalized) !== -1) {
+        continue;
+      }
+      out.push({ label: String(f.name), value: String(f.fontFamily) });
+    }
+    return out;
+  }
+
+  // Bersihkan nilai CSS font-family agar aman untuk output (tanpa `;`, `{`, `}`, HTML).
+  function sanitizeCoupleTitleFontCss(value) {
+    var cleaned = String(value || "")
+      .replace(/[^\w\s,()'"\-.]/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+    if (!cleaned || cleaned.length > 300) {
+      return "";
+    }
+    return cleaned;
+  }
+
+  // Resolve nilai atribut font -> CSS font-family ("" bila default/bawaan).
+  function resolveCoupleTitleFont(value) {
+    if (!value || value === "default") {
+      return "";
+    }
+    if (coupleTitleFonts[value]) {
+      return coupleTitleFonts[value];
+    }
+    return sanitizeCoupleTitleFontCss(value);
+  }
+
   var separatorPresets = [
     { label: "&", value: "&" },
     { label: "\u2764\ufe0f", value: "\u2764\ufe0f" },
@@ -74,6 +144,45 @@
         }
         return editor.getEditedPostAttribute("meta") || {};
       }, []);
+
+      // Gabungkan font dari semua origin (theme, custom/Font Library, core)
+      // yang terdapat di __experimentalFeatures — bukan typography.fontFamilies
+      // yang kosong di pengaturan editor.
+      function collectEditorFontFamilies(features) {
+        var out = [];
+        if (
+          !features ||
+          !features.typography ||
+          !features.typography.fontFamilies
+        ) {
+          return out;
+        }
+        var groups = features.typography.fontFamilies;
+        if (Array.isArray(groups)) {
+          return groups.slice();
+        }
+        Object.keys(groups).forEach(function (origin) {
+          var list = groups[origin];
+          if (Array.isArray(list)) {
+            out = out.concat(list);
+          }
+        });
+        return out;
+      }
+
+      var wpFontFamilies = wp.data.useSelect(function (select) {
+        var settings = select("core/block-editor").getSettings();
+        return collectEditorFontFamilies(
+          settings && settings.__experimentalFeatures
+            ? settings.__experimentalFeatures
+            : null,
+        );
+      }, []);
+
+      var currentFont =
+        attributes.fontFamily ||
+        attributes.wbproFontFamily ||
+        "";
 
       var groomName =
         attributes.groomName || meta.weddingblocks_groom_name || "";
@@ -122,6 +231,32 @@
       }
       if (attributes.style && attributes.style.typography && attributes.style.typography.fontSize) {
         titleStyle.fontSize = attributes.style.typography.fontSize;
+      }
+
+      // Font Nama Cover: React tidak mendukung `!important` pada inline style,
+// jadi preview diterapkan imperatif lewat ref + setProperty("important")
+// agar menang atas `.weddingblocks-cover-title` {font-family: Playfair !important}.
+      var currentFontStack = resolveCoupleTitleFont(currentFont);
+
+      var fontRef = element.createRef();
+      var useEffect = element.useEffect;
+      if (typeof useEffect === "function") {
+        useEffect(
+          function () {
+            if (fontRef && fontRef.current) {
+              if (currentFontStack) {
+                fontRef.current.style.setProperty(
+                  "font-family",
+                  currentFontStack,
+                  "important",
+                );
+              } else {
+                fontRef.current.style.removeProperty("font-family");
+              }
+            }
+          },
+          [currentFontStack],
+        );
       }
 
       var animPanel = typeof window.weddingblocksAnimationPanel === "function"
@@ -179,6 +314,34 @@
                   }),
                 });
               },
+            }),
+            el(SelectControl, {
+              label: __("Jenis Font Nama Cover", "weddingblocks"),
+              value: currentFont,
+              options: (function () {
+                var options = [
+                  { label: __("Bawaan", "weddingblocks"), value: "" },
+                ];
+                Object.keys(coupleTitleFonts).forEach(function (key) {
+                  options.push({
+                    label: coupleTitleFontLabels[key] || key,
+                    value: key,
+                  });
+                });
+                mergeCoupleTitleWpFonts(wpFontFamilies).forEach(
+                  function (font) {
+                    options.push({ label: font.label, value: font.value });
+                  },
+                );
+                return options;
+              })(),
+              onChange: function (value) {
+                setAttributes({ fontFamily: value });
+              },
+              help: __(
+                "Pilih jenis huruf untuk judul Nama Cover. Font tema dan font dari Font Library WordPress otomatis tersedia.",
+                "weddingblocks",
+              ),
             }),
             el(
               "div",
@@ -252,6 +415,7 @@
             {
               className: "weddingblocks-couple-title-text weddingblocks-cover-title",
               style: titleStyle,
+              ref: fontRef,
             },
             transformText(groomDisplay) + " ",
             el(

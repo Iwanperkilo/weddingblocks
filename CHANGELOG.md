@@ -7,6 +7,26 @@ dan plugin ini menganut [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.4.0] - 2026-08-17
+
+## Added (Ditambahkan)
+
+- **Kompatibilitas WordPress 7.1** — Diuji dengan WordPress 7.1 (iframed editor, pembaruan `@wordpress/components`, dan persistent toolbar). Tidak diperlukan perubahan kode; `Tested up to` pada readme.txt diperbarui ke 7.1.
+- **Pilih font untuk block `couple-title` (WB Nama Cover)** — kontrol **"Jenis Font Nama Cover"** di panel Tipografi editor: Playfair Display, Great Vibes, Montserrat, Georgia, System, Sans-serif, Monospace (semua tanpa webfont tambahan — memakai font yang sudah dibundel/kemampuan sistem), plus otomatis menyertakan font yang didaftarkan tema (`theme.json`) dan font dari **Font Library WordPress** (nilai CSS mentahnya disimpan dan dirender WordPress di frontend). Preview editor berubah langsung dan output `<h1>` memakai `font-family ... !important` agar konsisten dengan cover theme.css. Menggantikan fitur eksperimental di plugin Pro yang telah dipindah ke sini (nilai lama `wbproFontFamily` tetap dikenali).
+
+## [1.3.0] - 2026-08-XX
+
+## Added (Ditambahkan)
+
+- **Continuous / Attention Animations** — Lapisan animasi kedua yang independen untuk efek berulang: Sway, Float, Pulse, Wobble, dan Shake. Block bisa memakai entrance animation dan efek berkelanjutan sekaligus tanpa bertabrakan (efek berkelanjutan menunggu entrance animation selesai dulu).
+- Kontrol **Kecepatan** dan **Intensitas** untuk semua animasi berkelanjutan, plus **Titik Goyang** (pivot point) untuk Sway, Wobble, dan Pulse.
+- Animasi berkelanjutan berhenti otomatis saat block keluar layar dan dimatikan penuh di bawah `prefers-reduced-motion` (konsisten dengan perilaku accessibility entrance animation).
+- **Decorative Layer & Decorative Wrapper** — Dua block baru untuk membungkus area konten dengan elemen dekoratif melayang (kupu-kupu, burung, salju) tanpa memengaruhi layout di bawahnya.
+- **Extensibility** — Titik hook action/filter internal pada registrasi block, penyimpanan RSVP, dan tabel RSVP admin sebagai fondasi untuk add-on.
+- **RSVP Form** — Field tersembunyi opsional `guest-token` yang diteruskan pada submit RSVP bila ada di URL. Fondasi untuk add-on yang akan menautkan RSVP ke daftar tamu yang diimpor.
+- **Design Tokens & Theme-Independent Styling** — Undangan kini punya token warna dan tipografi bawaan sendiri (h1-h4, paragraph) yang tidak bergantung pada tema aktif, tetap bisa diedit per-undangan (panel "Tema Warna") dan per-block. Warna brand dimigrasi ke CSS custom properties agar perubahan tema mengalir konsisten ke semua block.
+- **Self-Hosted Local Fonts** — Montserrat, Playfair Display, dan Great Vibes dibundel lokal (woff2, subset latin) agar tipografi plugin konsisten tanpa bergantung CDN eksternal (paling benar menurut praktik WordPress.org).
+
 ## [1.0.0] - 2025-01-XX
 
 ### 🎉 Rilis Awal
