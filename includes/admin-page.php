@@ -67,9 +67,41 @@ function weddingblocks_render_admin_rsvp_page()
         'post_status'    => 'any',
     ));
 
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only status filter parameter.
+    $status_filter = '';
+    if (isset($_GET['status'])) {
+        $status_filter = sanitize_text_field(wp_unslash($_GET['status']));
+    } elseif (isset($_GET['wbpro_status'])) {
+        $status_filter = sanitize_text_field(wp_unslash($_GET['wbpro_status']));
+    }
+    $allowed_status = (array) apply_filters('weddingblocks_allowed_rsvp_statuses', array('pending', 'approved', 'hidden'));
+    if (! in_array($status_filter, $allowed_status, true)) {
+        $status_filter = '';
+    }
+
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only search parameter.
+    $search = '';
+    if (isset($_GET['s'])) {
+        $search = sanitize_text_field(wp_unslash($_GET['s']));
+    } elseif (isset($_GET['wbpro_search'])) {
+        $search = sanitize_text_field(wp_unslash($_GET['wbpro_search']));
+    }
+
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only attendance filter parameter.
+    $attendance_filter = '';
+    if (isset($_GET['attendance'])) {
+        $attendance_filter = sanitize_text_field(wp_unslash($_GET['attendance']));
+    } elseif (isset($_GET['wbpro_attendance'])) {
+        $attendance_filter = sanitize_text_field(wp_unslash($_GET['wbpro_attendance']));
+    }
+    $allowed_attendance = array('hadir', 'tidak_hadir', 'ragu_ragu');
+    if (! in_array($attendance_filter, $allowed_attendance, true)) {
+        $attendance_filter = '';
+    }
+
     // Fetch RSVP records.
-    $rsvps       = weddingblocks_get_rsvps($post_filter, $per_page, $offset);
-    $total_items = weddingblocks_get_rsvps_count($post_filter);
+    $rsvps       = weddingblocks_get_rsvps($post_filter, $per_page, $offset, $status_filter, $search, $attendance_filter);
+    $total_items = weddingblocks_get_rsvps_count($post_filter, $status_filter, $search, $attendance_filter);
     $total_pages = ceil($total_items / $per_page);
 
 ?>
@@ -119,14 +151,24 @@ function weddingblocks_render_admin_rsvp_page()
             </div>
         </form>
 
+        <?php
+        /**
+         * Extension point: Pro (or other add-ons) can inject extra filter
+         * controls — e.g. a status dropdown for moderation — right above
+         * the RSVP table without touching Free's core filter form.
+         */
+        do_action('weddingblocks_rsvp_before_table');
+        ?>
+
         <!-- RSVP Table -->
         <table class="wp-list-table widefat fixed striped table-view-list rsvps">
             <thead>
                 <tr>
+                    <?php do_action('weddingblocks_rsvp_head_begin'); ?>
                     <th scope="col" class="manage-column column-name" style="width: 15%;"><?php esc_html_e('Nama Tamu', 'weddingblocks'); ?></th>
                     <th scope="col" class="manage-column column-invitation" style="width: 20%;"><?php esc_html_e('Undangan', 'weddingblocks'); ?></th>
                     <th scope="col" class="manage-column column-attendance" style="width: 12%;"><?php esc_html_e('Kehadiran', 'weddingblocks'); ?></th>
-                    <th scope="col" class="manage-column column-guests" style="width: 10%;"><?php esc_html_e('Jumlah Pax', 'weddingblocks'); ?></th>
+                    <th scope="col" class="manage-column column-guests" style="width: 10%;"><?php esc_html_e('Pax', 'weddingblocks'); ?></th>
                     <th scope="col" class="manage-column column-message" style="width: 28%;"><?php esc_html_e('Ucapan & Doa Restu', 'weddingblocks'); ?></th>
                     <th scope="col" class="manage-column column-date" style="width: 15%;"><?php esc_html_e('Tanggal Kirim', 'weddingblocks'); ?></th>
                     <?php
@@ -144,34 +186,37 @@ function weddingblocks_render_admin_rsvp_page()
                         $invitation_title = get_the_title($rsvp->post_id);
                         $invitation_link  = get_edit_post_link($rsvp->post_id);
 
-                        // Badge styling.
-                        $badge_class = 'status-default';
+                        // Attendance badge styling.
+                        $attendance_style = '';
                         $attendance_label = '';
                         switch ($rsvp->attendance) {
                             case 'hadir':
-                                $badge_class = 'notice-success';
+                                $attendance_style = 'background: #edfaef; color: #008a20; border: 1px solid #c2ecc6;';
                                 $attendance_label = __('Hadir', 'weddingblocks');
                                 break;
                             case 'tidak_hadir':
-                                $badge_class = 'notice-error';
+                                $attendance_style = 'background: #fcf0f1; color: #d63638; border: 1px solid #f8d7da;';
                                 $attendance_label = __('Tidak Hadir', 'weddingblocks');
                                 break;
                             case 'ragu_ragu':
-                                $badge_class = 'notice-warning';
+                                $attendance_style = 'background: #fcf9e8; color: #996800; border: 1px solid #faeab9;';
                                 $attendance_label = __('Ragu-ragu', 'weddingblocks');
                                 break;
                         }
                     ?>
                         <tr>
+                            <?php do_action('weddingblocks_rsvp_row_begin', $rsvp); ?>
                             <td class="column-name">
                                 <strong><?php echo esc_html($rsvp->guest_name); ?></strong>
-                                <div class="row-actions">
-                                    <span class="delete">
-                                        <a href="<?php echo esc_url(wp_nonce_url(add_query_arg(array('action' => 'delete', 'id' => $rsvp->id)), 'delete_rsvp_' . $rsvp->id)); ?>" class="submitdelete" onclick="return confirm('Apakah Anda yakin ingin menghapus data RSVP ini?');">
-                                            <?php esc_html_e('Hapus', 'weddingblocks'); ?>
-                                        </a>
-                                    </span>
-                                </div>
+                                <?php if (apply_filters('weddingblocks_show_rsvp_row_actions', true, $rsvp)) : ?>
+                                    <div class="row-actions">
+                                        <span class="delete">
+                                            <a href="<?php echo esc_url(wp_nonce_url(add_query_arg(array('action' => 'delete', 'id' => $rsvp->id)), 'delete_rsvp_' . $rsvp->id)); ?>" class="submitdelete" onclick="return confirm('<?php echo esc_js(__('Apakah Anda yakin ingin menghapus data RSVP ini?', 'weddingblocks')); ?>');">
+                                                <?php esc_html_e('Hapus', 'weddingblocks'); ?>
+                                            </a>
+                                        </span>
+                                    </div>
+                                <?php endif; ?>
                             </td>
                             <td class="column-invitation">
                                 <?php if ($invitation_title) : ?>
@@ -183,9 +228,11 @@ function weddingblocks_render_admin_rsvp_page()
                                 <?php endif; ?>
                             </td>
                             <td class="column-attendance">
-                                <span class="badge notice <?php echo esc_attr($badge_class); ?>" style="padding: 3px 8px; border-radius: 4px; font-weight: 600; display: inline-block;">
-                                    <?php echo esc_html($attendance_label); ?>
-                                </span>
+                                <?php if ($attendance_label) : ?>
+                                    <span class="wb-rsvp-attendance" style="display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; <?php echo esc_attr($attendance_style); ?>">
+                                        <?php echo esc_html($attendance_label); ?>
+                                    </span>
+                                <?php endif; ?>
                             </td>
                             <td class="column-guests">
                                 <?php echo intval($rsvp->guests_count); ?>
@@ -210,8 +257,17 @@ function weddingblocks_render_admin_rsvp_page()
                         </tr>
                     <?php endforeach; ?>
                 <?php else : ?>
+                    <?php
+                    // Base columns: Nama, Undangan, Kehadiran, Pax, Ucapan, Tanggal.
+                    // Add-ons that inject extra <th>/<td> pairs above (via
+                    // weddingblocks_rsvp_head_begin / _table_head) should report
+                    // how many columns they added here, so the empty-state row
+                    // always spans the table's actual current width instead of
+                    // a number that goes stale the next time a column is added.
+                    $wbdl_rsvp_extra_columns = (int) apply_filters('weddingblocks_rsvp_extra_columns', 0);
+                    ?>
                     <tr>
-                        <td colspan="6" class="colspanchange">
+                        <td colspan="<?php echo esc_attr(6 + $wbdl_rsvp_extra_columns); ?>" class="colspanchange">
                             <?php esc_html_e('Tidak ada data RSVP ditemukan.', 'weddingblocks'); ?>
                         </td>
                     </tr>

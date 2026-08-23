@@ -4,7 +4,7 @@ Tags: wedding, invitation, gutenberg, fse, blocks
 Requires at least: 6.7
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Plugin URI: https://wordpress.org/plugins/weddingblocks/
@@ -91,6 +91,12 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 
 == Changelog ==
 
+= 1.4.1 =
+* Database & RSVP Queries - Enhanced `weddingblocks_get_rsvps()` and `weddingblocks_get_rsvps_count()` with dynamic search, attendance, and optional status filtering via extensible hooks (`weddingblocks_rsvp_search_fields`, `weddingblocks_rsvp_enable_status_filter`).
+* Cache Reliability - Optimized RSVP count cache handling to ensure accurate and immediate cache invalidation on RSVP submission or deletion.
+* Admin RSVP Improvements - Restored native row-action delete button and added clean native attendance status badge styling on the RSVP admin dashboard.
+* Extensibility - Added new action and filter hooks (`weddingblocks_show_rsvp_row_actions`, `weddingblocks_rsvp_extra_columns`, `weddingblocks_clear_rsvps_count_cache`) for seamless add-on integration.
+
 = 1.4.0 =
 * WordPress 7.1 compatibility - Tested with WordPress 7.1 including the iframed editor, the updated @wordpress/components, and the persistent editor toolbar.
 * Couple Title Font Picker - New "Jenis Font Nama Cover" control in the Typography panel for the couple-title block: Playfair Display, Great Vibes, Montserrat, Georgia, System, Sans-serif, and Monospace — all bundled locally or system-based, so no extra webfonts are loaded.
@@ -139,6 +145,9 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 * Zero external dependencies
 
 == Upgrade Notice ==
+
+= 1.4.1 =
+Maintenance release with optimized database queries, improved RSVP count caching, and enhanced admin RSVP list stability. Recommended for all users.
 
 = 1.4.0 =
 Adds full WordPress 7.1 compatibility (Tested up to: 7.1) and a font picker to the WB Nama Cover block (couple-title) with built-in, theme, and WordPress Font Library fonts. Safe to upgrade, no breaking changes. Recommended for all installations.

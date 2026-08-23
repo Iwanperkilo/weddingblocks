@@ -90,60 +90,137 @@ function weddingblocks_save_rsvp($data)
 /**
  * Retrieve RSVPs.
  *
- * @param int $post_id Optional filter by invitation post ID.
- * @param int $limit Number of records to return.
- * @param int $offset Offset for pagination.
+ * @param int    $post_id Optional filter by invitation post ID.
+ * @param int    $limit   Number of records to return.
+ * @param int    $offset  Offset for pagination.
+ * @param string $status  Optional status filter: 'pending'|'approved'|'hidden'.
+ * @param string $search  Optional search term for guest name or WA.
+ * @param string $attendance Optional attendance filter: 'hadir'|'tidak_hadir'|'ragu_ragu'.
  * @return array List of RSVPs.
  */
-function weddingblocks_get_rsvps($post_id = 0, $limit = 100, $offset = 0)
+function weddingblocks_get_rsvps($post_id = 0, $limit = 100, $offset = 0, $status = '', $search = '', $attendance = '')
 {
     global $wpdb;
     $table_name = $wpdb->prefix . 'weddingblocks_rsvps';
 
-    $sql = "SELECT * FROM $table_name";
+    $sql    = "SELECT * FROM $table_name";
     $params = array();
 
     if ($post_id > 0) {
-        $sql .= " WHERE post_id = %d";
+        $sql     .= " WHERE post_id = %d";
         $params[] = $post_id;
     }
 
-    $sql .= " ORDER BY created_at DESC LIMIT %d OFFSET %d";
+    // Status filter is only enabled if an add-on (e.g. Pro) supports it.
+    if (! empty($status) && apply_filters('weddingblocks_rsvp_enable_status_filter', false)) {
+        $sql     .= (empty($params) ? ' WHERE ' : ' AND ') . 'status = %s';
+        $params[] = $status;
+    }
+
+    if (! empty($search)) {
+        $search_term   = '%' . $wpdb->esc_like($search) . '%';
+        $search_fields = (array) apply_filters('weddingblocks_rsvp_search_fields', array('guest_name'));
+        $clauses       = array();
+
+        foreach ($search_fields as $field) {
+            $field = preg_replace('/[^a-zA-Z0-9_]/', '', $field);
+            if (! empty($field)) {
+                $clauses[] = "$field LIKE %s";
+                $params[]  = $search_term;
+            }
+        }
+
+        if (! empty($clauses)) {
+            $sql .= (empty($params) ? ' WHERE ' : ' AND ') . '(' . implode(' OR ', $clauses) . ')';
+        }
+    }
+
+    if (! empty($attendance)) {
+        $sql     .= (empty($params) ? ' WHERE ' : ' AND ') . 'attendance = %s';
+        $params[] = $attendance;
+    }
+
+    $sql     .= " ORDER BY created_at DESC LIMIT %d OFFSET %d";
     $params[] = intval($limit);
     $params[] = intval($offset);
 
     // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
-    return $wpdb->get_results($wpdb->prepare($sql, $params));
+    return $wpdb->get_results($wpdb->prepare($sql, ...$params));
 }
 
 /**
  * Count total RSVPs.
  *
- * @param int $post_id Optional filter by invitation post ID.
+ * @param int    $post_id    Optional filter by invitation post ID.
+ * @param string $status     Optional status filter: 'pending'|'approved'|'hidden'.
+ * @param string $search     Optional search term for guest name or WA.
+ * @param string $attendance Optional attendance filter: 'hadir'|'tidak_hadir'|'ragu_ragu'.
  * @return int Total RSVP count.
  */
-function weddingblocks_get_rsvps_count($post_id = 0)
+function weddingblocks_get_rsvps_count($post_id = 0, $status = '', $search = '', $attendance = '')
 {
     global $wpdb;
     $table_name = $wpdb->prefix . 'weddingblocks_rsvps';
 
+    $is_filtered = (! empty($status) || ! empty($search) || ! empty($attendance));
     $cache_key   = 'weddingblocks_rsvps_count_' . intval($post_id);
     $cache_group = 'weddingblocks';
 
-    $cached = wp_cache_get($cache_key, $cache_group);
-    if (false !== $cached) {
-        return intval($cached);
+    // Only cache base (unfiltered) count to ensure accurate cache invalidation on inserts/deletes.
+    if (! $is_filtered) {
+        $cached = wp_cache_get($cache_key, $cache_group);
+        if (false !== $cached) {
+            return intval($cached);
+        }
     }
 
+    $params = array();
     if ($post_id > 0) {
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
-        $count = intval($wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $table_name WHERE post_id = %d", $post_id)));
+        $sql      = "SELECT COUNT(*) FROM $table_name WHERE post_id = %d";
+        $params[] = $post_id;
     } else {
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
-        $count = intval($wpdb->get_var("SELECT COUNT(*) FROM $table_name"));
+        $sql = "SELECT COUNT(*) FROM $table_name";
     }
 
-    wp_cache_set($cache_key, $count, $cache_group, 5 * MINUTE_IN_SECONDS);
+    if (! empty($status) && apply_filters('weddingblocks_rsvp_enable_status_filter', false)) {
+        $sql     .= (empty($params) ? ' WHERE ' : ' AND ') . 'status = %s';
+        $params[] = $status;
+    }
+
+    if (! empty($search)) {
+        $search_term   = '%' . $wpdb->esc_like($search) . '%';
+        $search_fields = (array) apply_filters('weddingblocks_rsvp_search_fields', array('guest_name'));
+        $clauses       = array();
+
+        foreach ($search_fields as $field) {
+            $field = preg_replace('/[^a-zA-Z0-9_]/', '', $field);
+            if (! empty($field)) {
+                $clauses[] = "$field LIKE %s";
+                $params[]  = $search_term;
+            }
+        }
+
+        if (! empty($clauses)) {
+            $sql .= (empty($params) ? ' WHERE ' : ' AND ') . '(' . implode(' OR ', $clauses) . ')';
+        }
+    }
+
+    if (! empty($attendance)) {
+        $sql     .= (empty($params) ? ' WHERE ' : ' AND ') . 'attendance = %s';
+        $params[] = $attendance;
+    }
+
+    if (! empty($params)) {
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
+        $count = (int) $wpdb->get_var($wpdb->prepare($sql, ...$params));
+    } else {
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
+        $count = (int) $wpdb->get_var($sql);
+    }
+
+    if (! $is_filtered) {
+        wp_cache_set($cache_key, $count, $cache_group, 5 * MINUTE_IN_SECONDS);
+    }
 
     return $count;
 }
@@ -158,6 +235,8 @@ function weddingblocks_clear_rsvps_count_cache($post_id)
     $cache_group = 'weddingblocks';
     wp_cache_delete('weddingblocks_rsvps_count_' . intval($post_id), $cache_group);
     wp_cache_delete('weddingblocks_rsvps_count_0', $cache_group);
+
+    do_action('weddingblocks_clear_rsvps_count_cache', $post_id);
 }
 
 /**

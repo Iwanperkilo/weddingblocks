@@ -7,6 +7,18 @@ dan plugin ini menganut [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.4.1] - 2026-08-23
+
+### Added (Ditambahkan)
+- **Extensibility Hooks untuk RSVP Query** — Filter `weddingblocks_rsvp_search_fields` untuk memperluas pencarian database dan `weddingblocks_rsvp_enable_status_filter` untuk filter status modular.
+- **Filter UI & Tampilan Admin** — Filter `weddingblocks_show_rsvp_row_actions` untuk mengontrol visibilitas baris aksi tombol Hapus, serta filter `weddingblocks_rsvp_extra_columns` untuk penyesuaian lebar tabel kosong secara otomatis.
+- **Action Hook Pembersihan Cache** — Action `weddingblocks_clear_rsvps_count_cache` untuk memudahkan add-on menyinkronkan pembersihan cache hitungan RSVP.
+
+### Fixed & Improved (Diperbaiki & Ditingkatkan)
+- **Optimasi Database Query** — Query database pada `weddingblocks_get_rsvps()` dan `weddingblocks_get_rsvps_count()` kini 100% mandiri, bebas dari potensi error kolom `phone` atau `status` jika add-on tidak aktif.
+- **RSVP Count Cache Invalidation** — Perbaikan invalidasi cache jumlah RSVP agar langsung terhapus saat data RSVP baru masuk atau dihapus, mencegah data *stale* pada persistent object cache.
+- **Dasbor Admin RSVP** — Pemulihan tombol aksi "Hapus" bawaan dan penambahan badge styling kehadiran bawaan yang rapi dan mandiri tanpa memerlukan CSS eksternal.
+
 ## [1.4.0] - 2026-08-17
 
 ## Added (Ditambahkan)
