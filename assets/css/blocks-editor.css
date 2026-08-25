@@ -3,10 +3,10 @@
  */
 
 /* Adjust block layouts inside editor container */
-.wp-block[data-type^="weddingblocks/"] {
+/* .wp-block[data-type^="weddingblocks/"] {
     margin-top: 20px;
     margin-bottom: 20px;
-}
+} */
 
 /* Specific resets for editor view to prevent full-screen takeover */
 .weddingblocks-cover-wrapper {
