@@ -51,8 +51,7 @@
         el("div", useBlockProps({ key: "editor-preview", className: "weddingblocks-guest-name-block", style: { backgroundColor: attributes.backgroundColor, textAlign: attributes.textAlign } }),
           el("span", { className: "wb-editor-badge" }, el("span", { className: "wb-editor-badge-icon" }, "\uD83D\uDC64"), __("Nama Tamu", "weddingblocks")),
           attributes.showPrefix ? el("p", { className: "guest-prefix-text", style: { color: attributes.textColor } }, attributes.prefix) : null,
-          el("h4", { className: "guest-name-text", style: { color: attributes.textColor, fontSize: nameFontSize } }, attributes.fallback),
-          el("small", { style: { display: "block", marginTop: "8px", color: "#888", fontSize: "10px" } }, "\uD83D\uDCA1 Akan diganti dengan ?to=NamaTamu di URL asli.")
+          el("h4", { className: "guest-name-text", style: { color: attributes.textColor, fontSize: nameFontSize } }, attributes.fallback)
         ),
       ];
     },

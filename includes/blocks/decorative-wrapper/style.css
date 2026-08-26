@@ -18,3 +18,22 @@
     display: none !important;
   }
 }
+
+/* Kompensasi admin bar WP untuk elemen bervisor 100vh di dalam wrapper.
+   Dinamis: berlaku untuk blok APA PUN (group, columns, cover, image, dll)
+   yang menyuntikkan 100vh ke inline style-nya — tidak terbatas group.
+   WP memakai `html { margin-top: 32px }` (46px di mobile) saat toolbar
+   tampil, sehingga elemen 100vh "kepotong" di bawah layar. Kurangi tinggi
+   sesuai tinggi admin bar agar pas di viewport. !important diperlukan
+   untuk menimpa inline style `min-height/height:100vh` dari core block. */
+body.admin-bar .wb-decor-wrapper [style*="100vh"] {
+  min-height: calc(100vh - 32px) !important;
+  height: calc(100vh - 32px) !important;
+}
+
+@media screen and (max-width: 782px) {
+  body.admin-bar .wb-decor-wrapper [style*="100vh"] {
+    min-height: calc(100vh - 46px) !important;
+    height: calc(100vh - 46px) !important;
+  }
+}
