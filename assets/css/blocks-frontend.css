@@ -519,7 +519,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
 
 /* --- 7. GUESTBOOK / UCAPAN LIST --- */
 .weddingblocks-guestbook-container {
-  max-width: 600px;
+  max-width: 100%;
   margin: 0 auto;
   text-align: left;
 }
@@ -531,7 +531,6 @@ body.admin-bar .weddingblocks-cover-wrapper {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  padding: 10px;
 }
 
 /* Custom Scrollbar for Guestbook */
