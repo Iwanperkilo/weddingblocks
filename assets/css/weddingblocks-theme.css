@@ -39,12 +39,12 @@
 .weddingblocks-site {
   background-color: var(--wb-color-bg);
   color: var(--wb-color-ink);
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--wb-font-body, "Montserrat", sans-serif);
   line-height: 1.7;
 }
 
 .editor-styles-wrapper {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--wb-font-body, "Montserrat", sans-serif);
   line-height: 1.7;
 }
 
@@ -53,7 +53,7 @@
    ================================ */
 .weddingblocks-site .wp-block-heading,
 .editor-styles-wrapper .wp-block-heading {
-  font-family: "Playfair Display", "Georgia", serif;
+  font-family: var(--wb-font-heading, "Playfair Display", "Georgia", serif);
   color: var(--wb-color-ink);
 }
 

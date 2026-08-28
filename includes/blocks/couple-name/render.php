@@ -21,7 +21,7 @@ $name_type  = isset($attributes['nameType']) ? sanitize_key($attributes['nameTyp
 $align      = isset($attributes['align']) ? sanitize_key($attributes['align']) : 'center';
 
 $font_size      = isset($attributes['fontSize']) ? intval($attributes['fontSize']) : 32;
-$font_family    = isset($attributes['fontFamily']) ? sanitize_text_field($attributes['fontFamily']) : 'playfair';
+$font_family    = isset($attributes['fontFamily']) ? sanitize_text_field($attributes['fontFamily']) : 'default';
 $text_color     = isset($attributes['textColor']) ? sanitize_hex_color($attributes['textColor']) : '';
 $text_transform = isset($attributes['textTransform']) ? sanitize_key($attributes['textTransform']) : 'none';
 
@@ -49,17 +49,27 @@ if ('nickname' === $name_type) {
 
 $wrapper_class = 'weddingblocks-atomic-couple-name role-' . sanitize_html_class($role) . ' type-' . sanitize_html_class($name_type) . ' align-' . sanitize_html_class($align);
 
-$font_family_css = 'serif';
-if ('playfair' === $font_family) {
-    $font_family_css = "'Playfair Display', Georgia, serif";
-} elseif ('greatvibes' === $font_family) {
-    $font_family_css = "'Great Vibes', cursive";
-} elseif ('montserrat' === $font_family) {
-    $font_family_css = "'Montserrat', sans-serif";
-} elseif ('georgia' === $font_family) {
-    $font_family_css = 'Georgia, serif';
-} elseif ('sans-serif' === $font_family) {
-    $font_family_css = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+// Font family mapping: jika 'default' / kosong, biarkan kosong agar mewarisi font tema
+$font_family_style = '';
+if (! empty($font_family) && 'default' !== $font_family) {
+    if ('playfair' === $font_family) {
+        $font_family_style = " font-family: 'Playfair Display', Georgia, serif !important;";
+    } elseif ('greatvibes' === $font_family) {
+        $font_family_style = " font-family: 'Great Vibes', cursive !important;";
+    } elseif ('montserrat' === $font_family) {
+        $font_family_style = " font-family: 'Montserrat', sans-serif !important;";
+    } elseif ('georgia' === $font_family) {
+        $font_family_style = " font-family: Georgia, serif !important;";
+    } elseif ('sans-serif' === $font_family) {
+        $font_family_style = " font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;";
+    } else {
+        $cleaned = (string) preg_replace('/[^a-zA-Z0-9\s,()\'"-.]/', '', wp_strip_all_tags($font_family));
+        $cleaned = preg_replace('/\s+/', ' ', $cleaned);
+        $font_stack = trim($cleaned);
+        if ('' !== $font_stack && strlen($font_stack) <= 300) {
+            $font_family_style = ' font-family: ' . $font_stack . ' !important;';
+        }
+    }
 }
 
 $color_style = '';
@@ -68,9 +78,9 @@ if ('' !== $text_color) {
 }
 
 $style_attr = sprintf(
-    'font-size:%1$dpx; font-family:%2$s;%3$s text-transform:%4$s;',
+    'font-size:%1$dpx;%2$s%3$s text-transform:%4$s;',
     $font_size,
-    $font_family_css,
+    $font_family_style,
     $color_style,
     $text_transform
 );

@@ -20,6 +20,92 @@
     { name: "Emas Gelap", color: "#8a7a4f" },
   ];
 
+  var coupleInfoBuiltins = {
+    playfair: "'Playfair Display', Georgia, serif",
+    greatvibes: "'Great Vibes', cursive",
+    montserrat: "'Montserrat', sans-serif",
+    georgia: "Georgia, 'Times New Roman', serif",
+    system: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+    "sans-serif": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    monospace: "'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace",
+  };
+
+  var coupleInfoFontLabels = {
+    playfair: "Playfair Display",
+    greatvibes: "Great Vibes",
+    montserrat: "Montserrat",
+    georgia: "Georgia",
+    system: "System (WordPress)",
+    "sans-serif": "Sans-serif",
+    monospace: "Monospace",
+  };
+
+  function mergeCoupleInfoWpFonts(fonts) {
+    var out = [];
+    if (!Array.isArray(fonts)) {
+      return out;
+    }
+    var builtins = [];
+    Object.keys(coupleInfoBuiltins).forEach(function (key) {
+      builtins.push(coupleInfoBuiltins[key].toLowerCase().replace(/\s+/g, " "));
+    });
+    for (var i = 0; i < fonts.length; i++) {
+      var f = fonts[i];
+      if (!f || !f.name || !f.fontFamily) {
+        continue;
+      }
+      var normalized = String(f.fontFamily).toLowerCase().replace(/\s+/g, " ");
+      if (builtins.indexOf(normalized) !== -1) {
+        continue;
+      }
+      out.push({ label: String(f.name), value: String(f.fontFamily) });
+    }
+    return out;
+  }
+
+  function sanitizeCoupleInfoFontCss(value) {
+    var cleaned = String(value || "")
+      .replace(/[^\w\s,()'"\-.]/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+    if (!cleaned || cleaned.length > 300) {
+      return "";
+    }
+    return cleaned;
+  }
+
+  function resolveCoupleInfoFont(value) {
+    if (!value || value === "default") {
+      return "";
+    }
+    if (coupleInfoBuiltins[value]) {
+      return coupleInfoBuiltins[value];
+    }
+    return sanitizeCoupleInfoFontCss(value);
+  }
+
+  function collectEditorFontFamilies(features) {
+    var out = [];
+    if (
+      !features ||
+      !features.typography ||
+      !features.typography.fontFamilies
+    ) {
+      return out;
+    }
+    var groups = features.typography.fontFamilies;
+    if (Array.isArray(groups)) {
+      return groups.slice();
+    }
+    Object.keys(groups).forEach(function (origin) {
+      var list = groups[origin];
+      if (Array.isArray(list)) {
+        out = out.concat(list);
+      }
+    });
+    return out;
+  }
+
   blocks.registerBlockType("weddingblocks/couple-info", {
     edit: function (props) {
       var attributes = props.attributes;
@@ -31,6 +117,16 @@
         }
         return editor.getEditedPostAttribute("meta") || {};
       });
+
+      var wpFontFamilies = wp.data.useSelect(function (select) {
+        var settings = select("core/block-editor").getSettings();
+        return collectEditorFontFamilies(
+          settings && settings.__experimentalFeatures
+            ? settings.__experimentalFeatures
+            : null
+        );
+      }, []);
+
       var placeholderSvg =
         'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23b5a46d"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
 
@@ -73,25 +169,14 @@
       var avatarBorderColor = attributes.avatarBorderColor;
       var avatarBorderWidth = attributes.avatarBorderWidth;
 
-      // Font family mapping for editor
-      var fontFamilyCss = "Georgia, serif";
-      if ("playfair" === parentsLabelFontFamily) {
-        fontFamilyCss = "'Playfair Display', Georgia, serif";
-      } else if ("greatvibes" === parentsLabelFontFamily) {
-        fontFamilyCss = "'Great Vibes', cursive";
-      } else if ("montserrat" === parentsLabelFontFamily) {
-        fontFamilyCss = "'Montserrat', sans-serif";
-      } else if ("georgia" === parentsLabelFontFamily) {
-        fontFamilyCss = "Georgia, serif";
-      } else if ("sans-serif" === parentsLabelFontFamily) {
-        fontFamilyCss =
-          "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-      }
+      var fontFamilyCss = resolveCoupleInfoFont(parentsLabelFontFamily);
       var parentsLabelStyle = {
         fontSize: parentsLabelFontSize + "px",
-        fontFamily: fontFamilyCss,
         color: parentsLabelTextColor,
       };
+      if (fontFamilyCss) {
+        parentsLabelStyle.fontFamily = fontFamilyCss;
+      }
       var nameStyle = {
         fontSize: nameFontSize + "px",
         color: nameTextColor,
@@ -114,6 +199,22 @@
       var animPanel = typeof window.weddingblocksAnimationPanel === "function"
         ? window.weddingblocksAnimationPanel(attributes, setAttributes)
         : null;
+
+      var fontOptions = (function () {
+        var options = [
+          { label: __("Bawaan Tema (Otomatis)", "weddingblocks"), value: "default" },
+        ];
+        Object.keys(coupleInfoBuiltins).forEach(function (key) {
+          options.push({
+            label: coupleInfoFontLabels[key] || key,
+            value: key,
+          });
+        });
+        mergeCoupleInfoWpFonts(wpFontFamilies).forEach(function (font) {
+          options.push({ label: font.label, value: font.value });
+        });
+        return options;
+      })();
 
       return el(
         "div",
@@ -256,16 +357,11 @@
             el(SelectControl, {
               label: __("Gaya Font", "weddingblocks"),
               value: parentsLabelFontFamily,
-              options: [
-                { label: "Playfair Display", value: "playfair" },
-                { label: "Great Vibes", value: "greatvibes" },
-                { label: "Montserrat", value: "montserrat" },
-                { label: "Georgia", value: "georgia" },
-                { label: "Sans-serif", value: "sans-serif" },
-              ],
+              options: fontOptions,
               onChange: function (value) {
                 setAttributes({ parentsLabelFontFamily: value });
               },
+              help: __("Pilih jenis huruf untuk nama orang tua. Font tema dan font dari Font Library WordPress otomatis tersedia.", "weddingblocks")
             }),
           ),
         ),

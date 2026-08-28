@@ -112,30 +112,33 @@ if (empty($parents_label_bride)) {
 	$parents_label_bride = __('Putri dari Bapak & Ibu Orang Tua Wanita', 'weddingblocks');
 }
 
-// Font family mapping for frontend
-switch ($parents_label_font_family) {
-	case 'playfair':
-		$font_family_css = "'Playfair Display', Georgia, serif";
-		break;
-	case 'greatvibes':
-		$font_family_css = "'Great Vibes', cursive";
-		break;
-	case 'montserrat':
-		$font_family_css = "'Montserrat', sans-serif";
-		break;
-	case 'sans-serif':
-		$font_family_css = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-		break;
-	case 'georgia':
-	default:
-		$font_family_css = "Georgia, serif";
-		break;
+// Font family mapping for frontend: jika 'default' / kosong, biarkan kosong agar mewarisi font tema (--wb-font-body)
+$parents_font_style = '';
+if (! empty($parents_label_font_family) && 'default' !== $parents_label_font_family) {
+	if ('playfair' === $parents_label_font_family) {
+		$parents_font_style = " font-family: 'Playfair Display', Georgia, serif !important;";
+	} elseif ('greatvibes' === $parents_label_font_family) {
+		$parents_font_style = " font-family: 'Great Vibes', cursive !important;";
+	} elseif ('montserrat' === $parents_label_font_family) {
+		$parents_font_style = " font-family: 'Montserrat', sans-serif !important;";
+	} elseif ('georgia' === $parents_label_font_family) {
+		$parents_font_style = " font-family: Georgia, serif !important;";
+	} elseif ('sans-serif' === $parents_label_font_family) {
+		$parents_font_style = " font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;";
+	} else {
+		$cleaned = (string) preg_replace('/[^a-zA-Z0-9\s,()\'"-.]/', '', wp_strip_all_tags($parents_label_font_family));
+		$cleaned = preg_replace('/\s+/', ' ', $cleaned);
+		$font_stack = trim($cleaned);
+		if ('' !== $font_stack && strlen($font_stack) <= 300) {
+			$parents_font_style = ' font-family: ' . $font_stack . ' !important;';
+		}
+	}
 }
 
 $parents_label_style_attr = sprintf(
-	'font-size: %dpx; font-family: %s; color: %s;',
+	'font-size: %dpx;%s color: %s;',
 	$parents_label_font_size,
-	esc_attr($font_family_css),
+	$parents_font_style,
 	esc_attr($parents_label_text_color)
 );
 $name_style_attr = sprintf(

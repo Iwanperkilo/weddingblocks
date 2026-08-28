@@ -320,7 +320,7 @@
               value: currentFont,
               options: (function () {
                 var options = [
-                  { label: __("Bawaan", "weddingblocks"), value: "" },
+                  { label: __("Bawaan Tema (Otomatis)", "weddingblocks"), value: "" },
                 ];
                 Object.keys(coupleTitleFonts).forEach(function (key) {
                   options.push({

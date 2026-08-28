@@ -39,7 +39,7 @@
     },
     "fontFamily": {
       "type": "string",
-      "default": "playfair"
+      "default": "default"
     },
     "textColor": {
       "type": "string",

@@ -17,6 +17,94 @@
     { name: "Rose Gold", color: "#b76e79" },
   ];
 
+  var coupleNameBuiltins = {
+    playfair: "'Playfair Display', Georgia, serif",
+    greatvibes: "'Great Vibes', cursive",
+    montserrat: "'Montserrat', sans-serif",
+    georgia: "Georgia, 'Times New Roman', serif",
+    system: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+    "sans-serif": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    monospace: "'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace",
+  };
+
+  var coupleNameFontLabels = {
+    playfair: __("Playfair Display (Serif Elegan)", "weddingblocks"),
+    greatvibes: __("Great Vibes (Kaligrafi)", "weddingblocks"),
+    montserrat: __("Montserrat (Sans-serif Modern)", "weddingblocks"),
+    georgia: __("Georgia (Serif Klasik)", "weddingblocks"),
+    system: __("System (Bawaan WordPress)", "weddingblocks"),
+    "sans-serif": __("Sans-serif", "weddingblocks"),
+    monospace: __("Monospace", "weddingblocks"),
+  };
+
+  // Font yang terdaftar dari tema (theme.json) dan Font Library WordPress.
+  function mergeCoupleNameWpFonts(fonts) {
+    var out = [];
+    if (!Array.isArray(fonts)) {
+      return out;
+    }
+    var builtins = [];
+    Object.keys(coupleNameBuiltins).forEach(function (key) {
+      builtins.push(coupleNameBuiltins[key].toLowerCase().replace(/\s+/g, " "));
+    });
+    for (var i = 0; i < fonts.length; i++) {
+      var f = fonts[i];
+      if (!f || !f.name || !f.fontFamily) {
+        continue;
+      }
+      var normalized = String(f.fontFamily).toLowerCase().replace(/\s+/g, " ");
+      if (builtins.indexOf(normalized) !== -1) {
+        continue;
+      }
+      out.push({ label: String(f.name), value: String(f.fontFamily) });
+    }
+    return out;
+  }
+
+  function sanitizeCoupleNameFontCss(value) {
+    var cleaned = String(value || "")
+      .replace(/[^\w\s,()'"\-.]/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+    if (!cleaned || cleaned.length > 300) {
+      return "";
+    }
+    return cleaned;
+  }
+
+  function resolveCoupleNameFont(value) {
+    if (!value || value === "default") {
+      return "";
+    }
+    if (coupleNameBuiltins[value]) {
+      return coupleNameBuiltins[value];
+    }
+    return sanitizeCoupleNameFontCss(value);
+  }
+
+  // Ekstrak font families dari semua origin (__experimentalFeatures / Font Library)
+  function collectEditorFontFamilies(features) {
+    var out = [];
+    if (
+      !features ||
+      !features.typography ||
+      !features.typography.fontFamilies
+    ) {
+      return out;
+    }
+    var groups = features.typography.fontFamilies;
+    if (Array.isArray(groups)) {
+      return groups.slice();
+    }
+    Object.keys(groups).forEach(function (origin) {
+      var list = groups[origin];
+      if (Array.isArray(list)) {
+        out = out.concat(list);
+      }
+    });
+    return out;
+  }
+
   blocks.registerBlockType("weddingblocks/couple-name", {
     edit: function (props) {
       var attributes = props.attributes;
@@ -26,11 +114,21 @@
         return editor.getEditedPostAttribute("meta") || {};
       });
 
+      // Baca daftar font dari block-editor __experimentalFeatures (Theme + WP Font Library)
+      var wpFontFamilies = wp.data.useSelect(function (select) {
+        var settings = select("core/block-editor").getSettings();
+        return collectEditorFontFamilies(
+          settings && settings.__experimentalFeatures
+            ? settings.__experimentalFeatures
+            : null
+        );
+      }, []);
+
       var role = attributes.role || "groom";
       var nameType = attributes.nameType || "full";
       var align = attributes.align || "center";
       var fontSize = attributes.fontSize || 32;
-      var fontFamily = attributes.fontFamily || "playfair";
+      var fontFamily = attributes.fontFamily || "default";
       var textColor = attributes.textColor || "";
       var textTransform = attributes.textTransform || "none";
 
@@ -54,19 +152,54 @@
         ? (nickName || fullName || fallback)
         : (fullName || nickName || fallback);
 
-      var fontFamilyCSS = "serif";
-      if (fontFamily === "playfair") fontFamilyCSS = "'Playfair Display', Georgia, serif";
-      else if (fontFamily === "greatvibes") fontFamilyCSS = "'Great Vibes', cursive";
-      else if (fontFamily === "montserrat") fontFamilyCSS = "'Montserrat', sans-serif";
-      else if (fontFamily === "georgia") fontFamilyCSS = "Georgia, serif";
-      else if (fontFamily === "sans-serif") fontFamilyCSS = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+      var currentFontStack = resolveCoupleNameFont(fontFamily);
 
-      var previewStyle = { fontSize: fontSize + "px", fontFamily: fontFamilyCSS, textTransform: textTransform };
+      // React inline style { fontFamily: ... } tidak mendukung !important,
+      // terapkan secara imperatif lewat ref + setProperty("important") agar menang
+      // atas stylesheet tema di editor.
+      var fontRef = element.createRef();
+      var useEffect = element.useEffect;
+      if (typeof useEffect === "function") {
+        useEffect(
+          function () {
+            if (fontRef && fontRef.current) {
+              if (currentFontStack) {
+                fontRef.current.style.setProperty(
+                  "font-family",
+                  currentFontStack,
+                  "important"
+                );
+              } else {
+                fontRef.current.style.removeProperty("font-family");
+              }
+            }
+          },
+          [currentFontStack]
+        );
+      }
+
+      var previewStyle = { fontSize: fontSize + "px", textTransform: textTransform };
       if (textColor) { previewStyle.color = textColor; }
 
       var animPanel = typeof window.weddingblocksAnimationPanel === "function"
         ? window.weddingblocksAnimationPanel(attributes, props.setAttributes)
         : null;
+
+      var fontOptions = (function () {
+        var options = [
+          { label: __("Bawaan Tema (Otomatis)", "weddingblocks"), value: "default" },
+        ];
+        Object.keys(coupleNameBuiltins).forEach(function (key) {
+          options.push({
+            label: coupleNameFontLabels[key] || key,
+            value: key,
+          });
+        });
+        mergeCoupleNameWpFonts(wpFontFamilies).forEach(function (font) {
+          options.push({ label: font.label, value: font.value });
+        });
+        return options;
+      })();
 
       return [
         el(InspectorControls, { key: "inspector" },
@@ -75,7 +208,13 @@
             el(SelectControl, { label: __("Perataan", "weddingblocks"), value: align, options: [{ label: __("Kiri", "weddingblocks"), value: "left" }, { label: __("Tengah", "weddingblocks"), value: "center" }, { label: __("Kanan", "weddingblocks"), value: "right" }], onChange: function (v) { props.setAttributes({ align: v }); } }),
             el(SelectControl, { label: __("Tipe Nama", "weddingblocks"), value: nameType, options: [{ label: __("Nama Lengkap", "weddingblocks"), value: "full" }, { label: __("Nama Panggilan", "weddingblocks"), value: "nickname" }], onChange: function (v) { props.setAttributes({ nameType: v }); } }),
             el(RangeControl, { label: __("Ukuran Font (px)", "weddingblocks"), value: fontSize, min: 12, max: 72, onChange: function (v) { props.setAttributes({ fontSize: v }); } }),
-            el(SelectControl, { label: __("Jenis Font", "weddingblocks"), value: fontFamily, options: [{ label: "Playfair Display (Serif Elegant)", value: "playfair" }, { label: "Great Vibes (Calligraphy)", value: "greatvibes" }, { label: "Montserrat (Modern Sans-serif)", value: "montserrat" }, { label: "Georgia (Classic Serif)", value: "georgia" }, { label: "System Sans-serif", value: "sans-serif" }], onChange: function (v) { props.setAttributes({ fontFamily: v }); } }),
+            el(SelectControl, {
+              label: __("Jenis Font", "weddingblocks"),
+              value: fontFamily,
+              options: fontOptions,
+              onChange: function (v) { props.setAttributes({ fontFamily: v }); },
+              help: __("Pilih jenis huruf untuk nama mempelai. Font tema dan font dari Font Library WordPress otomatis tersedia.", "weddingblocks")
+            }),
             el(SelectControl, { label: __("Transformasi Teks", "weddingblocks"), value: textTransform, options: [{ label: __("Normal", "weddingblocks"), value: "none" }, { label: __("HURUF BESAR (UPPERCASE)", "weddingblocks"), value: "uppercase" }, { label: __("Huruf Besar Di Awal (Capitalize)", "weddingblocks"), value: "capitalize" }, { label: __("huruf kecil (lowercase)", "weddingblocks"), value: "lowercase" }], onChange: function (v) { props.setAttributes({ textTransform: v }); } })
           ),
           el(PanelColorSettings, { title: __("Pengaturan Warna", "weddingblocks"), initialOpen: false, colorSettings: [{ value: textColor, colors: customColors, label: __("Warna Nama", "weddingblocks"), onChange: function (v) { props.setAttributes({ textColor: v || "" }); } }] })
@@ -83,7 +222,7 @@
         animPanel,
         el("div", useBlockProps({ key: "preview", className: "weddingblocks-atomic-couple-name role-" + role + " type-" + nameType + " align-" + align }),
           el("span", { className: "wb-editor-badge" }, el("span", { className: "wb-editor-badge-icon" }, "\uD83C\uDD94"), __("Nama " + roleLabel, "weddingblocks")),
-          el("span", { className: "atomic-name-text", style: previewStyle }, display)
+          el("span", { className: "atomic-name-text", style: previewStyle, ref: fontRef }, display)
         ),
       ];
     },
