@@ -4,7 +4,7 @@ Tags: wedding, invitation, gutenberg, fse, blocks
 Requires at least: 6.7
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.4.1
+Stable tag: 1.5.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Plugin URI: https://wordpress.org/plugins/weddingblocks/
@@ -91,6 +91,15 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 
 == Changelog ==
 
+= 1.5.0 =
+* Dynamic Typography & Font Library Integration - Refactored couple-related blocks (couple-name, couple-parents, couple-info) to support dynamic font selection from the WordPress Font Library and theme settings.
+* Flexible Font System - Replaced hardcoded font mappings with a flexible system that allows blocks to inherit theme typography by default or use custom font families.
+* CSS Variables - Updated CSS to use CSS variables for body, heading, and accent fonts.
+* Font Resolution Logic - Implemented font family resolution logic in couple-info, couple-name, and couple-parents blocks.
+* Editor Integration - Integrated wp.data to fetch available font families from the editor settings.
+* Sanitization - Added sanitization for custom font family strings in PHP render templates.
+* Block Attributes - Updated block attributes to use 'default' instead of hardcoded 'playfair'.
+
 = 1.4.1 =
 * Database & RSVP Queries - Enhanced `weddingblocks_get_rsvps()` and `weddingblocks_get_rsvps_count()` with dynamic search, attendance, and optional status filtering via extensible hooks (`weddingblocks_rsvp_search_fields`, `weddingblocks_rsvp_enable_status_filter`).
 * Cache Reliability - Optimized RSVP count cache handling to ensure accurate and immediate cache invalidation on RSVP submission or deletion.
@@ -145,6 +154,9 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 * Zero external dependencies
 
 == Upgrade Notice ==
+
+= 1.5.0 =
+Adds dynamic typography and WordPress Font Library support to couple blocks (name, parents, info). Safe to upgrade, no breaking changes. Recommended for all installations.
 
 = 1.4.1 =
 Maintenance release with optimized database queries, improved RSVP count caching, and enhanced admin RSVP list stability. Recommended for all users.

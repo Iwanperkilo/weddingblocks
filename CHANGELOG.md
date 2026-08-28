@@ -7,6 +7,19 @@ dan plugin ini menganut [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.5.0] - 2026-08-28
+
+### Added (Ditambahkan)
+- **Dynamic Typography & Font Library Integration** — Refactor block `couple-name`, `couple-parents`, dan `couple-info` agar mendukung pemilihan font dinamis dari WordPress Font Library dan pengaturan tema.
+- **Flexible Font System** — Mengganti pemetaan font hardcoded dengan sistem fleksibel yang memungkinkan block mewarisi tipografi tema secara default atau memakai font family kustom.
+- **CSS Variables** — CSS diperbarui untuk memakai CSS variables pada font body, heading, dan aksen.
+- **Font Resolution Logic** — Logika resolusi font family diimplementasikan pada block couple-info, couple-name, dan couple-parents.
+- **Editor Integration** — Integrasi `wp.data` untuk mengambil daftar font family yang tersedia dari pengaturan editor.
+
+### Fixed & Improved (Diperbaiki & Ditingkatkan)
+- **Sanitasi** — Ditambahkan sanitasi untuk string font family kustom pada template render PHP.
+- **Block Attributes** — Atribut block diperbarui memakai default `'default'`, bukan lagi hardcoded `'playfair'`.
+
 ## [1.4.1] - 2026-08-23
 
 ### Added (Ditambahkan)
