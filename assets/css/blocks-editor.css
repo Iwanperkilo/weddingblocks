@@ -43,9 +43,9 @@
     color: #333;
 }
 
-.weddingblocks-cover-title .weddingblocks-separator,
+/* Separator mewarisi font-family dari .weddingblocks-cover-title (mengikuti
+   pilihan "Jenis Font Nama Cover"), sama seperti di blocks-frontend.css. */
 .weddingblocks-separator {
-    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif !important;
     text-transform: none !important;
     display: inline-block;
 }

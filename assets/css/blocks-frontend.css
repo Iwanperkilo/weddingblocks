@@ -191,9 +191,11 @@ body.admin-bar .weddingblocks-cover-wrapper {
   color: #ffffff;
 }
 
-.weddingblocks-cover-title .weddingblocks-separator,
+/* Separator mewarisi font-family dari .weddingblocks-cover-title (mengikuti
+   pilihan "Jenis Font Nama Cover"). Preset hati TIDAK bergantung pada
+   font-family karena dirender sebagai SVG background-image (lihat
+   .weddingblocks-separator--icon di bawah, isi <span> dikosongkan). */
 .weddingblocks-separator {
-  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif !important;
   text-transform: none !important;
   display: inline-block;
 }
