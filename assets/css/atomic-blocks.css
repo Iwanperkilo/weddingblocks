@@ -44,9 +44,13 @@
 
 /* Couple Parents (Single) */
 .weddingblocks-atomic-couple-parents {
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
   text-align: center;
   margin: 10px 0;
+  gap: 0.3em;
+  overflow-wrap: anywhere;
 }
 
 .weddingblocks-atomic-couple-parents.align-left {
@@ -66,12 +70,8 @@
 
 .weddingblocks-atomic-couple-parents .atomic-parents-label,
 .weddingblocks-atomic-couple-parents .atomic-parents-names {
-  display: block;
   line-height: 1.4;
   font-weight: 500;
-}
-.weddingblocks-atomic-couple-parents .atomic-parents-label {
-  margin-bottom: 4px;
 }
 
 /* Couple Photo (Single) */
