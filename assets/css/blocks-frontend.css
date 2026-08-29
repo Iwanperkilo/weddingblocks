@@ -369,7 +369,8 @@ body.admin-bar .weddingblocks-cover-wrapper {
   border: 1px solid color-mix(in srgb, var(--wb-color-primary, #b5a46d) 15%, transparent);
   border-radius: 15px;
   padding: 15px 5px;
-  width: clamp(55px, 15vw, 55px);
+  min-width: 45px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
