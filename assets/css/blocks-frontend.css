@@ -35,8 +35,10 @@ body.weddingblocks-locked {
   margin-bottom: 40px;
   border-radius: 20px;
   background: var(--wb-color-surface, #ffffff);
-  border: 1px solid color-mix(in srgb, var(--wb-color-primary, #b5a46d) 12%, transparent);
-  box-shadow: 0 10px 40px color-mix(in srgb, var(--wb-color-primary, #b5a46d) 4%, transparent);
+  border: 1px solid
+    color-mix(in srgb, var(--wb-color-primary, #b5a46d) 12%, transparent);
+  box-shadow: 0 10px 40px
+    color-mix(in srgb, var(--wb-color-primary, #b5a46d) 4%, transparent);
   text-align: center;
   transition:
     transform 0.4s ease,
@@ -44,7 +46,8 @@ body.weddingblocks-locked {
 }
 
 .weddingblocks-section:hover {
-  box-shadow: 0 15px 50px color-mix(in srgb, var(--wb-color-primary, #b5a46d) 8%, transparent);
+  box-shadow: 0 15px 50px
+    color-mix(in srgb, var(--wb-color-primary, #b5a46d) 8%, transparent);
 }
 
 /* Typography & Global Utility Classes */
@@ -116,7 +119,6 @@ body.admin-bar .weddingblocks-cover-wrapper {
 }
 
 @media screen and (max-width: 782px) {
-
   /* WP switches the admin bar to its taller mobile height at this breakpoint. */
   body.admin-bar .weddingblocks-cover-wrapper {
     top: 46px !important;
@@ -132,7 +134,10 @@ body.admin-bar .weddingblocks-cover-wrapper {
   left: 50% !important;
   right: auto !important;
   width: 100% !important;
-  max-width: min(var(--wb-cover-max-width, 480px), calc(100vw - 24px)) !important;
+  max-width: min(
+    var(--wb-cover-max-width, 480px),
+    calc(100vw - 24px)
+  ) !important;
   transform: translateX(-50%);
 }
 
@@ -254,7 +259,8 @@ body.admin-bar .weddingblocks-cover-wrapper {
   background: var(--wb-music-bg-color, rgba(255, 255, 255, 0.85));
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid color-mix(in srgb, var(--wb-color-primary, #b5a46d) 40%, transparent);
+  border: 1px solid
+    color-mix(in srgb, var(--wb-color-primary, #b5a46d) 40%, transparent);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   z-index: 9999;
   display: flex;
@@ -262,7 +268,11 @@ body.admin-bar .weddingblocks-cover-wrapper {
   align-items: center;
   cursor: pointer;
   color: var(--wb-music-color, var(--wb-color-primary, #b5a46d));
-  border-color: color-mix(in srgb, var(--wb-music-color, var(--wb-color-primary, #b5a46d)) 40%, transparent);
+  border-color: color-mix(
+    in srgb,
+    var(--wb-music-color, var(--wb-color-primary, #b5a46d)) 40%,
+    transparent
+  );
   outline: none;
   transition:
     transform 0.3s,
@@ -293,10 +303,12 @@ body.admin-bar .weddingblocks-cover-wrapper {
 .weddingblocks-couple-columns {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  align-items: center;
+  align-items: baseline;
   gap: 20px;
   container-type: inline-size;
   container-name: wb-couple-info;
+  max-width: 720px;
+  margin-inline: auto;
 }
 
 .weddingblocks-couple-columns--vertical {
@@ -313,14 +325,17 @@ body.admin-bar .weddingblocks-cover-wrapper {
 }
 
 .weddingblocks-avatar {
-  width: 160px;
-  height: 160px;
+  width: clamp(96px, 22vw, 160px);
+  height: clamp(96px, 22vw, 160px);
+  aspect-ratio: 1;
   border-radius: 50%;
   overflow: hidden;
   border: 4px solid var(--wb-color-primary, #b5a46d);
-  box-shadow: 0 8px 25px color-mix(in srgb, var(--wb-color-primary, #b5a46d) 15%, transparent);
+  box-shadow: 0 8px 25px
+    color-mix(in srgb, var(--wb-color-primary, #b5a46d) 15%, transparent);
   margin-bottom: 20px;
   background-color: var(--wb-color-surface-tint, #f6f2e8);
+  flex-shrink: 0;
 }
 
 .weddingblocks-avatar img {
@@ -366,7 +381,8 @@ body.admin-bar .weddingblocks-cover-wrapper {
 
 .countdown-item {
   background: rgba(255, 255, 255, 0.85);
-  border: 1px solid color-mix(in srgb, var(--wb-color-primary, #b5a46d) 15%, transparent);
+  border: 1px solid
+    color-mix(in srgb, var(--wb-color-primary, #b5a46d) 15%, transparent);
   border-radius: 15px;
   padding: 15px 5px;
   min-width: 45px;
@@ -405,7 +421,8 @@ body.admin-bar .weddingblocks-cover-wrapper {
   min-width: 180px;
   padding: 30px 20px;
   background: rgba(255, 255, 255, 0.5);
-  border: 1px solid color-mix(in srgb, var(--wb-color-primary, #b5a46d) 15%, transparent);
+  border: 1px solid
+    color-mix(in srgb, var(--wb-color-primary, #b5a46d) 15%, transparent);
   border-radius: 15px;
   transition:
     transform 0.3s ease,
@@ -414,7 +431,11 @@ body.admin-bar .weddingblocks-cover-wrapper {
 
 .weddingblocks-event-card:hover {
   transform: translateY(-3px);
-  border-color: color-mix(in srgb, var(--wb-color-primary, #b5a46d) 40%, transparent);
+  border-color: color-mix(
+    in srgb,
+    var(--wb-color-primary, #b5a46d) 40%,
+    transparent
+  );
 }
 
 .weddingblocks-event-card h3 {
@@ -464,7 +485,11 @@ body.admin-bar .weddingblocks-cover-wrapper {
 .weddingblocks-form select,
 .weddingblocks-form textarea {
   padding: 12px 16px;
-  border: 1px solid var(--wb-rsvp-input-border-color, color-mix(in srgb, var(--wb-color-primary, #b5a46d) 30%, transparent));
+  border: 1px solid
+    var(
+      --wb-rsvp-input-border-color,
+      color-mix(in srgb, var(--wb-color-primary, #b5a46d) 30%, transparent)
+    );
   border-radius: 8px;
   font-family: var(--wb-font-body, "Montserrat", sans-serif);
   font-size: 14px;
@@ -480,8 +505,16 @@ body.admin-bar .weddingblocks-cover-wrapper {
 .weddingblocks-form input[type="number"]:focus,
 .weddingblocks-form select:focus,
 .weddingblocks-form textarea:focus {
-  border-color: var(--wb-rsvp-input-border-color, var(--wb-color-primary, #b5a46d));
-  box-shadow: 0 0 8px color-mix(in srgb, var(--wb-rsvp-input-border-color, var(--wb-color-primary, #b5a46d)) 60%, transparent);
+  border-color: var(
+    --wb-rsvp-input-border-color,
+    var(--wb-color-primary, #b5a46d)
+  );
+  box-shadow: 0 0 8px
+    color-mix(
+      in srgb,
+      var(--wb-rsvp-input-border-color, var(--wb-color-primary, #b5a46d)) 60%,
+      transparent
+    );
 }
 
 /* Alerts styling */
@@ -554,12 +587,20 @@ body.admin-bar .weddingblocks-cover-wrapper {
 }
 
 .guestbook-list::-webkit-scrollbar-thumb {
-  background: color-mix(in srgb, var(--wb-color-primary, #b5a46d) 30%, transparent);
+  background: color-mix(
+    in srgb,
+    var(--wb-color-primary, #b5a46d) 30%,
+    transparent
+  );
   border-radius: 10px;
 }
 
 .guestbook-list::-webkit-scrollbar-thumb:hover {
-  background: color-mix(in srgb, var(--wb-color-primary, #b5a46d) 50%, transparent);
+  background: color-mix(
+    in srgb,
+    var(--wb-color-primary, #b5a46d) 50%,
+    transparent
+  );
 }
 
 .guestbook-item {
@@ -643,7 +684,8 @@ body.admin-bar .weddingblocks-cover-wrapper {
   font-style: italic;
   background: rgb(109 109 109 / 30%);
   border-radius: 12px;
-  border: 1px dashed color-mix(in srgb, var(--wb-color-primary, #b5a46d) 20%, transparent);
+  border: 1px dashed
+    color-mix(in srgb, var(--wb-color-primary, #b5a46d) 20%, transparent);
 }
 
 /* Guest Name Block */
@@ -674,7 +716,10 @@ body.admin-bar .weddingblocks-cover-wrapper {
 .weddingblocks-btn-gold {
   display: inline-block;
   padding: 12px 28px;
-  background-color: var(--wb-rsvp-button-color, var(--wb-color-primary, #b5a46d));
+  background-color: var(
+    --wb-rsvp-button-color,
+    var(--wb-color-primary, #b5a46d)
+  );
   color: #ffffff;
   border: none;
   border-radius: 30px;
@@ -684,16 +729,30 @@ body.admin-bar .weddingblocks-cover-wrapper {
   letter-spacing: 1px;
   text-transform: uppercase;
   cursor: pointer;
-  box-shadow: 0 4px 15px color-mix(in srgb, var(--wb-rsvp-button-color, var(--wb-color-primary, #b5a46d)) 20%, transparent);
+  box-shadow: 0 4px 15px
+    color-mix(
+      in srgb,
+      var(--wb-rsvp-button-color, var(--wb-color-primary, #b5a46d)) 20%,
+      transparent
+    );
   transition: all 0.3s ease;
   text-decoration: none;
   outline: none;
 }
 
 .weddingblocks-btn-gold:hover {
-  background-color: color-mix(in srgb, var(--wb-rsvp-button-color, var(--wb-color-primary, #b5a46d)) 85%, black);
+  background-color: color-mix(
+    in srgb,
+    var(--wb-rsvp-button-color, var(--wb-color-primary, #b5a46d)) 85%,
+    black
+  );
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px color-mix(in srgb, var(--wb-rsvp-button-color, var(--wb-color-primary, #b5a46d)) 30%, transparent);
+  box-shadow: 0 6px 20px
+    color-mix(
+      in srgb,
+      var(--wb-rsvp-button-color, var(--wb-color-primary, #b5a46d)) 30%,
+      transparent
+    );
 }
 
 .weddingblocks-btn-gold:active {
@@ -729,7 +788,6 @@ body.admin-bar .weddingblocks-cover-wrapper {
 .weddingblocks-atomic-couple-name.align-right {
   text-align: right;
 }
-
 
 .weddingblocks-atomic-couple-name .atomic-name {
   display: block;
@@ -925,6 +983,12 @@ body.admin-bar .weddingblocks-cover-wrapper {
     justify-items: center;
     gap: 30px;
   }
+  .weddingblocks-separator-column {
+    order: 0;
+  }
+  .weddingblocks-ampersand {
+    font-size: 36px !important;
+  }
 }
 
 @supports not (container-type: inline-size) {
@@ -934,6 +998,54 @@ body.admin-bar .weddingblocks-cover-wrapper {
       justify-items: center;
       gap: 30px;
     }
+    .weddingblocks-ampersand {
+      font-size: 36px !important;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .weddingblocks-couple-columns {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 24px;
+  }
+  .weddingblocks-couple-columns > .weddingblocks-couple-column:first-child {
+    order: 0;
+  }
+  .weddingblocks-couple-columns > .weddingblocks-separator-column {
+    order: 1;
+  }
+  .weddingblocks-couple-columns > .weddingblocks-couple-column:last-child {
+    order: 2;
+  }
+  .weddingblocks-ampersand {
+    font-size: 32px !important;
+  }
+  .weddingblocks-avatar {
+    border-width: 3px;
+    margin-bottom: 14px;
+  }
+  .weddingblocks-couple-column h3 {
+    font-size: clamp(16px, 5vw, 22px);
+  }
+  .weddingblocks-parents-info span,
+  .weddingblocks-couple-column p {
+    font-size: clamp(11px, 3.2vw, 14px);
+  }
+}
+
+@media (max-width: 360px) {
+  .weddingblocks-avatar {
+    border-width: 2px;
+    margin-bottom: 10px;
+  }
+  .weddingblocks-couple-column h3 {
+    font-size: 16px;
+  }
+  .weddingblocks-parents-info span,
+  .weddingblocks-couple-column p {
+    font-size: 11px;
   }
 }
 
@@ -954,7 +1066,8 @@ body.admin-bar .weddingblocks-cover-wrapper {
   min-width: 180px;
   padding: 30px 20px;
   background: rgba(255, 255, 255, 0.5);
-  border: 1px solid color-mix(in srgb, var(--wb-color-primary, #b5a46d) 15%, transparent);
+  border: 1px solid
+    color-mix(in srgb, var(--wb-color-primary, #b5a46d) 15%, transparent);
   border-radius: 15px;
   transition:
     transform 0.3s ease,
@@ -963,7 +1076,11 @@ body.admin-bar .weddingblocks-cover-wrapper {
 
 .weddingblocks-event-card:hover {
   transform: translateY(-3px);
-  border-color: color-mix(in srgb, var(--wb-color-primary, #b5a46d) 40%, transparent);
+  border-color: color-mix(
+    in srgb,
+    var(--wb-color-primary, #b5a46d) 40%,
+    transparent
+  );
 }
 
 .weddingblocks-event-card h3 {
@@ -994,7 +1111,11 @@ body.admin-bar .weddingblocks-cover-wrapper {
 
 .weddingblocks-event-info__inner {
   --wb-event-gold: var(--wb-color-primary, #b5a46d);
-  --wb-event-gold-soft: color-mix(in srgb, var(--wb-color-primary, #b5a46d) 12%, transparent);
+  --wb-event-gold-soft: color-mix(
+    in srgb,
+    var(--wb-color-primary, #b5a46d) 12%,
+    transparent
+  );
 }
 
 .weddingblocks-event-columns {
@@ -1002,9 +1123,13 @@ body.admin-bar .weddingblocks-cover-wrapper {
   display: grid;
   gap: 18px;
   padding: 24px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(251, 250, 247, 0.96) 100%);
-  border: 1px solid color-mix(in srgb, var(--wb-color-primary, #b5a46d) 16%, transparent);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(251, 250, 247, 0.96) 100%
+  );
+  border: 1px solid
+    color-mix(in srgb, var(--wb-color-primary, #b5a46d) 16%, transparent);
   border-radius: 22px;
   box-shadow: 0 14px 34px rgba(84, 69, 34, 0.08);
 }
@@ -1013,7 +1138,8 @@ body.admin-bar .weddingblocks-cover-wrapper {
   position: relative;
   padding: 26px 22px;
   background: rgba(255, 255, 255, 0.92);
-  border: 1px solid color-mix(in srgb, var(--wb-color-primary, #b5a46d) 18%, transparent);
+  border: 1px solid
+    color-mix(in srgb, var(--wb-color-primary, #b5a46d) 18%, transparent);
   border-radius: 18px;
   box-shadow: 0 8px 20px rgba(84, 69, 34, 0.06);
   overflow: hidden;
@@ -1031,13 +1157,22 @@ body.admin-bar .weddingblocks-cover-wrapper {
   top: 0;
   width: 100%;
   height: 4px;
-  background: linear-gradient(90deg, color-mix(in srgb, var(--wb-event-accent-color) 15%, transparent), var(--wb-event-accent-color) 50%, color-mix(in srgb, var(--wb-event-accent-color) 15%, transparent));
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--wb-event-accent-color) 15%, transparent),
+    var(--wb-event-accent-color) 50%,
+    color-mix(in srgb, var(--wb-event-accent-color) 15%, transparent)
+  );
 }
 
 .weddingblocks-event-info .weddingblocks-event-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 24px rgba(84, 69, 34, 0.09);
-  border-color: color-mix(in srgb, var(--wb-color-primary, #b5a46d) 30%, transparent);
+  border-color: color-mix(
+    in srgb,
+    var(--wb-color-primary, #b5a46d) 30%,
+    transparent
+  );
 }
 
 .weddingblocks-event-info .weddingblocks-event-card h3 {
@@ -1067,7 +1202,9 @@ body.admin-bar .weddingblocks-cover-wrapper {
   display: block;
 }
 
-.weddingblocks-event-info .weddingblocks-event-card__meta+.weddingblocks-event-card__meta {
+.weddingblocks-event-info
+  .weddingblocks-event-card__meta
+  + .weddingblocks-event-card__meta {
   margin-top: 2px;
 }
 
@@ -1091,7 +1228,9 @@ body.admin-bar .weddingblocks-cover-wrapper {
   grid-template-columns: minmax(0, 1fr);
 }
 
-.weddingblocks-event-info .weddingblocks-event-columns--vertical .weddingblocks-event-card {
+.weddingblocks-event-info
+  .weddingblocks-event-columns--vertical
+  .weddingblocks-event-card {
   max-width: 620px;
   min-width: 270px;
   margin-left: auto;
@@ -1102,7 +1241,9 @@ body.admin-bar .weddingblocks-cover-wrapper {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.weddingblocks-event-info .weddingblocks-event-columns--horizontal .weddingblocks-event-card {
+.weddingblocks-event-info
+  .weddingblocks-event-columns--horizontal
+  .weddingblocks-event-card {
   min-width: 0;
 }
 
@@ -1126,11 +1267,13 @@ body.admin-bar .weddingblocks-cover-wrapper {
   width: 3px;
   transform: translateX(-50%);
   border-radius: 999px;
-  background: linear-gradient(to bottom,
-      color-mix(in srgb, var(--wb-event-accent-color) 8%, transparent),
-      var(--wb-event-accent-color) 14%,
-      var(--wb-event-accent-color) 86%,
-      color-mix(in srgb, var(--wb-event-accent-color) 8%, transparent));
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--wb-event-accent-color) 8%, transparent),
+    var(--wb-event-accent-color) 14%,
+    var(--wb-event-accent-color) 86%,
+    color-mix(in srgb, var(--wb-event-accent-color) 8%, transparent)
+  );
 }
 
 .weddingblocks-event-info .weddingblocks-timeline-item {
@@ -1141,11 +1284,15 @@ body.admin-bar .weddingblocks-cover-wrapper {
   min-width: 0;
 }
 
-.weddingblocks-event-info .weddingblocks-timeline-item--start .weddingblocks-timeline-content {
+.weddingblocks-event-info
+  .weddingblocks-timeline-item--start
+  .weddingblocks-timeline-content {
   grid-column: 1;
 }
 
-.weddingblocks-event-info .weddingblocks-timeline-item--end .weddingblocks-timeline-content {
+.weddingblocks-event-info
+  .weddingblocks-timeline-item--end
+  .weddingblocks-timeline-content {
   grid-column: 3;
 }
 
@@ -1163,15 +1310,20 @@ body.admin-bar .weddingblocks-cover-wrapper {
   border-radius: 50%;
   background: var(--wb-event-accent-color);
   border: 3px solid #fffaf2;
-  box-shadow: 0 0 0 6px color-mix(in srgb, var(--wb-event-accent-color) 12%, transparent);
+  box-shadow: 0 0 0 6px
+    color-mix(in srgb, var(--wb-event-accent-color) 12%, transparent);
   z-index: 1;
 }
 
-.weddingblocks-event-info .weddingblocks-timeline-item--start .weddingblocks-event-card {
+.weddingblocks-event-info
+  .weddingblocks-timeline-item--start
+  .weddingblocks-event-card {
   margin-right: 20px;
 }
 
-.weddingblocks-event-info .weddingblocks-timeline-item--end .weddingblocks-event-card {
+.weddingblocks-event-info
+  .weddingblocks-timeline-item--end
+  .weddingblocks-event-card {
   margin-left: 20px;
 }
 
@@ -1189,11 +1341,16 @@ body.admin-bar .weddingblocks-cover-wrapper {
   background-color: var(--wb-event-primary-color);
   border-color: var(--wb-event-primary-color);
   color: #ffffff !important;
-  box-shadow: 0 10px 22px color-mix(in srgb, var(--wb-event-primary-color) 18%, transparent);
+  box-shadow: 0 10px 22px
+    color-mix(in srgb, var(--wb-event-primary-color) 18%, transparent);
 }
 
 .weddingblocks-event-info .weddingblocks-wa-button:hover {
-  background-color: color-mix(in srgb, var(--wb-event-primary-color) 88%, black);
+  background-color: color-mix(
+    in srgb,
+    var(--wb-event-primary-color) 88%,
+    black
+  );
   border-color: color-mix(in srgb, var(--wb-event-primary-color) 88%, black);
 }
 
@@ -1237,13 +1394,21 @@ body.admin-bar .weddingblocks-cover-wrapper {
     margin-top: 20px;
   }
 
-  .weddingblocks-event-info .weddingblocks-timeline-item--start .weddingblocks-timeline-content,
-  .weddingblocks-event-info .weddingblocks-timeline-item--end .weddingblocks-timeline-content {
+  .weddingblocks-event-info
+    .weddingblocks-timeline-item--start
+    .weddingblocks-timeline-content,
+  .weddingblocks-event-info
+    .weddingblocks-timeline-item--end
+    .weddingblocks-timeline-content {
     grid-column: 2;
   }
 
-  .weddingblocks-event-info .weddingblocks-timeline-item--start .weddingblocks-event-card,
-  .weddingblocks-event-info .weddingblocks-timeline-item--end .weddingblocks-event-card {
+  .weddingblocks-event-info
+    .weddingblocks-timeline-item--start
+    .weddingblocks-event-card,
+  .weddingblocks-event-info
+    .weddingblocks-timeline-item--end
+    .weddingblocks-event-card {
     margin-left: 5px;
     margin-right: 5px;
   }
@@ -1275,13 +1440,21 @@ body.admin-bar .weddingblocks-cover-wrapper {
       margin-top: 20px;
     }
 
-    .weddingblocks-event-info .weddingblocks-timeline-item--start .weddingblocks-timeline-content,
-    .weddingblocks-event-info .weddingblocks-timeline-item--end .weddingblocks-timeline-content {
+    .weddingblocks-event-info
+      .weddingblocks-timeline-item--start
+      .weddingblocks-timeline-content,
+    .weddingblocks-event-info
+      .weddingblocks-timeline-item--end
+      .weddingblocks-timeline-content {
       grid-column: 2;
     }
 
-    .weddingblocks-event-info .weddingblocks-timeline-item--start .weddingblocks-event-card,
-    .weddingblocks-event-info .weddingblocks-timeline-item--end .weddingblocks-event-card {
+    .weddingblocks-event-info
+      .weddingblocks-timeline-item--start
+      .weddingblocks-event-card,
+    .weddingblocks-event-info
+      .weddingblocks-timeline-item--end
+      .weddingblocks-event-card {
       margin-left: 5px;
       margin-right: 5px;
     }
@@ -1478,7 +1651,6 @@ body.admin-bar .weddingblocks-cover-wrapper {
 }
 
 @keyframes wbWobble {
-
   0%,
   100% {
     transform: rotate(0deg);
@@ -1506,7 +1678,6 @@ body.admin-bar .weddingblocks-cover-wrapper {
 }
 
 @keyframes wbShake {
-
   0%,
   100% {
     transform: translateX(0);
@@ -1527,14 +1698,15 @@ body.admin-bar .weddingblocks-cover-wrapper {
 }
 
 @keyframes wbBreathe {
-
   0%,
   100% {
-    box-shadow: 0 4px 15px color-mix(in srgb, var(--wb-color-primary, #b5a46d) 20%, transparent);
+    box-shadow: 0 4px 15px
+      color-mix(in srgb, var(--wb-color-primary, #b5a46d) 20%, transparent);
   }
 
   50% {
-    box-shadow: 0 4px 30px color-mix(in srgb, var(--wb-color-primary, #b5a46d) 55%, transparent);
+    box-shadow: 0 4px 30px
+      color-mix(in srgb, var(--wb-color-primary, #b5a46d) 55%, transparent);
   }
 }
 
@@ -1558,7 +1730,9 @@ body.admin-bar .weddingblocks-cover-wrapper {
 /* --- Continuous: Countdown tick --- */
 .countdown-value {
   display: inline-block;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .countdown-value.wb-tick {
@@ -1611,7 +1785,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
 }
 
 .weddingblocks-btn-gold::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background: rgba(255, 255, 255, 0.15);
@@ -1674,7 +1848,6 @@ body.admin-bar .weddingblocks-cover-wrapper {
    pengguna yang memintanya.
    ================================ */
 @media (prefers-reduced-motion: reduce) {
-
   [data-wb-anim],
   [data-wb-attn],
   .weddingblocks-cover-content,
