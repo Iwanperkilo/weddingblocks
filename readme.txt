@@ -4,7 +4,7 @@ Tags: wedding, invitation, gutenberg, fse, blocks
 Requires at least: 6.7
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.5.0
+Stable tag: 1.5.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Plugin URI: https://wordpress.org/plugins/weddingblocks/
@@ -91,6 +91,11 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 
 == Changelog ==
 
+= 1.5.1 =
+* Separator font inheritance - Removed hardcoded font-family from .weddingblocks-separator in both editor and frontend CSS. The separator now inherits the font-family from .weddingblocks-cover-title to stay consistent with the "Jenis Font Nama Cover" selection.
+* Cover wrapper layout - Adjusted minimum width and box-sizing for the cover wrapper to improve stability across devices.
+* CSS formatting & responsive layout - Reformatted CSS declarations for better readability and improved responsive behavior for couple columns, avatars, and other components.
+
 = 1.5.0 =
 * Dynamic Typography & Font Library Integration - Refactored couple-related blocks (couple-name, couple-parents, couple-info) to support dynamic font selection from the WordPress Font Library and theme settings.
 * Flexible Font System - Replaced hardcoded font mappings with a flexible system that allows blocks to inherit theme typography by default or use custom font families.
@@ -154,6 +159,9 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 * Zero external dependencies
 
 == Upgrade Notice ==
+
+= 1.5.1 =
+Style fixes and UI improvements. Safe to upgrade, no breaking changes. Recommended for all installations.
 
 = 1.5.0 =
 Adds dynamic typography and WordPress Font Library support to couple blocks (name, parents, info). Safe to upgrade, no breaking changes. Recommended for all installations.

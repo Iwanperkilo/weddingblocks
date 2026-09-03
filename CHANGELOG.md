@@ -7,6 +7,13 @@ dan plugin ini menganut [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.5.1] - 2026-09-03
+
+### Fixed & Improved (Diperbaiki & Ditingkatkan)
+- **Separator font inheritance** — Menghapus font-family hardcoded dari `.weddingblocks-separator` di CSS editor maupun frontend. Separator sekarang mewarisi font-family dari `.weddingblocks-cover-title` agar konsisten dengan pilihan "Jenis Font Nama Cover".
+- **Cover wrapper layout** — Menyesuaikan minimum width dan box-sizing pada wrapper cover untuk meningkatkan stabilitas tampilan di berbagai perangkat.
+- **CSS formatting & responsive layout** — Memformat ulang deklarasi CSS untuk keterbacaan yang lebih baik dan meningkatkan responsivitas layout untuk couple columns, avatars, dan komponen lainnya.
+
 ## [1.5.0] - 2026-08-28
 
 ### Added (Ditambahkan)
@@ -145,6 +152,8 @@ dan plugin ini menganut [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+[1.5.1]: #151---2026-09-03
+[1.5.0]: #150---2026-08-28
 [1.1.0]: #110---2026-07-16
 [1.0.0]: #100---2025-01-xx
 [Unreleased]: #unreleased
