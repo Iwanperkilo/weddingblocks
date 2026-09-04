@@ -303,7 +303,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
 .weddingblocks-couple-columns {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  align-items: baseline;
+  align-items: flex-start;
   gap: 20px;
   container-type: inline-size;
   container-name: wb-couple-info;
@@ -360,6 +360,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
 
 .weddingblocks-separator-column {
   justify-self: center;
+  align-self: center;
 }
 
 .weddingblocks-ampersand {
