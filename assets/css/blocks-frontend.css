@@ -811,7 +811,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
 .weddingblocks-atomic-couple-name .atomic-fullname,
 .weddingblocks-atomic-couple-name.type-full .atomic-name-text {
   font-family: var(--wb-font-heading, "Playfair Display", serif);
-  font-weight: 600;
+  font-weight: 500;
   color: var(--wb-color-ink, #2c2c2c);
   font-size: 1.5em;
   line-height: 1.2;

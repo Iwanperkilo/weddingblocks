@@ -21,7 +21,6 @@
   text-align: right;
 }
 
-
 .weddingblocks-atomic-couple-name .atomic-name-text {
   display: inline-block;
   font-family: "Playfair Display", serif;
@@ -30,7 +29,7 @@
 }
 
 .weddingblocks-atomic-couple-name.type-full .atomic-name-text {
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.6em;
 }
 
@@ -40,7 +39,6 @@
   font-size: 1.3em;
   letter-spacing: 0.03em;
 }
-
 
 /* Couple Parents (Single) */
 .weddingblocks-atomic-couple-parents {
