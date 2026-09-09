@@ -2,6 +2,7 @@
   var el = element.createElement;
   var InspectorControls = blockEditor.InspectorControls;
   var PanelBody = components.PanelBody;
+  var FocalPointPicker = components.FocalPointPicker;
   var SelectControl = components.SelectControl;
   var RangeControl = components.RangeControl;
   var Button = components.Button;
@@ -25,6 +26,8 @@
       var frameColor = attributes.frameColor || "";
       var frameWidth = attributes.frameWidth || 3;
       var align = attributes.align || "center";
+      var focalPoint = attributes.photoFocalPoint || { x: 0.5, y: 0.5 };
+      var zoom = attributes.photoZoom || 100;
 
       var photo, name, fallback, roleLabel;
       if (role === "bride") {
@@ -47,6 +50,12 @@
         if (frameColor) { imgStyle.borderColor = frameColor; }
         imgStyle.borderWidth = frameWidth + "px";
       }
+      var focalPositionStr = Math.round(focalPoint.x * 100) + "% " + Math.round(focalPoint.y * 100) + "%";
+      var photoImgStyle = {
+        objectPosition: focalPositionStr,
+        transformOrigin: focalPositionStr,
+        transform: "scale(" + (zoom / 100) + ")",
+      };
       var wrapperClass = "weddingblocks-atomic-couple-photo role-" + role + " shape-" + shape + " align-" + align + (showFrame ? " has-frame" : " no-frame");
 
       var animPanel = typeof window.weddingblocksAnimationPanel === "function"
@@ -60,6 +69,8 @@
             el(SelectControl, { label: __("Perataan", "weddingblocks"), value: align, options: [{ label: __("Kiri", "weddingblocks"), value: "left" }, { label: __("Tengah", "weddingblocks"), value: "center" }, { label: __("Kanan", "weddingblocks"), value: "right" }], onChange: function (v) { props.setAttributes({ align: v }); } }),
             el(SelectControl, { label: __("Style Foto", "weddingblocks"), value: shape, options: [{ label: __("Bulat (Circle)", "weddingblocks"), value: "circle" }, { label: __("Sudut Membulat (Rounded)", "weddingblocks"), value: "rounded" }, { label: __("Kotak (Square)", "weddingblocks"), value: "square" }], onChange: function (v) { props.setAttributes({ shape: v }); } }),
             el(RangeControl, { label: __("Ukuran Foto (px)", "weddingblocks"), value: size, min: 40, max: 800, onChange: function (v) { props.setAttributes({ size: v }); } }),
+            el(FocalPointPicker, { label: __("Fokus Foto", "weddingblocks"), url: displayPhoto, value: focalPoint, onChange: function (v) { props.setAttributes({ photoFocalPoint: v }); } }),
+            el(RangeControl, { label: __("Zoom Foto (%)", "weddingblocks"), value: zoom, min: 100, max: 300, onChange: function (v) { props.setAttributes({ photoZoom: v !== undefined ? v : 100 }); } }),
             el(Button, { isSecondary: showFrame, isTertiary: !showFrame, onClick: function () { props.setAttributes({ showFrame: !showFrame }); } }, showFrame ? __("Tampilkan Bingkai: ON", "weddingblocks") : __("Tampilkan Bingkai: OFF", "weddingblocks"))
           ),
           showFrame && el(PanelColorSettings, { title: __("Warna Bingkai", "weddingblocks"), initialOpen: true, colorSettings: [{ value: frameColor, onChange: function (v) { props.setAttributes({ frameColor: v || "" }); }, label: __("Warna Border Foto", "weddingblocks") }] }),
@@ -69,7 +80,7 @@
         el("div", useBlockProps({ key: "preview", className: wrapperClass }),
           el("span", { className: "wb-editor-badge" }, el("span", { className: "wb-editor-badge-icon" }, "\uD83D\uDDBC\uFE0F"), __("Foto " + roleLabel, "weddingblocks")),
           el("figure", { className: "atomic-photo shape-" + shape + (showFrame ? " has-frame" : " no-frame"), style: imgStyle },
-            el("img", { src: displayPhoto, alt: name, className: photo ? "" : "atomic-photo-placeholder" })
+            el("img", { src: displayPhoto, alt: name, className: photo ? "" : "atomic-photo-placeholder", style: photo ? photoImgStyle : undefined })
           )
         ),
       ];

@@ -38,6 +38,27 @@ if ($frame_width > 10) {
 $align      = isset($attributes['align']) ? sanitize_key($attributes['align']) : 'center';
 $align      = in_array($align, array('left', 'center', 'right'), true) ? $align : 'center';
 
+// Focal point (free-form, admin-set at theme-design time) + zoom: lets a
+// section frame just the face, upper body, etc. instead of always showing
+// the photo's full natural composition. object-position anchors which part
+// of the photo stays visible under object-fit:cover; the transform:scale()
+// zooms in further from that same anchor point (clipped by the figure's
+// own overflow:hidden), so no destructive crop or extra image variant is
+// needed — it's the same photo used elsewhere (e.g. section background).
+$focal_point = isset($attributes['photoFocalPoint']) && is_array($attributes['photoFocalPoint']) ? $attributes['photoFocalPoint'] : array();
+$focal_x     = isset($focal_point['x']) ? max(0, min(1, (float) $focal_point['x'])) : 0.5;
+$focal_y     = isset($focal_point['y']) ? max(0, min(1, (float) $focal_point['y'])) : 0.5;
+$focal_css   = sprintf('%d%% %d%%', round($focal_x * 100), round($focal_y * 100));
+
+$zoom = isset($attributes['photoZoom']) ? (float) $attributes['photoZoom'] : 100;
+$zoom = max(100, min(300, $zoom));
+
+$photo_img_style = sprintf(
+    'object-position:%1$s;transform-origin:%1$s;transform:scale(%2$s);',
+    $focal_css,
+    $zoom / 100
+);
+
 if ('bride' === $role) {
     $photo     = ! empty($attributes['bridePhoto']) ? $attributes['bridePhoto'] : get_post_meta(get_the_ID(), 'weddingblocks_bride_photo', true);
     $name      = ! empty($attributes['brideName'])  ? $attributes['brideName']  : get_post_meta(get_the_ID(), 'weddingblocks_bride_name', true);
@@ -77,7 +98,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
         ?>>
     <figure class="<?php echo esc_attr($figure_class); ?>" style="<?php echo esc_attr($inline_style); ?>">
         <?php if ('' !== $photo) : ?>
-            <img src="<?php echo esc_url($photo); ?>" alt="<?php echo esc_attr($name); ?>" />
+            <img src="<?php echo esc_url($photo); ?>" alt="<?php echo esc_attr($name); ?>" style="<?php echo esc_attr($photo_img_style); ?>" />
         <?php else : ?>
             <img src="<?php echo esc_url($placeholder_svg); ?>" alt="<?php echo esc_attr($name); ?>" class="atomic-photo-placeholder" />
         <?php endif; ?>

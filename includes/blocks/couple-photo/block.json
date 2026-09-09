@@ -59,6 +59,14 @@
     "animationDelay": {
       "type": "number",
       "default": 0
+    },
+    "photoFocalPoint": {
+      "type": "object",
+      "default": { "x": 0.5, "y": 0.5 }
+    },
+    "photoZoom": {
+      "type": "number",
+      "default": 100
     }
   },
   "supports": {
