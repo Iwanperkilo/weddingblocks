@@ -4,7 +4,7 @@ Tags: wedding, invitation, gutenberg, fse, blocks
 Requires at least: 6.7
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.5.1
+Stable tag: 1.6.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Plugin URI: https://wordpress.org/plugins/weddingblocks/
@@ -91,6 +91,12 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 
 == Changelog ==
 
+= 1.6.0 =
+* Added: Focal Point & Zoom Controls for Couple Photo block — new editor controls to set focal point (object-position) and zoom level (transform: scale) without destructive cropping or re-uploading images.
+* Fixed: Couple columns alignment — changed align-items from baseline to flex-start to prevent vertical misalignment; added align-self: center to separator column for proper centering.
+* Fixed: Replaced background shorthand with explicit background-color to avoid unintended side effects.
+* Fixed: Reduced font weight for couple name and fullname styles from 600 to 500 for a lighter, more balanced appearance.
+
 = 1.5.1 =
 * Separator font inheritance - Removed hardcoded font-family from .weddingblocks-separator in both editor and frontend CSS. The separator now inherits the font-family from .weddingblocks-cover-title to stay consistent with the "Jenis Font Nama Cover" selection.
 * Cover wrapper layout - Adjusted minimum width and box-sizing for the cover wrapper to improve stability across devices.
@@ -159,6 +165,9 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 * Zero external dependencies
 
 == Upgrade Notice ==
+
+= 1.6.0 =
+Adds focal point and zoom controls to Couple Photo block, plus UI fixes for couple columns alignment and font weights. Safe to upgrade, no breaking changes. Recommended for all installations.
 
 = 1.5.1 =
 Style fixes and UI improvements. Safe to upgrade, no breaking changes. Recommended for all installations.

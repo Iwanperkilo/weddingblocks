@@ -7,6 +7,19 @@ dan plugin ini menganut [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.6.0] - 2026-09-09
+
+### Added (Ditambahkan)
+- **Focal Point & Zoom Controls untuk Couple Photo** — Kontrol baru di block editor untuk mengatur **focal point (titik fokus)** dan **zoom level** pada foto pasangan (block `couple-photo`). Memungkinkan pengguna menentukan area fokus gambar dan memperbesar/mengecilkan tanpa perlu crop destruktif atau mengunggah aset gambar baru.
+  - Atribut `photoFocalPoint` dan `photoZoom` ditambahkan ke `block.json`
+  - Implementasi `FocalPointPicker` dan `RangeControl` di block editor
+  - Update `render.php` menerapkan `object-position`, `transform-origin`, dan `transform: scale()` berdasarkan atribut baru
+
+### Fixed & Improved (Diperbaiki & Ditingkatkan)
+- **Couple columns alignment** — Mengubah `align-items` dari `baseline` ke `flex-start` pada grid couple columns untuk mencegah *vertical misalignment*, serta menambahkan `align-self: center` pada kolom separator agar tetap terpusat dengan benar di dalam layout.
+- **CSS background shorthand** — Mengganti `background` shorthand dengan `background-color` yang lebih eksplisit untuk menghindari *side effect* tidak diinginkan pada properti background lain.
+- **Font weight couple name & fullname** — Mengurangi `font-weight` dari `600` ke `500` pada style nama pasangan dan nama lengkap untuk tampilan yang lebih halus dan seimbang.
+
 ## [1.5.1] - 2026-09-03
 
 ### Fixed & Improved (Diperbaiki & Ditingkatkan)
@@ -152,6 +165,7 @@ dan plugin ini menganut [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+[1.6.0]: #160---2026-09-09
 [1.5.1]: #151---2026-09-03
 [1.5.0]: #150---2026-08-28
 [1.1.0]: #110---2026-07-16
