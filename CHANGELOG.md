@@ -13,7 +13,7 @@ dan plugin ini menganut [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - **Focal Point & Zoom Controls untuk Couple Photo** — Kontrol baru di block editor untuk mengatur **focal point (titik fokus)** dan **zoom level** pada foto pasangan (block `couple-photo`). Memungkinkan pengguna menentukan area fokus gambar dan memperbesar/mengecilkan tanpa perlu crop destruktif atau mengunggah aset gambar baru.
   - Atribut `photoFocalPoint` dan `photoZoom` ditambahkan ke `block.json`
   - Implementasi `FocalPointPicker` dan `RangeControl` di block editor
-  - Update `render.php` menerapkan `object-position`, `transform-origin`, dan `transform: scale()` berdasarkan atribut baru
+  - `render.php` menerapkan `object-position` dan `transform-origin` (dari titik fokus yang sama, agar zoom selalu "mengunci" ke titik itu, tidak pernah mendorongnya keluar frame) berdasarkan atribut baru. Nilai zoom sendiri dititipkan lewat CSS custom property `--wb-photo-zoom` alih-alih langsung men-set `transform` inline, supaya efek hover-zoom bawaan (`atomic-blocks.css` / `blocks-frontend.css`) tetap berfungsi normal — hover menambah zoom secara relatif (`calc(var(--wb-photo-zoom, 1) * 1.06)`) dari nilai dasar yang diatur admin, bukan menggantikannya.
 
 ### Fixed & Improved (Diperbaiki & Ditingkatkan)
 - **Couple columns alignment** — Mengubah `align-items` dari `baseline` ke `flex-start` pada grid couple columns untuk mencegah *vertical misalignment*, serta menambahkan `align-self: center` pada kolom separator agar tetap terpusat dengan benar di dalam layout.
