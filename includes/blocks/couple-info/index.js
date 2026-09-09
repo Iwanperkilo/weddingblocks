@@ -1,5 +1,7 @@
 (function (blocks, element, blockEditor, i18n, components) {
   var el = element.createElement;
+  var useEffect = element.useEffect;
+  var useRef = element.useRef;
   var useBlockProps = blockEditor.useBlockProps;
   var InspectorControls = blockEditor.InspectorControls;
   var __ = i18n.__;
@@ -25,19 +27,22 @@
     greatvibes: "'Great Vibes', cursive",
     montserrat: "'Montserrat', sans-serif",
     georgia: "Georgia, 'Times New Roman', serif",
-    system: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-    "sans-serif": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-    monospace: "'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace",
+    system:
+      "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+    "sans-serif":
+      "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    monospace:
+      "'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace",
   };
 
   var coupleInfoFontLabels = {
-    playfair: "Playfair Display",
-    greatvibes: "Great Vibes",
-    montserrat: "Montserrat",
-    georgia: "Georgia",
-    system: "System (WordPress)",
-    "sans-serif": "Sans-serif",
-    monospace: "Monospace",
+    playfair: __("Playfair Display (Serif Elegan)", "weddingblocks"),
+    greatvibes: __("Great Vibes (Kaligrafi)", "weddingblocks"),
+    montserrat: __("Montserrat (Sans-serif Modern)", "weddingblocks"),
+    georgia: __("Georgia (Serif Klasik)", "weddingblocks"),
+    system: __("System (Bawaan WordPress)", "weddingblocks"),
+    "sans-serif": __("Sans-serif", "weddingblocks"),
+    monospace: __("Monospace", "weddingblocks"),
   };
 
   function mergeCoupleInfoWpFonts(fonts) {
@@ -123,7 +128,7 @@
         return collectEditorFontFamilies(
           settings && settings.__experimentalFeatures
             ? settings.__experimentalFeatures
-            : null
+            : null,
         );
       }, []);
 
@@ -148,23 +153,18 @@
       var firstName = attributes.swapCouple ? groomName : brideName;
       var firstParents = attributes.swapCouple ? groomParents : brideParents;
       var firstPhoto = attributes.swapCouple ? groomPhoto : bridePhoto;
-      var firstLabel = attributes.swapCouple
-        ? __("Mempelai Pria", "weddingblocks")
-        : __("Mempelai Wanita", "weddingblocks");
 
       var secondName = attributes.swapCouple ? brideName : groomName;
       var secondParents = attributes.swapCouple ? brideParents : groomParents;
       var secondPhoto = attributes.swapCouple ? bridePhoto : groomPhoto;
-      var secondLabel = attributes.swapCouple
-        ? __("Mempelai Wanita", "weddingblocks")
-        : __("Mempelai Pria", "weddingblocks");
       var showParentsLabel = attributes.showParentsLabel;
       var parentsLabelGroom = attributes.parentsLabelGroom;
       var parentsLabelBride = attributes.parentsLabelBride;
       var parentsLabelFontSize = attributes.parentsLabelFontSize;
       var parentsLabelFontFamily = attributes.parentsLabelFontFamily;
       var parentsLabelTextColor = attributes.parentsLabelTextColor;
-      var nameFontSize = attributes.nameFontSize || 24;
+      var nameFontSize = attributes.nameFontSize || 20;
+      var nameFontFamily = attributes.nameFontFamily || "default";
       var nameTextColor = attributes.nameTextColor;
       var avatarBorderColor = attributes.avatarBorderColor;
       var avatarBorderWidth = attributes.avatarBorderWidth;
@@ -177,17 +177,54 @@
       if (fontFamilyCss) {
         parentsLabelStyle.fontFamily = fontFamilyCss;
       }
+      var nameFontFamilyCss = resolveCoupleInfoFont(nameFontFamily);
       var nameStyle = {
         fontSize: nameFontSize + "px",
         color: nameTextColor,
       };
+      if (nameFontFamilyCss) {
+        nameStyle.fontFamily = nameFontFamilyCss;
+      }
+
+      // Border foto: pakai kontrol Border bawaan WP (attributes.style.border)
+      // jika sudah diisi, dengan fallback ke atribut lama avatarBorderColor /
+      // avatarBorderWidth untuk konten yang dibuat sebelum fitur ini ada.
+      var styleAttr = attributes.style || {};
+      var borderObj = styleAttr.border || {};
+
+      var resolvedBorderColor = "";
+      if (borderObj.color) {
+        resolvedBorderColor = borderObj.color;
+      } else if (attributes.borderColor) {
+        resolvedBorderColor =
+          "var(--wp--preset--color--" + attributes.borderColor + ")";
+      } else if (avatarBorderColor) {
+        resolvedBorderColor = avatarBorderColor;
+      }
+
+      var resolvedBorderWidth = "";
+      if (borderObj.width) {
+        resolvedBorderWidth = borderObj.width;
+      } else if (
+        styleAttr.border &&
+        Object.prototype.hasOwnProperty.call(styleAttr.border, "width")
+      ) {
+        resolvedBorderWidth = "0px";
+      } else {
+        resolvedBorderWidth = (avatarBorderWidth || 0) + "px";
+      }
+
+      var resolvedBorderStyle =
+        borderObj.style ||
+        (resolvedBorderWidth && resolvedBorderWidth !== "0px" ? "solid" : "");
+
       var avatarStyle = {
-        borderColor: avatarBorderColor,
-        borderWidth: avatarBorderWidth + "px",
-        borderStyle: "solid",
+        borderColor: resolvedBorderColor,
+        borderWidth: resolvedBorderWidth,
+        borderStyle: resolvedBorderStyle,
       };
       var ampersandStyle = {
-        color: avatarBorderColor,
+        color: resolvedBorderColor,
       };
 
       // Layout class
@@ -196,13 +233,74 @@
           ? "weddingblocks-couple-columns--vertical"
           : "";
 
-      var animPanel = typeof window.weddingblocksAnimationPanel === "function"
-        ? window.weddingblocksAnimationPanel(attributes, setAttributes)
-        : null;
+      // React inline style { fontFamily: ... } tidak mendukung !important,
+      // terapkan secara imperatif lewat ref + setProperty("important") agar menang
+      // atas stylesheet tema di editor.
+      var firstNameRef = element.createRef();
+      var secondNameRef = element.createRef();
+      var firstParentsLabelRef = element.createRef();
+      var firstParentsNamesRef = element.createRef();
+      var firstParentsPlainRef = element.createRef();
+      var secondParentsLabelRef = element.createRef();
+      var secondParentsNamesRef = element.createRef();
+      var secondParentsPlainRef = element.createRef();
+
+      useEffect(
+        function () {
+          [firstNameRef, secondNameRef].forEach(function (ref) {
+            if (ref && ref.current) {
+              if (nameFontFamilyCss) {
+                ref.current.style.setProperty(
+                  "font-family",
+                  nameFontFamilyCss,
+                  "important",
+                );
+              } else {
+                ref.current.style.removeProperty("font-family");
+              }
+            }
+          });
+        },
+        [nameFontFamilyCss],
+      );
+
+      useEffect(
+        function () {
+          [
+            firstParentsLabelRef,
+            firstParentsNamesRef,
+            firstParentsPlainRef,
+            secondParentsLabelRef,
+            secondParentsNamesRef,
+            secondParentsPlainRef,
+          ].forEach(function (ref) {
+            if (ref && ref.current) {
+              if (fontFamilyCss) {
+                ref.current.style.setProperty(
+                  "font-family",
+                  fontFamilyCss,
+                  "important",
+                );
+              } else {
+                ref.current.style.removeProperty("font-family");
+              }
+            }
+          });
+        },
+        [fontFamilyCss, showParentsLabel],
+      );
+
+      var animPanel =
+        typeof window.weddingblocksAnimationPanel === "function"
+          ? window.weddingblocksAnimationPanel(attributes, setAttributes)
+          : null;
 
       var fontOptions = (function () {
         var options = [
-          { label: __("Bawaan Tema (Otomatis)", "weddingblocks"), value: "default" },
+          {
+            label: __("Bawaan Tema (Otomatis)", "weddingblocks"),
+            value: "default",
+          },
         ];
         Object.keys(coupleInfoBuiltins).forEach(function (key) {
           options.push({
@@ -237,9 +335,9 @@
               help: attributes.swapCouple
                 ? __("Mempelai Pria ditampilkan di kiri/atas", "weddingblocks")
                 : __(
-                  "Mempelai Wanita ditampilkan di kiri/atas",
-                  "weddingblocks",
-                ),
+                    "Mempelai Wanita ditampilkan di kiri/atas",
+                    "weddingblocks",
+                  ),
               checked: attributes.swapCouple,
               onChange: function (value) {
                 setAttributes({ swapCouple: value });
@@ -263,7 +361,7 @@
           el(
             PanelColorSettings,
             {
-              title: __("Pengaturan Warna", "weddingblocks"),
+              title: __("Pengaturan Warna & Font Mempelai", "weddingblocks"),
               initialOpen: false,
               colorSettings: [
                 {
@@ -272,14 +370,6 @@
                     setAttributes({ nameTextColor: value });
                   },
                   label: __("Warna Nama Mempelai", "weddingblocks"),
-                  colors: LABEL_TEXT_COLORS,
-                },
-                {
-                  value: avatarBorderColor,
-                  onChange: function (value) {
-                    setAttributes({ avatarBorderColor: value });
-                  },
-                  label: __("Warna Border Foto", "weddingblocks"),
                   colors: LABEL_TEXT_COLORS,
                 },
                 {
@@ -293,17 +383,7 @@
               ],
             },
             el(RangeControl, {
-              label: __("Border Foto", "weddingblocks"),
-              value: avatarBorderWidth,
-              onChange: function (value) {
-                setAttributes({ avatarBorderWidth: value });
-              },
-              min: 0,
-              max: 15,
-              step: 1,
-            }),
-            el(RangeControl, {
-              label: __("Font Mempelai", "weddingblocks"),
+              label: __("Ukuran Font Mempelai", "weddingblocks"),
               value: nameFontSize,
               onChange: function (value) {
                 setAttributes({ nameFontSize: value });
@@ -311,6 +391,18 @@
               min: 16,
               max: 64,
               step: 1,
+            }),
+            el(SelectControl, {
+              label: __("Jenis Font Nama Mempelai", "weddingblocks"),
+              value: nameFontFamily,
+              options: fontOptions,
+              onChange: function (value) {
+                setAttributes({ nameFontFamily: value });
+              },
+              help: __(
+                "Pilih jenis huruf untuk nama mempelai. Font tema dan font dari Font Library WordPress otomatis tersedia.",
+                "weddingblocks",
+              ),
             }),
           ),
           el(
@@ -327,42 +419,45 @@
               },
             }),
             showParentsLabel &&
-            el(TextControl, {
-              label: __("Label Orang Tua Pria", "weddingblocks"),
-              value: parentsLabelGroom,
-              onChange: function (value) {
-                setAttributes({ parentsLabelGroom: value });
-              },
-            }),
+              el(TextControl, {
+                label: __("Label Orang Tua Pria", "weddingblocks"),
+                value: parentsLabelGroom,
+                onChange: function (value) {
+                  setAttributes({ parentsLabelGroom: value });
+                },
+              }),
             showParentsLabel &&
-            el(TextControl, {
-              label: __("Label Orang Tua Wanita", "weddingblocks"),
-              value: parentsLabelBride,
-              onChange: function (value) {
-                setAttributes({ parentsLabelBride: value });
-              },
-            }),
+              el(TextControl, {
+                label: __("Label Orang Tua Wanita", "weddingblocks"),
+                value: parentsLabelBride,
+                onChange: function (value) {
+                  setAttributes({ parentsLabelBride: value });
+                },
+              }),
             showParentsLabel &&
-            el(RangeControl, {
-              label: __("Ukuran Font", "weddingblocks"),
-              value: parentsLabelFontSize,
-              onChange: function (value) {
-                setAttributes({ parentsLabelFontSize: value });
-              },
-              min: 10,
-              max: 50,
-              step: 1,
-            }),
+              el(RangeControl, {
+                label: __("Ukuran Font", "weddingblocks"),
+                value: parentsLabelFontSize,
+                onChange: function (value) {
+                  setAttributes({ parentsLabelFontSize: value });
+                },
+                min: 10,
+                max: 50,
+                step: 1,
+              }),
             showParentsLabel &&
-            el(SelectControl, {
-              label: __("Gaya Font", "weddingblocks"),
-              value: parentsLabelFontFamily,
-              options: fontOptions,
-              onChange: function (value) {
-                setAttributes({ parentsLabelFontFamily: value });
-              },
-              help: __("Pilih jenis huruf untuk nama orang tua. Font tema dan font dari Font Library WordPress otomatis tersedia.", "weddingblocks")
-            }),
+              el(SelectControl, {
+                label: __("Gaya Font", "weddingblocks"),
+                value: parentsLabelFontFamily,
+                options: fontOptions,
+                onChange: function (value) {
+                  setAttributes({ parentsLabelFontFamily: value });
+                },
+                help: __(
+                  "Pilih jenis huruf untuk nama orang tua. Font tema dan font dari Font Library WordPress otomatis tersedia.",
+                  "weddingblocks",
+                ),
+              }),
           ),
         ),
         animPanel,
@@ -374,29 +469,36 @@
             { className: "weddingblocks-avatar", style: avatarStyle },
             el("img", { src: firstPhoto, alt: firstName }),
           ),
-          el("h3", { style: nameStyle }, firstName),
+          el("h3", { style: nameStyle, ref: firstNameRef }, firstName),
           showParentsLabel &&
-          el(
-            "p",
-            { className: "weddingblocks-parents-info" },
             el(
-              "span",
-              {
-                className: "weddingblocks-parents-label",
-                style: parentsLabelStyle,
-              },
-              attributes.swapCouple ? parentsLabelGroom : parentsLabelBride,
+              "p",
+              { className: "weddingblocks-parents-info" },
+              el(
+                "span",
+                {
+                  className: "weddingblocks-parents-label",
+                  style: parentsLabelStyle,
+                  ref: firstParentsLabelRef,
+                },
+                attributes.swapCouple ? parentsLabelGroom : parentsLabelBride,
+              ),
+              el(
+                "span",
+                {
+                  className: "weddingblocks-parents-names",
+                  style: parentsLabelStyle,
+                  ref: firstParentsNamesRef,
+                },
+                firstParents,
+              ),
             ),
+          !showParentsLabel &&
             el(
-              "span",
-              {
-                className: "weddingblocks-parents-names",
-                style: parentsLabelStyle,
-              },
+              "p",
+              { style: parentsLabelStyle, ref: firstParentsPlainRef },
               firstParents,
             ),
-          ),
-          !showParentsLabel && el("p", {}, firstParents),
         ),
         el(
           "div",
@@ -404,7 +506,11 @@
             className:
               "weddingblocks-couple-column weddingblocks-separator-column",
           },
-          el("p", { className: "weddingblocks-ampersand", style: ampersandStyle }, "&"),
+          el(
+            "p",
+            { className: "weddingblocks-ampersand", style: ampersandStyle },
+            "&",
+          ),
         ),
         el(
           "div",
@@ -414,29 +520,36 @@
             { className: "weddingblocks-avatar", style: avatarStyle },
             el("img", { src: secondPhoto, alt: secondName }),
           ),
-          el("h3", { style: nameStyle }, secondName),
+          el("h3", { style: nameStyle, ref: secondNameRef }, secondName),
           showParentsLabel &&
-          el(
-            "p",
-            { className: "weddingblocks-parents-info" },
             el(
-              "span",
-              {
-                className: "weddingblocks-parents-label",
-                style: parentsLabelStyle,
-              },
-              attributes.swapCouple ? parentsLabelBride : parentsLabelGroom,
+              "p",
+              { className: "weddingblocks-parents-info" },
+              el(
+                "span",
+                {
+                  className: "weddingblocks-parents-label",
+                  style: parentsLabelStyle,
+                  ref: secondParentsLabelRef,
+                },
+                attributes.swapCouple ? parentsLabelBride : parentsLabelGroom,
+              ),
+              el(
+                "span",
+                {
+                  className: "weddingblocks-parents-names",
+                  style: parentsLabelStyle,
+                  ref: secondParentsNamesRef,
+                },
+                secondParents,
+              ),
             ),
+          !showParentsLabel &&
             el(
-              "span",
-              {
-                className: "weddingblocks-parents-names",
-                style: parentsLabelStyle,
-              },
+              "p",
+              { style: parentsLabelStyle, ref: secondParentsPlainRef },
               secondParents,
             ),
-          ),
-          !showParentsLabel && el("p", {}, secondParents),
         ),
       );
     },

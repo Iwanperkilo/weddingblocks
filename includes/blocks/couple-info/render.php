@@ -26,6 +26,7 @@ $parents_label_font_size = 15;
 $parents_label_font_family = 'georgia';
 $parents_label_text_color = '#000000';
 $name_font_size = 20;
+$name_font_family = 'default';
 $name_text_color = '#2c2c2c';
 $avatar_border_color = '';
 $avatar_border_width = 4;
@@ -56,6 +57,9 @@ if (isset($attributes['parentsLabelTextColor'])) {
 }
 if (isset($attributes['nameFontSize'])) {
 	$name_font_size = intval($attributes['nameFontSize']);
+}
+if (isset($attributes['nameFontFamily'])) {
+	$name_font_family = $attributes['nameFontFamily'];
 }
 if (isset($attributes['nameTextColor'])) {
 	$name_text_color = sanitize_hex_color($attributes['nameTextColor']);
@@ -123,14 +127,45 @@ if (! empty($parents_label_font_family) && 'default' !== $parents_label_font_fam
 		$parents_font_style = " font-family: 'Montserrat', sans-serif !important;";
 	} elseif ('georgia' === $parents_label_font_family) {
 		$parents_font_style = " font-family: Georgia, serif !important;";
+	} elseif ('system' === $parents_label_font_family) {
+		$parents_font_style = " font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;";
 	} elseif ('sans-serif' === $parents_label_font_family) {
 		$parents_font_style = " font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;";
+	} elseif ('monospace' === $parents_label_font_family) {
+		$parents_font_style = " font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace !important;";
 	} else {
 		$cleaned = (string) preg_replace('/[^a-zA-Z0-9\s,()\'"-.]/', '', wp_strip_all_tags($parents_label_font_family));
 		$cleaned = preg_replace('/\s+/', ' ', $cleaned);
 		$font_stack = trim($cleaned);
 		if ('' !== $font_stack && strlen($font_stack) <= 300) {
 			$parents_font_style = ' font-family: ' . $font_stack . ' !important;';
+		}
+	}
+}
+
+// Font family mapping untuk nama mempelai (sama seperti mapping label orang tua di atas).
+$name_font_style = '';
+if (! empty($name_font_family) && 'default' !== $name_font_family) {
+	if ('playfair' === $name_font_family) {
+		$name_font_style = " font-family: 'Playfair Display', Georgia, serif !important;";
+	} elseif ('greatvibes' === $name_font_family) {
+		$name_font_style = " font-family: 'Great Vibes', cursive !important;";
+	} elseif ('montserrat' === $name_font_family) {
+		$name_font_style = " font-family: 'Montserrat', sans-serif !important;";
+	} elseif ('georgia' === $name_font_family) {
+		$name_font_style = " font-family: Georgia, serif !important;";
+	} elseif ('system' === $name_font_family) {
+		$name_font_style = " font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;";
+	} elseif ('sans-serif' === $name_font_family) {
+		$name_font_style = " font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;";
+	} elseif ('monospace' === $name_font_family) {
+		$name_font_style = " font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace !important;";
+	} else {
+		$cleaned = (string) preg_replace('/[^a-zA-Z0-9\s,()\'"-.]/', '', wp_strip_all_tags($name_font_family));
+		$cleaned = preg_replace('/\s+/', ' ', $cleaned);
+		$font_stack = trim($cleaned);
+		if ('' !== $font_stack && strlen($font_stack) <= 300) {
+			$name_font_style = ' font-family: ' . $font_stack . ' !important;';
 		}
 	}
 }
@@ -142,17 +177,52 @@ $parents_label_style_attr = sprintf(
 	esc_attr($parents_label_text_color)
 );
 $name_style_attr = sprintf(
-	'font-size: %dpx; color: %s;',
+	'font-size: %dpx;%s color: %s;',
 	$name_font_size,
+	$name_font_style,
 	esc_attr($name_text_color)
 );
-$avatar_style_attr = 'border-width: ' . $avatar_border_width . 'px; border-style: solid;';
-if ('' !== $avatar_border_color) {
-    $avatar_style_attr = 'border-color: ' . esc_attr($avatar_border_color) . '; ' . $avatar_style_attr;
+
+// Border foto: native WP border (attributes.style.border) dengan fallback
+// ke atribut lama avatarBorderColor / avatarBorderWidth untuk konten yang
+// dibuat sebelum panel Border bawaan WP diaktifkan di blok ini.
+$style_border = isset($attributes['style']['border']) && is_array($attributes['style']['border']) ? $attributes['style']['border'] : array();
+
+$resolved_border_color = '';
+if (! empty($style_border['color'])) {
+	$resolved_border_color = esc_attr($style_border['color']);
+} elseif (! empty($attributes['borderColor'])) {
+	$resolved_border_color = sprintf('var(--wp--preset--color--%s)', sanitize_key($attributes['borderColor']));
+} elseif ('' !== $avatar_border_color) {
+	$resolved_border_color = esc_attr($avatar_border_color);
+}
+
+$resolved_border_width = '';
+if (! empty($style_border['width'])) {
+	$resolved_border_width = esc_attr($style_border['width']);
+} elseif (array_key_exists('width', $style_border)) {
+	$resolved_border_width = '0px';
+} else {
+	$resolved_border_width = $avatar_border_width . 'px';
+}
+
+$resolved_border_style = '';
+if (! empty($style_border['style'])) {
+	$resolved_border_style = esc_attr($style_border['style']);
+} elseif ('' !== $resolved_border_width && '0px' !== $resolved_border_width) {
+	$resolved_border_style = 'solid';
+}
+
+$avatar_style_attr = 'border-width: ' . $resolved_border_width . ';';
+if ('' !== $resolved_border_style) {
+	$avatar_style_attr .= ' border-style: ' . $resolved_border_style . ';';
+}
+if ('' !== $resolved_border_color) {
+	$avatar_style_attr = 'border-color: ' . $resolved_border_color . '; ' . $avatar_style_attr;
 }
 $ampersand_style_attr = '';
-if ('' !== $avatar_border_color) {
-    $ampersand_style_attr = 'color: ' . esc_attr($avatar_border_color) . ' !important;';
+if ('' !== $resolved_border_color) {
+    $ampersand_style_attr = 'color: ' . $resolved_border_color . ' !important;';
 }
 
 // Layout class

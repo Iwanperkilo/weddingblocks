@@ -58,6 +58,10 @@
       "type": "number",
       "default": 20
     },
+    "nameFontFamily": {
+      "type": "string",
+      "default": "default"
+    },
     "nameTextColor": {
       "type": "string",
       "default": "#2c2c2c"
@@ -85,6 +89,23 @@
     "animationDelay": {
       "type": "number",
       "default": 0
+    }
+  },
+  "supports": {
+    "html": false,
+    "__experimentalBorder": {
+      "color": true,
+      "width": true,
+      "style": true,
+      "radius": false,
+      "__experimentalSkipSerialization": true
+    },
+    "border": {
+      "color": true,
+      "width": true,
+      "style": true,
+      "radius": false,
+      "__experimentalSkipSerialization": true
     }
   },
   "editorScript": "file:./index.js",
