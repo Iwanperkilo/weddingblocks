@@ -15,7 +15,8 @@
       var attributes = props.attributes;
       var meta = wp.data.useSelect(function (select) {
         var editor = select("core/editor");
-        if (!editor || typeof editor.getEditedPostAttribute !== "function") return {};
+        if (!editor || typeof editor.getEditedPostAttribute !== "function")
+          return {};
         return editor.getEditedPostAttribute("meta") || {};
       });
 
@@ -43,48 +44,237 @@
       }
       if (!name) name = fallback;
 
-      var placeholderSvg = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23b5a46d"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
-      var displayPhoto = photo || placeholderSvg;
-      var imgStyle = { width: size + "px", height: size + "px" };
-      if (showFrame) {
-        if (frameColor) { imgStyle.borderColor = frameColor; }
-        imgStyle.borderWidth = frameWidth + "px";
+      var styleAttr = attributes.style || {};
+      var borderObj = styleAttr.border || {};
+      var rawRadius = borderObj.radius;
+
+      var borderRadiusStyle = "";
+      if (typeof rawRadius === "string" && rawRadius.trim() !== "") {
+        borderRadiusStyle = rawRadius;
+      } else if (typeof rawRadius === "object" && rawRadius !== null) {
+        var tl =
+          rawRadius.topLeft !== undefined
+            ? rawRadius.topLeft
+            : rawRadius.top || "0";
+        var tr =
+          rawRadius.topRight !== undefined
+            ? rawRadius.topRight
+            : rawRadius.right || "0";
+        var br =
+          rawRadius.bottomRight !== undefined
+            ? rawRadius.bottomRight
+            : rawRadius.bottom || "0";
+        var bl =
+          rawRadius.bottomLeft !== undefined
+            ? rawRadius.bottomLeft
+            : rawRadius.left || "0";
+        borderRadiusStyle = tl + " " + tr + " " + br + " " + bl;
+      } else if (shape === "rounded") {
+        borderRadiusStyle = "16px";
+      } else if (shape === "square") {
+        borderRadiusStyle = "0px";
+      } else {
+        borderRadiusStyle = "50%";
       }
-      var focalPositionStr = Math.round(focalPoint.x * 100) + "% " + Math.round(focalPoint.y * 100) + "%";
+
+      // Border Color
+      var borderColorStyle = "";
+      if (borderObj.color) {
+        borderColorStyle = borderObj.color;
+      } else if (attributes.borderColor) {
+        borderColorStyle =
+          "var(--wp--preset--color--" + attributes.borderColor + ")";
+      } else if (showFrame && frameColor) {
+        borderColorStyle = frameColor;
+      }
+
+      // Border Width
+      var borderWidthStyle = "";
+      if (borderObj.width) {
+        if (typeof borderObj.width === "object") {
+          borderWidthStyle =
+            (borderObj.width.top || "0") +
+            " " +
+            (borderObj.width.right || "0") +
+            " " +
+            (borderObj.width.bottom || "0") +
+            " " +
+            (borderObj.width.left || "0");
+        } else {
+          borderWidthStyle = borderObj.width;
+        }
+      } else if (
+        styleAttr.border &&
+        Object.prototype.hasOwnProperty.call(styleAttr.border, "width")
+      ) {
+        borderWidthStyle = "0px";
+      } else if (showFrame) {
+        borderWidthStyle = frameWidth + "px";
+      } else {
+        borderWidthStyle = "0px";
+      }
+
+      // Border Style
+      var borderStyleVal =
+        borderObj.style ||
+        (borderWidthStyle &&
+        borderWidthStyle !== "0px" &&
+        borderWidthStyle !== "0"
+          ? "solid"
+          : "");
+
+      var placeholderSvg =
+        'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23b5a46d"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
+      var displayPhoto = photo || placeholderSvg;
+      var imgStyle = {
+        width: size + "px",
+        height: size + "px",
+        borderRadius: borderRadiusStyle,
+      };
+      if (borderWidthStyle) {
+        imgStyle.borderWidth = borderWidthStyle;
+      }
+      if (borderColorStyle) {
+        imgStyle.borderColor = borderColorStyle;
+      }
+      if (borderStyleVal) {
+        imgStyle.borderStyle = borderStyleVal;
+      }
+
+      var focalPositionStr =
+        Math.round(focalPoint.x * 100) +
+        "% " +
+        Math.round(focalPoint.y * 100) +
+        "%";
       var photoImgStyle = {
         objectPosition: focalPositionStr,
         transformOrigin: focalPositionStr,
         "--wb-photo-zoom": zoom / 100,
       };
-      var wrapperClass = "weddingblocks-atomic-couple-photo role-" + role + " shape-" + shape + " align-" + align + (showFrame ? " has-frame" : " no-frame");
+      var wrapperClass =
+        "weddingblocks-atomic-couple-photo role-" +
+        role +
+        " shape-" +
+        shape +
+        " align-" +
+        align +
+        (showFrame ||
+        (borderWidthStyle &&
+          borderWidthStyle !== "0px" &&
+          borderWidthStyle !== "0")
+          ? " has-frame"
+          : " no-frame");
 
-      var animPanel = typeof window.weddingblocksAnimationPanel === "function"
-        ? window.weddingblocksAnimationPanel(attributes, props.setAttributes)
-        : null;
+      var animPanel =
+        typeof window.weddingblocksAnimationPanel === "function"
+          ? window.weddingblocksAnimationPanel(attributes, props.setAttributes)
+          : null;
 
       return [
-        el(InspectorControls, { key: "inspector" },
-          el(PanelBody, { title: __("Pengaturan Foto Mempelai", "weddingblocks"), initialOpen: true },
-            el(SelectControl, { label: __("Mempelai", "weddingblocks"), value: role, options: [{ label: __("Mempelai Pria", "weddingblocks"), value: "groom" }, { label: __("Mempelai Wanita", "weddingblocks"), value: "bride" }], onChange: function (v) { props.setAttributes({ role: v }); } }),
-            el(SelectControl, { label: __("Perataan", "weddingblocks"), value: align, options: [{ label: __("Kiri", "weddingblocks"), value: "left" }, { label: __("Tengah", "weddingblocks"), value: "center" }, { label: __("Kanan", "weddingblocks"), value: "right" }], onChange: function (v) { props.setAttributes({ align: v }); } }),
-            el(SelectControl, { label: __("Style Foto", "weddingblocks"), value: shape, options: [{ label: __("Bulat (Circle)", "weddingblocks"), value: "circle" }, { label: __("Sudut Membulat (Rounded)", "weddingblocks"), value: "rounded" }, { label: __("Kotak (Square)", "weddingblocks"), value: "square" }], onChange: function (v) { props.setAttributes({ shape: v }); } }),
-            el(RangeControl, { label: __("Ukuran Foto (px)", "weddingblocks"), value: size, min: 40, max: 800, onChange: function (v) { props.setAttributes({ size: v }); } }),
-            el(FocalPointPicker, { label: __("Fokus Foto", "weddingblocks"), url: displayPhoto, value: focalPoint, onChange: function (v) { props.setAttributes({ photoFocalPoint: v }); } }),
-            el(RangeControl, { label: __("Zoom Foto (%)", "weddingblocks"), value: zoom, min: 100, max: 300, onChange: function (v) { props.setAttributes({ photoZoom: v !== undefined ? v : 100 }); } }),
-            el(Button, { isSecondary: showFrame, isTertiary: !showFrame, onClick: function () { props.setAttributes({ showFrame: !showFrame }); } }, showFrame ? __("Tampilkan Bingkai: ON", "weddingblocks") : __("Tampilkan Bingkai: OFF", "weddingblocks"))
+        el(
+          InspectorControls,
+          { key: "inspector" },
+          el(
+            PanelBody,
+            {
+              title: __("Pengaturan Foto Mempelai", "weddingblocks"),
+              initialOpen: true,
+            },
+            el(SelectControl, {
+              label: __("Mempelai", "weddingblocks"),
+              value: role,
+              options: [
+                { label: __("Mempelai Pria", "weddingblocks"), value: "groom" },
+                {
+                  label: __("Mempelai Wanita", "weddingblocks"),
+                  value: "bride",
+                },
+              ],
+              onChange: function (v) {
+                props.setAttributes({ role: v });
+              },
+            }),
+            el(SelectControl, {
+              label: __("Perataan", "weddingblocks"),
+              value: align,
+              options: [
+                { label: __("Kiri", "weddingblocks"), value: "left" },
+                { label: __("Tengah", "weddingblocks"), value: "center" },
+                { label: __("Kanan", "weddingblocks"), value: "right" },
+              ],
+              onChange: function (v) {
+                props.setAttributes({ align: v });
+              },
+            }),
+            el(RangeControl, {
+              label: __("Ukuran Foto (px)", "weddingblocks"),
+              value: size,
+              min: 40,
+              max: 800,
+              onChange: function (v) {
+                props.setAttributes({ size: v });
+              },
+            }),
+            el(FocalPointPicker, {
+              label: __("Fokus Foto", "weddingblocks"),
+              url: displayPhoto,
+              value: focalPoint,
+              onChange: function (v) {
+                props.setAttributes({ photoFocalPoint: v });
+              },
+            }),
+            el(RangeControl, {
+              label: __("Zoom Foto (%)", "weddingblocks"),
+              value: zoom,
+              min: 100,
+              max: 300,
+              onChange: function (v) {
+                props.setAttributes({ photoZoom: v !== undefined ? v : 100 });
+              },
+            }),
           ),
-          showFrame && el(PanelColorSettings, { title: __("Warna Bingkai", "weddingblocks"), initialOpen: true, colorSettings: [{ value: frameColor, onChange: function (v) { props.setAttributes({ frameColor: v || "" }); }, label: __("Warna Border Foto", "weddingblocks") }] }),
-          showFrame && el(PanelBody, { initialOpen: true }, el(RangeControl, { label: __("Border (px)", "weddingblocks"), value: frameWidth, min: 1, max: 10, onChange: function (v) { props.setAttributes({ frameWidth: v }); } }))
         ),
         animPanel,
-        el("div", useBlockProps({ key: "preview", className: wrapperClass }),
-          el("span", { className: "wb-editor-badge" }, el("span", { className: "wb-editor-badge-icon" }, "\uD83D\uDDBC\uFE0F"), __("Foto " + roleLabel, "weddingblocks")),
-          el("figure", { className: "atomic-photo shape-" + shape + (showFrame ? " has-frame" : " no-frame"), style: imgStyle },
-            el("img", { src: displayPhoto, alt: name, className: photo ? "" : "atomic-photo-placeholder", style: photo ? photoImgStyle : undefined })
-          )
+        el(
+          "div",
+          useBlockProps({ key: "preview", className: wrapperClass }),
+          el(
+            "span",
+            { className: "wb-editor-badge" },
+            el(
+              "span",
+              { className: "wb-editor-badge-icon" },
+              "\uD83D\uDDBC\uFE0F",
+            ),
+            __("Foto " + roleLabel, "weddingblocks"),
+          ),
+          el(
+            "figure",
+            {
+              className:
+                "atomic-photo shape-" +
+                shape +
+                (showFrame ? " has-frame" : " no-frame"),
+              style: imgStyle,
+            },
+            el("img", {
+              src: displayPhoto,
+              alt: name,
+              className: photo ? "" : "atomic-photo-placeholder",
+              style: photo ? photoImgStyle : undefined,
+            }),
+          ),
         ),
       ];
     },
-    save: function () { return null; },
+    save: function () {
+      return null;
+    },
   });
-})(window.wp.blocks, window.wp.element, window.wp.blockEditor, window.wp.components, window.wp.i18n);
+})(
+  window.wp.blocks,
+  window.wp.element,
+  window.wp.blockEditor,
+  window.wp.components,
+  window.wp.i18n,
+);
