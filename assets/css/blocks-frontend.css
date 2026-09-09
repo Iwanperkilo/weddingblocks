@@ -1776,7 +1776,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
 }
 
 .weddingblocks-atomic-couple-photo .atomic-photo:hover img {
-  transform: scale(1.06);
+  transform: scale(calc(var(--wb-photo-zoom, 1) * 1.06));
 }
 
 /* --- Interaction: Button ripple --- */

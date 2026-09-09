@@ -54,7 +54,7 @@
       var photoImgStyle = {
         objectPosition: focalPositionStr,
         transformOrigin: focalPositionStr,
-        transform: "scale(" + (zoom / 100) + ")",
+        "--wb-photo-zoom": zoom / 100,
       };
       var wrapperClass = "weddingblocks-atomic-couple-photo role-" + role + " shape-" + shape + " align-" + align + (showFrame ? " has-frame" : " no-frame");
 

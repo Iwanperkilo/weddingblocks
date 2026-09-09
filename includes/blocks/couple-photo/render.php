@@ -54,7 +54,7 @@ $zoom = isset($attributes['photoZoom']) ? (float) $attributes['photoZoom'] : 100
 $zoom = max(100, min(300, $zoom));
 
 $photo_img_style = sprintf(
-    'object-position:%1$s;transform-origin:%1$s;transform:scale(%2$s);',
+    'object-position:%1$s;transform-origin:%1$s;--wb-photo-zoom:%2$s;',
     $focal_css,
     $zoom / 100
 );
