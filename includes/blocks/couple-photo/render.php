@@ -16,15 +16,22 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
-$role       = isset($attributes['role']) ? sanitize_key($attributes['role']) : 'groom';
-$shape      = isset($attributes['shape']) ? sanitize_key($attributes['shape']) : 'circle';
-$shape      = in_array($shape, array('circle', 'rounded', 'square'), true) ? $shape : 'circle';
-$size       = isset($attributes['size']) ? (int) $attributes['size'] : 200;
+$role  = isset($attributes['role']) ? sanitize_key($attributes['role']) : 'groom';
+$size  = isset($attributes['size']) ? (int) $attributes['size'] : 200;
 if ($size < 40) {
     $size = 40;
 }
 if ($size > 800) {
     $size = 800;
+}
+
+// Height defaults to size for backward compatibility.
+$height = isset($attributes['height']) ? (int) $attributes['height'] : $size;
+if ($height < 40) {
+    $height = 40;
+}
+if ($height > 800) {
+    $height = 800;
 }
 $show_frame  = isset($attributes['showFrame']) ? (bool) $attributes['showFrame'] : true;
 $frame_color = isset($attributes['frameColor']) && preg_match('/^#[0-9a-fA-F]{3,8}$/', $attributes['frameColor']) ? $attributes['frameColor'] : '';
@@ -75,7 +82,7 @@ if ('' === $name) {
 // Native WP border attributes with fallback to legacy frame settings.
 $style_border = isset($attributes['style']['border']) && is_array($attributes['style']['border']) ? $attributes['style']['border'] : array();
 
-// 1. Border radius handling: native WP border radius with fallback to legacy shape.
+// 1. Border radius: native WP border radius, no shape fallback.
 $border_radius = '';
 if (! empty($style_border['radius'])) {
     $radius_raw = $style_border['radius'];
@@ -87,16 +94,6 @@ if (! empty($style_border['radius'])) {
         $border_radius = esc_attr(trim("$tl $tr $br $bl"));
     } elseif (is_string($radius_raw) && '' !== trim($radius_raw)) {
         $border_radius = esc_attr(trim($radius_raw));
-    }
-}
-
-if ('' === $border_radius) {
-    if ('rounded' === $shape) {
-        $border_radius = '16px';
-    } elseif ('square' === $shape) {
-        $border_radius = '0px';
-    } else {
-        $border_radius = '50%';
     }
 }
 
@@ -141,7 +138,7 @@ if (! empty($style_border['style'])) {
 
 $placeholder_svg = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23b5a46d"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
 
-$inline_style = sprintf('width:%1$dpx;height:%1$dpx;border-radius:%2$s;', $size, $border_radius);
+$inline_style = sprintf('width:%1$dpx;height:%2$dpx;border-radius:%3$s;', $size, $height, $border_radius);
 if ('' !== $border_width) {
     $inline_style .= sprintf('border-width:%s;', $border_width);
 }
@@ -151,10 +148,9 @@ if ('' !== $border_color) {
 if ('' !== $border_style) {
     $inline_style .= sprintf('border-style:%s;', $border_style);
 }
-$frame_class  = ($show_frame || ('' !== $border_width && '0px' !== $border_width && '0' !== $border_width)) ? ' has-frame' : ' no-frame';
-$shape_class  = ' shape-' . sanitize_html_class($shape);
+$frame_class   = ($show_frame || ('' !== $border_width && '0px' !== $border_width && '0' !== $border_width)) ? ' has-frame' : ' no-frame';
 $wrapper_class = 'weddingblocks-atomic-couple-photo role-' . sanitize_html_class($role) . ' align-' . sanitize_html_class($align) . $frame_class;
-$figure_class  = 'atomic-photo' . $shape_class;
+$figure_class  = 'atomic-photo';
 
 $wrapper_attributes = get_block_wrapper_attributes(
     array_merge(

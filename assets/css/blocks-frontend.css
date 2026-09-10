@@ -919,18 +919,6 @@ body.admin-bar .weddingblocks-cover-wrapper {
   margin-right: 0;
 }
 
-.weddingblocks-atomic-couple-photo .atomic-photo.shape-circle {
-  border-radius: 50%;
-}
-
-.weddingblocks-atomic-couple-photo .atomic-photo.shape-rounded {
-  border-radius: 16px;
-}
-
-.weddingblocks-atomic-couple-photo .atomic-photo.shape-square {
-  border-radius: 0;
-}
-
 .weddingblocks-atomic-couple-photo .atomic-photo img {
   width: 100%;
   height: 100%;
@@ -957,18 +945,6 @@ body.admin-bar .weddingblocks-cover-wrapper {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
-}
-
-.weddingblocks-atomic-couple-photo.shape-circle .atomic-photo {
-  border-radius: 50%;
-}
-
-.weddingblocks-atomic-couple-photo.shape-rounded .atomic-photo {
-  border-radius: 15px;
-}
-
-.weddingblocks-atomic-couple-photo.shape-square .atomic-photo {
-  border-radius: 0;
 }
 
 /* Frame styling */

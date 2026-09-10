@@ -5,9 +5,7 @@
   var FocalPointPicker = components.FocalPointPicker;
   var SelectControl = components.SelectControl;
   var RangeControl = components.RangeControl;
-  var Button = components.Button;
   var useBlockProps = blockEditor.useBlockProps;
-  var PanelColorSettings = blockEditor.PanelColorSettings;
   var __ = i18n.__;
 
   blocks.registerBlockType("weddingblocks/couple-photo", {
@@ -21,8 +19,8 @@
       });
 
       var role = attributes.role || "groom";
-      var shape = attributes.shape || "circle";
       var size = attributes.size || 200;
+      var height = attributes.height !== undefined ? attributes.height : size;
       var showFrame = attributes.showFrame !== false;
       var frameColor = attributes.frameColor || "";
       var frameWidth = attributes.frameWidth || 3;
@@ -52,29 +50,11 @@
       if (typeof rawRadius === "string" && rawRadius.trim() !== "") {
         borderRadiusStyle = rawRadius;
       } else if (typeof rawRadius === "object" && rawRadius !== null) {
-        var tl =
-          rawRadius.topLeft !== undefined
-            ? rawRadius.topLeft
-            : rawRadius.top || "0";
-        var tr =
-          rawRadius.topRight !== undefined
-            ? rawRadius.topRight
-            : rawRadius.right || "0";
-        var br =
-          rawRadius.bottomRight !== undefined
-            ? rawRadius.bottomRight
-            : rawRadius.bottom || "0";
-        var bl =
-          rawRadius.bottomLeft !== undefined
-            ? rawRadius.bottomLeft
-            : rawRadius.left || "0";
+        var tl = rawRadius.topLeft !== undefined ? rawRadius.topLeft : rawRadius.top || "0";
+        var tr = rawRadius.topRight !== undefined ? rawRadius.topRight : rawRadius.right || "0";
+        var br = rawRadius.bottomRight !== undefined ? rawRadius.bottomRight : rawRadius.bottom || "0";
+        var bl = rawRadius.bottomLeft !== undefined ? rawRadius.bottomLeft : rawRadius.left || "0";
         borderRadiusStyle = tl + " " + tr + " " + br + " " + bl;
-      } else if (shape === "rounded") {
-        borderRadiusStyle = "16px";
-      } else if (shape === "square") {
-        borderRadiusStyle = "0px";
-      } else {
-        borderRadiusStyle = "50%";
       }
 
       // Border Color
@@ -128,7 +108,7 @@
       var displayPhoto = photo || placeholderSvg;
       var imgStyle = {
         width: size + "px",
-        height: size + "px",
+        height: height + "px",
         borderRadius: borderRadiusStyle,
       };
       if (borderWidthStyle) {
@@ -154,8 +134,6 @@
       var wrapperClass =
         "weddingblocks-atomic-couple-photo role-" +
         role +
-        " shape-" +
-        shape +
         " align-" +
         align +
         (showFrame ||
@@ -207,12 +185,25 @@
               },
             }),
             el(RangeControl, {
-              label: __("Ukuran Foto (px)", "weddingblocks"),
+              label: __("Lebar Foto (px)", "weddingblocks"),
               value: size,
               min: 40,
               max: 800,
               onChange: function (v) {
                 props.setAttributes({ size: v });
+              },
+            }),
+            el(RangeControl, {
+              label: __("Tinggi Foto (px)", "weddingblocks"),
+              value: height,
+              min: 40,
+              max: 800,
+              help: __(
+                "Atur border-radius via panel Border untuk mengubah bentuk foto.",
+                "weddingblocks",
+              ),
+              onChange: function (v) {
+                props.setAttributes({ height: v });
               },
             }),
             el(FocalPointPicker, {
@@ -251,10 +242,7 @@
           el(
             "figure",
             {
-              className:
-                "atomic-photo shape-" +
-                shape +
-                (showFrame ? " has-frame" : " no-frame"),
+              className: "atomic-photo" + (showFrame ? " has-frame" : " no-frame"),
               style: imgStyle,
             },
             el("img", {

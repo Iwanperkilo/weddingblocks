@@ -5,7 +5,7 @@
   "title": "WB Foto Mempelai",
   "category": "weddingblocks",
   "icon": "format-image",
-  "description": "Menampilkan foto mempelai pria atau wanita dengan gaya bentuk melingkar atau persegi.",
+  "description": "Menampilkan foto mempelai pria atau wanita.",
   "textdomain": "weddingblocks",
   "attributes": {
     "groomPhoto": {
@@ -24,11 +24,11 @@
       "type": "string",
       "default": "groom"
     },
-    "shape": {
-      "type": "string",
-      "default": "circle"
-    },
     "size": {
+      "type": "number",
+      "default": 200
+    },
+    "height": {
       "type": "number",
       "default": 200
     },
