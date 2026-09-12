@@ -176,7 +176,7 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 == Upgrade Notice ==
 
 = 1.7.0 =
-Adds native WordPress border support for both Couple Photo and Couple Info blocks, font family selection for couple-info, independent height control for couple-photo, and refactors the zoom implementation to use a CSS custom property. The legacy `shape` attribute has been removed in favor of native border-radius. Safe to upgrade, no breaking changes for existing content. Recommended for all installations.
+Adds native WordPress border support for Couple Photo & Couple Info, font family for couple-info, and photo height control. Zoom refactored to CSS custom property. Legacy shape attribute removed in favor of border-radius. Safe to upgrade, no breaking changes.
 
 = 1.6.0 =
 Adds focal point and zoom controls to Couple Photo block, plus UI fixes for couple columns alignment and font weights. Safe to upgrade, no breaking changes. Recommended for all installations.
