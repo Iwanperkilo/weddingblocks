@@ -4,7 +4,7 @@ Tags: wedding, invitation, gutenberg, fse, blocks
 Requires at least: 6.7
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.6.0
+Stable tag: 1.7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Plugin URI: https://wordpress.org/plugins/weddingblocks/
@@ -91,6 +91,15 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 
 == Changelog ==
 
+= 1.7.0 =
+* Added: Native WordPress Border Support for Couple Photo block — integrates `__experimentalBorder` and border attributes (color, radius, style, width) with support for individual corner radius, color presets, and legacy frame fallback.
+* Added: Native WordPress Border Support for Couple Info block — adds border color, width, and style support to the couple-info block.
+* Added: Font Family support for Couple Info block — new `nameFontFamily` attribute with SelectControl editor interface and localized labels.
+* Added: Independent Height Control for Couple Photo block — new `height` attribute allowing rectangular photo dimensions instead of forcing a square aspect ratio.
+* Changed: Refactored couple-photo zoom to use a CSS custom property (`--wb-photo-zoom`) instead of inline transform styles, allowing the zoom level to combine with existing hover effects via relative scaling.
+* Changed: Removed the legacy `shape` attribute (circle, rounded, square) from couple-photo in favor of native WordPress border-radius attributes for more granular control.
+* Fixed: Zoom focal point maintenance — `object-position` and `transform-origin` now use the same focal point so zoom always anchors to that point without pushing it out of frame.
+
 = 1.6.0 =
 * Added: Focal Point & Zoom Controls for Couple Photo block — new editor controls to set focal point (object-position) and zoom level (transform: scale) without destructive cropping or re-uploading images.
 * Fixed: Couple columns alignment — changed align-items from baseline to flex-start to prevent vertical misalignment; added align-self: center to separator column for proper centering.
@@ -165,6 +174,9 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 * Zero external dependencies
 
 == Upgrade Notice ==
+
+= 1.7.0 =
+Adds native WordPress border support for both Couple Photo and Couple Info blocks, font family selection for couple-info, independent height control for couple-photo, and refactors the zoom implementation to use a CSS custom property. The legacy `shape` attribute has been removed in favor of native border-radius. Safe to upgrade, no breaking changes for existing content. Recommended for all installations.
 
 = 1.6.0 =
 Adds focal point and zoom controls to Couple Photo block, plus UI fixes for couple columns alignment and font weights. Safe to upgrade, no breaking changes. Recommended for all installations.

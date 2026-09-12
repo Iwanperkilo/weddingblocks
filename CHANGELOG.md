@@ -7,22 +7,45 @@ dan plugin ini menganut [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.7.0] - 2026-09-12
+
+### Added (Ditambahkan)
+
+- **Native WordPress Border Support untuk Couple Photo** — Integrasi `__experimentalBorder` dan border attributes ke `block.json`, mencakup dukungan untuk border radius (individual corners + shorthand), border color (native styles, color presets, atau legacy frame settings), dan border width (native styles atau legacy frame width). Logika fallback otomatis dipertahankan untuk mempertahankan kompatibilitas dengan atribut frame legacy.
+- **Native WordPress Border Support untuk Couple Info** — Menambahkan dukungan border bawaan WordPress pada block `couple-info` (color, width, style; radius dinonaktifkan sesuai desain block).
+- **Font Family Support untuk Couple Info** — Atribut `nameFontFamily` ditambahkan ke block `couple-info` untuk memungkinkan pemilihan font family kustom pada nama mempelai. Editor JS diperbarui dengan kontrol `SelectControl` dan label yang dilokalkan. CSS refaktor untuk menghilangkan font family hardcoded di editor previews.
+- **Independent Height Control untuk Couple Photo** — Atribut `height` ditambahkan ke `block.json`, memungkinkan foto berdimensi rectangular (lebar dan tinggi independen) tanpa memaksa aspect ratio square.
+
+### Changed (Diubah)
+
+- **Zoom Refactor ke CSS Custom Property** — Refactor zoom functionality pada `couple-photo` untuk menggunakan CSS custom property (`--wb-photo-zoom`) alih-alih inline transform styles. Ini memungkinkan zoom level untuk di kombinasikan dengan existing hover effects (scale) di CSS, mencegah inline transform dari menggantikan hover state. Hover scale sekarang menggunakan relative scaling: `calc(var(--wb-photo-zoom, 1) * 1.06)`.
+- **Shape Attribute Dihapus** — Menggantikan attribute `shape` legacy (circle, rounded, square) dengan reliance penuh pada native WordPress border-radius attributes. Ini menyederhanakan block logic dan memberikan kontrol yang lebih granular.
+- **Border Radius Logic Diperbarui** — `render.php` dan `index.js` kini mendukung border radius per-corner (topLeft, topRight, bottomRight, bottomLeft) serta shorthand, selain backward compatibility dengan format lama (top/right/bottom/left).
+
+### Fixed & Improved (Diperbaiki & Ditingkatkan)
+
+- **Zoom Focal Point Maintenance** — `object-position` dan `transform-origin` sekarang menggunakan titik fokus yang sama, memastikan zoom selalu "mengunci" ke titik fokus tersebut dan tidak mendorongnya keluar dari frame.
+- **Border Fallback Logic** — Automatic fallback ke legacy frame settings (frameColor, frameWidth) ketika native border attributes belum diatur, memastikan konten yang dibuat sebelum fitur ini ada tetap berfungsi.
+
 ## [1.6.0] - 2026-09-09
 
 ### Added (Ditambahkan)
+
 - **Focal Point & Zoom Controls untuk Couple Photo** — Kontrol baru di block editor untuk mengatur **focal point (titik fokus)** dan **zoom level** pada foto pasangan (block `couple-photo`). Memungkinkan pengguna menentukan area fokus gambar dan memperbesar/mengecilkan tanpa perlu crop destruktif atau mengunggah aset gambar baru.
   - Atribut `photoFocalPoint` dan `photoZoom` ditambahkan ke `block.json`
   - Implementasi `FocalPointPicker` dan `RangeControl` di block editor
   - `render.php` menerapkan `object-position` dan `transform-origin` (dari titik fokus yang sama, agar zoom selalu "mengunci" ke titik itu, tidak pernah mendorongnya keluar frame) berdasarkan atribut baru. Nilai zoom sendiri dititipkan lewat CSS custom property `--wb-photo-zoom` alih-alih langsung men-set `transform` inline, supaya efek hover-zoom bawaan (`atomic-blocks.css` / `blocks-frontend.css`) tetap berfungsi normal — hover menambah zoom secara relatif (`calc(var(--wb-photo-zoom, 1) * 1.06)`) dari nilai dasar yang diatur admin, bukan menggantikannya.
 
 ### Fixed & Improved (Diperbaiki & Ditingkatkan)
-- **Couple columns alignment** — Mengubah `align-items` dari `baseline` ke `flex-start` pada grid couple columns untuk mencegah *vertical misalignment*, serta menambahkan `align-self: center` pada kolom separator agar tetap terpusat dengan benar di dalam layout.
-- **CSS background shorthand** — Mengganti `background` shorthand dengan `background-color` yang lebih eksplisit untuk menghindari *side effect* tidak diinginkan pada properti background lain.
+
+- **Couple columns alignment** — Mengubah `align-items` dari `baseline` ke `flex-start` pada grid couple columns untuk mencegah _vertical misalignment_, serta menambahkan `align-self: center` pada kolom separator agar tetap terpusat dengan benar di dalam layout.
+- **CSS background shorthand** — Mengganti `background` shorthand dengan `background-color` yang lebih eksplisit untuk menghindari _side effect_ tidak diinginkan pada properti background lain.
 - **Font weight couple name & fullname** — Mengurangi `font-weight` dari `600` ke `500` pada style nama pasangan dan nama lengkap untuk tampilan yang lebih halus dan seimbang.
 
 ## [1.5.1] - 2026-09-03
 
 ### Fixed & Improved (Diperbaiki & Ditingkatkan)
+
 - **Separator font inheritance** — Menghapus font-family hardcoded dari `.weddingblocks-separator` di CSS editor maupun frontend. Separator sekarang mewarisi font-family dari `.weddingblocks-cover-title` agar konsisten dengan pilihan "Jenis Font Nama Cover".
 - **Cover wrapper layout** — Menyesuaikan minimum width dan box-sizing pada wrapper cover untuk meningkatkan stabilitas tampilan di berbagai perangkat.
 - **CSS formatting & responsive layout** — Memformat ulang deklarasi CSS untuk keterbacaan yang lebih baik dan meningkatkan responsivitas layout untuk couple columns, avatars, dan komponen lainnya.
@@ -30,6 +53,7 @@ dan plugin ini menganut [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [1.5.0] - 2026-08-28
 
 ### Added (Ditambahkan)
+
 - **Dynamic Typography & Font Library Integration** — Refactor block `couple-name`, `couple-parents`, dan `couple-info` agar mendukung pemilihan font dinamis dari WordPress Font Library dan pengaturan tema.
 - **Flexible Font System** — Mengganti pemetaan font hardcoded dengan sistem fleksibel yang memungkinkan block mewarisi tipografi tema secara default atau memakai font family kustom.
 - **CSS Variables** — CSS diperbarui untuk memakai CSS variables pada font body, heading, dan aksen.
@@ -37,19 +61,22 @@ dan plugin ini menganut [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - **Editor Integration** — Integrasi `wp.data` untuk mengambil daftar font family yang tersedia dari pengaturan editor.
 
 ### Fixed & Improved (Diperbaiki & Ditingkatkan)
+
 - **Sanitasi** — Ditambahkan sanitasi untuk string font family kustom pada template render PHP.
 - **Block Attributes** — Atribut block diperbarui memakai default `'default'`, bukan lagi hardcoded `'playfair'`.
 
 ## [1.4.1] - 2026-08-23
 
 ### Added (Ditambahkan)
+
 - **Extensibility Hooks untuk RSVP Query** — Filter `weddingblocks_rsvp_search_fields` untuk memperluas pencarian database dan `weddingblocks_rsvp_enable_status_filter` untuk filter status modular.
 - **Filter UI & Tampilan Admin** — Filter `weddingblocks_show_rsvp_row_actions` untuk mengontrol visibilitas baris aksi tombol Hapus, serta filter `weddingblocks_rsvp_extra_columns` untuk penyesuaian lebar tabel kosong secara otomatis.
 - **Action Hook Pembersihan Cache** — Action `weddingblocks_clear_rsvps_count_cache` untuk memudahkan add-on menyinkronkan pembersihan cache hitungan RSVP.
 
 ### Fixed & Improved (Diperbaiki & Ditingkatkan)
+
 - **Optimasi Database Query** — Query database pada `weddingblocks_get_rsvps()` dan `weddingblocks_get_rsvps_count()` kini 100% mandiri, bebas dari potensi error kolom `phone` atau `status` jika add-on tidak aktif.
-- **RSVP Count Cache Invalidation** — Perbaikan invalidasi cache jumlah RSVP agar langsung terhapus saat data RSVP baru masuk atau dihapus, mencegah data *stale* pada persistent object cache.
+- **RSVP Count Cache Invalidation** — Perbaikan invalidasi cache jumlah RSVP agar langsung terhapus saat data RSVP baru masuk atau dihapus, mencegah data _stale_ pada persistent object cache.
 - **Dasbor Admin RSVP** — Pemulihan tombol aksi "Hapus" bawaan dan penambahan badge styling kehadiran bawaan yang rapi dan mandiri tanpa memerlukan CSS eksternal.
 
 ## [1.4.0] - 2026-08-17
@@ -77,6 +104,7 @@ dan plugin ini menganut [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### 🎉 Rilis Awal
 
 #### Added (Ditambahkan)
+
 - 11+ custom Gutenberg blocks:
   - `cover` — Sampul pembuka undangan
   - `couple-name` — Nama pengantin pria & wanita
@@ -108,11 +136,13 @@ dan plugin ini menganut [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Zero dependency eksternal
 
 #### Security
+
 - Pengecekan `ABSPATH` untuk mencegah akses langsung ke file PHP
 - Validasi nonce pada form submission
 - Sanitasi & escape data saat output
 
 #### Documentation
+
 - README.md lengkap dengan badge, instalasi, dan kontribusi
 - readme.txt standar WordPress.org plugin directory
 - CHANGELOG.md (file ini)
@@ -122,6 +152,7 @@ dan plugin ini menganut [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [1.2.0] - 2026-07-17
 
 ### Added (Ditambahkan)
+
 - **Animation System**: Sistem animasi terpusat berbasis CSS + IntersectionObserver tanpa dependency eksternal.
   - 5 jenis entrance animation: `fadeUp`, `fadeIn`, `slideLeft`, `slideRight`, `zoomIn`
   - Setiap block mendukung attribute `animationStyle`, `animationDuration`, `animationDelay`
@@ -137,13 +168,15 @@ dan plugin ini menganut [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [1.1.0] - 2026-07-16
 
 ### Added (Ditambahkan)
+
 - Blok Event Info yang lengkap dengan berbagai variasi layout dan kustomisasi gaya editor.
 - Opsi kustomisasi tambahan pada blok Music Player.
-- Kolom jumlah tamu (*guest count*) pada form RSVP.
+- Kolom jumlah tamu (_guest count_) pada form RSVP.
 - Pengaturan alignment (perataan), ukuran font, dan toggle prefiks pada blok Guest Name.
 - Berkas helper `includes/helpers.php` untuk memisahkan fungsi-fungsi umum.
 
 ### Changed (Diubah)
+
 - Dukungan Editor Template & FSE: Blok sekarang dapat ditambahkan langsung ke dalam template editor WordPress, tidak terbatas hanya pada postingan Custom Post Type "Undangan".
 - Migrasi tata letak blok couple dan event info ke CSS Grid dan container queries untuk responsivitas yang lebih baik.
 - Penyederhanaan CSS frontend dan peningkatan transisi animasi.
@@ -155,13 +188,9 @@ dan plugin ini menganut [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### Planned
-- Template tambahan (modern, elegant, rustic)
-- Integrasi Google Maps
-- Export data RSVP ke CSV
+
 - Tema visual tambahan
 - Multi-bahasa (EN/ID)
-- Custom font picker di block
-- Dukungan QR Code untuk undangan digital
 
 ---
 
