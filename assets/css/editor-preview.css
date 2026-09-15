@@ -145,15 +145,15 @@
 .editor-styles-wrapper
   .weddingblocks-atomic-couple-photo
   .atomic-photo-placeholder,
+.editor-styles-wrapper .weddingblocks-atomic-couple-photo .atomic-photo svg,
 .editor-styles-wrapper
   .weddingblocks-couple-column
   .weddingblocks-avatar-placeholder,
 .editor-styles-wrapper .weddingblocks-couple-column .weddingblocks-avatar svg {
   display: block;
-  width: 55%;
-  height: 55%;
-  max-width: 55%;
-  max-height: 55%;
+  width: 100%;
+  height: 100%;
+  margin: auto;
   color: var(--wb-color-primary, #b5a46d);
   fill: currentColor;
 }

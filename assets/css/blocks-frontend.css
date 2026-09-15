@@ -339,6 +339,8 @@ body.admin-bar .weddingblocks-cover-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .weddingblocks-avatar img {
@@ -351,10 +353,9 @@ body.admin-bar .weddingblocks-cover-wrapper {
 .weddingblocks-avatar .weddingblocks-avatar-placeholder,
 .weddingblocks-avatar svg {
   display: block;
-  width: 55%;
-  height: 55%;
-  max-width: 55%;
-  max-height: 55%;
+  width: 100%;
+  height: 100%;
+  margin: auto;
   color: var(--wb-color-primary, #b5a46d);
   fill: currentColor;
 }
@@ -428,7 +429,7 @@ body.admin-bar .weddingblocks-cover-wrapper {
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--wb-color-muted, #777);
-  margin-top: 6px;
+  margin-top: 0;
 }
 
 /* --- 5. EVENT DETAILS --- */
@@ -915,12 +916,10 @@ body.admin-bar .weddingblocks-cover-wrapper {
 }
 
 .weddingblocks-atomic-couple-photo .atomic-photo {
-  margin: 0;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
   overflow: hidden;
   background: var(--wb-color-surface-tint, #f5f0e6);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
@@ -928,6 +927,11 @@ body.admin-bar .weddingblocks-cover-wrapper {
 
 .weddingblocks-atomic-couple-photo.align-left .atomic-photo {
   margin-left: 0;
+  margin-right: auto;
+}
+
+.weddingblocks-atomic-couple-photo.align-center .atomic-photo {
+  margin-left: auto;
   margin-right: auto;
 }
 
@@ -944,12 +948,12 @@ body.admin-bar .weddingblocks-cover-wrapper {
   flex-shrink: 0;
 }
 
-.weddingblocks-atomic-couple-photo .atomic-photo-placeholder {
+.weddingblocks-atomic-couple-photo .atomic-photo-placeholder,
+.weddingblocks-atomic-couple-photo .atomic-photo svg {
   display: block;
-  width: 55%;
-  height: 55%;
-  max-width: 55%;
-  max-height: 55%;
+  width: 100%;
+  height: 100%;
+  margin: auto;
   color: var(--wb-color-primary, #b5a46d);
   fill: currentColor;
 }
