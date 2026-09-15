@@ -7,6 +7,13 @@ dan plugin ini menganut [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.7.1] - 2026-09-15
+
+### Fixed & Improved (Diperbaiki & Ditingkatkan)
+
+- **Placeholder Rendering Refinement** — Placeholder SVG untuk couple-info, couple-photo, dan avatar helper diperbarui agar scaling lebih konsisten di editor dan frontend.
+- **Alignment Tuning** — CSS alignment untuk couple-photo disesuaikan supaya left/center/right positioning lebih stabil dan mudah dirawat.
+
 ## [1.7.0] - 2026-09-12
 
 ### Added (Ditambahkan)

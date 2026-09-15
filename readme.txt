@@ -4,7 +4,7 @@ Tags: wedding, invitation, gutenberg, fse, blocks
 Requires at least: 6.7
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.7.0
+Stable tag: 1.7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Plugin URI: https://wordpress.org/plugins/weddingblocks/
@@ -91,6 +91,10 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 
 == Changelog ==
 
+= 1.7.1 =
+* Fixed: Placeholder rendering and photo alignment refined for couple-photo, couple-info, and avatar placeholders.
+* Changed: Updated SVG placeholder paths and alignment CSS so placeholders scale consistently across editor and frontend.
+
 = 1.7.0 =
 * Added: Native WordPress Border Support for Couple Photo block — integrates `__experimentalBorder` and border attributes (color, radius, style, width) with support for individual corner radius, color presets, and legacy frame fallback.
 * Added: Native WordPress Border Support for Couple Info block — adds border color, width, and style support to the couple-info block.
@@ -174,6 +178,9 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 * Zero external dependencies
 
 == Upgrade Notice ==
+
+= 1.7.1 =
+Improves placeholder rendering and couple photo alignment without changing existing block data. Safe to upgrade, no breaking changes.
 
 = 1.7.0 =
 Adds native WordPress border support for Couple Photo & Couple Info, font family for couple-info, and photo height control. Zoom refactored to CSS custom property. Legacy shape attribute removed in favor of border-radius. Safe to upgrade, no breaking changes.
