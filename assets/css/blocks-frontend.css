@@ -336,12 +336,27 @@ body.admin-bar .weddingblocks-cover-wrapper {
   margin-bottom: 20px;
   background-color: var(--wb-color-surface-tint, #f6f2e8);
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .weddingblocks-avatar img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  flex-shrink: 0;
+}
+
+.weddingblocks-avatar .weddingblocks-avatar-placeholder,
+.weddingblocks-avatar svg {
+  display: block;
+  width: 55%;
+  height: 55%;
+  max-width: 55%;
+  max-height: 55%;
+  color: var(--wb-color-primary, #b5a46d);
+  fill: currentColor;
 }
 
 .weddingblocks-couple-column h3 {
@@ -901,7 +916,9 @@ body.admin-bar .weddingblocks-cover-wrapper {
 
 .weddingblocks-atomic-couple-photo .atomic-photo {
   margin: 0;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-left: auto;
   margin-right: auto;
   overflow: hidden;
@@ -924,16 +941,17 @@ body.admin-bar .weddingblocks-cover-wrapper {
   height: 100%;
   object-fit: cover;
   display: block;
+  flex-shrink: 0;
 }
 
 .weddingblocks-atomic-couple-photo .atomic-photo-placeholder {
   display: block;
-  width: 100%;
-  height: 100%;
+  width: 55%;
+  height: 55%;
+  max-width: 55%;
+  max-height: 55%;
   color: var(--wb-color-primary, #b5a46d);
-  font-family: "Playfair Display", serif;
-  font-size: 3em;
-  font-weight: 700;
+  fill: currentColor;
 }
 
 .weddingblocks-atomic-couple-photo .atomic-photo-caption {

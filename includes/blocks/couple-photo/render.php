@@ -136,8 +136,6 @@ if (! empty($style_border['style'])) {
     $border_style = 'solid';
 }
 
-$placeholder_svg = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23b5a46d"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
-
 $inline_style = sprintf('width:%1$dpx;height:%2$dpx;border-radius:%3$s;', $size, $height, $border_radius);
 if ('' !== $border_width) {
     $inline_style .= sprintf('border-width:%s;', $border_width);
@@ -163,10 +161,10 @@ $wrapper_attributes = get_block_wrapper_attributes(
 <div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
         ?>>
     <figure class="<?php echo esc_attr($figure_class); ?>" style="<?php echo esc_attr($inline_style); ?>">
-        <?php if ('' !== $photo) : ?>
+        <?php if (! empty($photo)) : ?>
             <img src="<?php echo esc_url($photo); ?>" alt="<?php echo esc_attr($name); ?>" style="<?php echo esc_attr($photo_img_style); ?>" />
         <?php else : ?>
-            <img src="<?php echo esc_url($placeholder_svg); ?>" alt="<?php echo esc_attr($name); ?>" class="atomic-photo-placeholder" />
+            <?php echo weddingblocks_get_placeholder_avatar_svg('atomic-photo-placeholder'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
         <?php endif; ?>
     </figure>
 </div>

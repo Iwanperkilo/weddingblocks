@@ -418,3 +418,23 @@ if (! function_exists('weddingblocks_render_flyer')) {
         echo '</span>';
     }
 }
+
+if (! function_exists('weddingblocks_get_placeholder_avatar_svg')) {
+    /**
+     * Get inline SVG markup for couple photo/avatar placeholder.
+     *
+     * Used when no photo is uploaded so the frontend displays a clean,
+     * elegant avatar silhouette without broken image icons or leaking alt text.
+     *
+     * @param string $class Additional CSS classes.
+     * @return string SVG HTML markup.
+     */
+    function weddingblocks_get_placeholder_avatar_svg($class = '')
+    {
+        $classes = trim('wb-avatar-placeholder ' . $class);
+        return sprintf(
+            '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>',
+            esc_attr($classes)
+        );
+    }
+}

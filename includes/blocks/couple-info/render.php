@@ -86,26 +86,21 @@ if (empty($groom_parents)) $groom_parents = __('Putra dari Bapak & Ibu Orang Tua
 if (empty($bride_name)) $bride_name = __('Mempelai Wanita', 'weddingblocks');
 if (empty($bride_parents)) $bride_parents = __('Putri dari Bapak & Ibu Orang Tua Wanita', 'weddingblocks');
 
-$placeholder_svg = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23b5a46d"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
-
-$groom_photo_url = ! empty($groom_photo) ? esc_url($groom_photo) : $placeholder_svg;
-$bride_photo_url = ! empty($bride_photo) ? esc_url($bride_photo) : $placeholder_svg;
-
 // Determine display order
 if ($swap_couple) {
-	$first_name = $groom_name;
-	$first_parents = $groom_parents;
-	$first_photo_url = $groom_photo_url;
-	$second_name = $bride_name;
-	$second_parents = $bride_parents;
-	$second_photo_url = $bride_photo_url;
+	$first_name       = $groom_name;
+	$first_parents    = $groom_parents;
+	$first_photo_url  = ! empty($groom_photo) ? esc_url($groom_photo) : '';
+	$second_name      = $bride_name;
+	$second_parents   = $bride_parents;
+	$second_photo_url = ! empty($bride_photo) ? esc_url($bride_photo) : '';
 } else {
-	$first_name = $bride_name;
-	$first_parents = $bride_parents;
-	$first_photo_url = $bride_photo_url;
-	$second_name = $groom_name;
-	$second_parents = $groom_parents;
-	$second_photo_url = $groom_photo_url;
+	$first_name       = $bride_name;
+	$first_parents    = $bride_parents;
+	$first_photo_url  = ! empty($bride_photo) ? esc_url($bride_photo) : '';
+	$second_name      = $groom_name;
+	$second_parents   = $groom_parents;
+	$second_photo_url = ! empty($groom_photo) ? esc_url($groom_photo) : '';
 }
 
 // Parents label defaults
@@ -241,7 +236,11 @@ $wrapper_attributes = function_exists('get_block_wrapper_attributes')
 		?>>
 	<div class="weddingblocks-couple-column">
 		<div class="weddingblocks-avatar" style="<?php echo esc_attr($avatar_style_attr); ?>">
-			<img src="<?php echo esc_url($first_photo_url); ?>" alt="<?php echo esc_attr($first_name); ?>">
+			<?php if ('' !== $first_photo_url) : ?>
+				<img src="<?php echo esc_url($first_photo_url); ?>" alt="<?php echo esc_attr($first_name); ?>">
+			<?php else : ?>
+				<?php echo weddingblocks_get_placeholder_avatar_svg('weddingblocks-avatar-placeholder'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			<?php endif; ?>
 		</div>
 		<h3 style="<?php echo esc_attr($name_style_attr); ?>"><?php echo esc_html($first_name); ?></h3>
 		<?php if ($show_parents_label) : ?>
@@ -258,7 +257,11 @@ $wrapper_attributes = function_exists('get_block_wrapper_attributes')
 	</div>
 	<div class="weddingblocks-couple-column">
 		<div class="weddingblocks-avatar" style="<?php echo esc_attr($avatar_style_attr); ?>">
-			<img src="<?php echo esc_url($second_photo_url); ?>" alt="<?php echo esc_attr($second_name); ?>">
+			<?php if ('' !== $second_photo_url) : ?>
+				<img src="<?php echo esc_url($second_photo_url); ?>" alt="<?php echo esc_attr($second_name); ?>">
+			<?php else : ?>
+				<?php echo weddingblocks_get_placeholder_avatar_svg('weddingblocks-avatar-placeholder'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			<?php endif; ?>
 		</div>
 		<h3 style="<?php echo esc_attr($name_style_attr); ?>"><?php echo esc_html($second_name); ?></h3>
 		<?php if ($show_parents_label) : ?>
