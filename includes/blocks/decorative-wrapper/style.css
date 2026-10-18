@@ -4,6 +4,7 @@
   position: relative;
   overflow: hidden;
   min-height: 50px;
+  container-type: inline-size;
 }
 
 /* Pastikan konten anak (nama mempelai, dll) selalu di atas dekorasi "behind", tapi JANGAN menimpa .wb-decor-layer */

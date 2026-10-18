@@ -36,7 +36,12 @@
   width: var(--wb-size);
   height: var(--wb-size);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.6) 55%, rgba(255, 255, 255, 0) 100%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.6) 55%,
+    rgba(255, 255, 255, 0) 100%
+  );
   box-shadow: 0 0 6px rgba(255, 255, 255, 0.45);
   opacity: 0;
   animation: wb-snow-fall var(--wb-dur) linear var(--wb-delay) infinite;
@@ -81,186 +86,231 @@
 .wb-flyer {
   position: absolute;
   top: var(--wb-top);
-  left: -10%;
-  width: 36px;
-  transform: scale(var(--wb-scale));
-  animation: wb-fly var(--wb-dur) linear var(--wb-delay) infinite;
+  width: 48px;
+  pointer-events: none;
   opacity: 0;
   will-change: transform, opacity;
+}
+
+.wb-flyer--ltr {
+  left: 0;
+  animation: wb-fly-ltr var(--wb-dur) linear var(--wb-delay) infinite;
+}
+
+.wb-flyer--rtl {
+  right: 0;
+  animation: wb-fly-rtl var(--wb-dur) linear var(--wb-delay) infinite;
 }
 
 .wb-flyer-svg {
   width: 100%;
   height: auto;
-  fill: #b5a46d;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
 }
 
-/* ===== Burung Organik (Side View) ===== */
+/* ===== Burung Dekorasi 2 Sayap (Bentuk Acuan CodePen) ===== */
 .wb-flyer--bird {
   width: 54px;
-  /* Sedikit disesuaikan untuk proporsi samping */
 }
 
-/* Wrapper gerak tubuh: memisahkan "bob" naik-turun & pitch tubuh burung
-   dari animasi lintasan terbang (wb-fly) yang sudah dipakai di .wb-flyer,
-   supaya keduanya tidak rebutan properti transform pada elemen yang sama. */
+/* Wrapper Gerakan Tubuh (Bobbing & Pitching Alami) */
 .wb-flyer--bird .wb-bird-motion {
   display: block;
+  perspective: 500px;
   transform-box: fill-box;
-  animation: wb-bird-bob var(--wb-bird-flap, 0.4s) ease-in-out infinite;
+  animation: wb-bird-bob var(--wb-bird-flap, 0.44s) ease-in-out infinite alternate;
   will-change: transform;
 }
 
 .wb-flyer--bird .wb-bird-svg {
-  fill: #3a3529;
-  /* Warna siluet gelap */
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.2));
   overflow: visible;
 }
 
-/* Ekor: gerakan halus seperti kemudi, sedikit berlawanan fase dengan sayap */
-.wb-flyer--bird .wb-bird-tail {
+/* Sayap Belakang (Far Wing): engsel bahu tertanam rapi di balik tubuh */
+.wb-flyer--bird .wb-bird-wing--far {
   transform-box: fill-box;
-  transform-origin: 88% 30%;
-  animation: wb-bird-tail-flick var(--wb-bird-flap, 0.4s) ease-in-out infinite;
+  transform-origin: 54% 98%;
+  animation: wb-bird-wing-far var(--wb-bird-flap, 0.44s) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
   will-change: transform;
 }
 
-/* Definisi dasar sayap: Engsel di pangkal bahu (sekitar bahu burung dari samping) */
-.wb-flyer--bird .wb-wing {
+/* Sayap Depan (Near Wing): engsel bahu tertanam presisi di dada burung */
+.wb-flyer--bird .wb-bird-wing--near {
   transform-box: fill-box;
-  transform-origin: 100% 97%;
-  /* Titik engsel bahu burung dari samping (sudut kanan-bawah bentuk sayap) */
+  transform-origin: 98% 93%;
+  animation: wb-bird-wing-near var(--wb-bird-flap, 0.44s) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
   will-change: transform;
 }
 
-/* --- Sayap Jauh (Far Wing) --- */
-/* Terlihat di belakang badan, kepakannya sedikit berbeda untuk kedalaman */
-.wb-flyer--bird .wb-wing--bird-far {
-  fill: #2a261d;
-  /* Sedikit lebih gelap untuk efek bayangan/kedalaman */
-  transform-origin: 100% 96%;
-  animation: wb-bird-flap-far var(--wb-bird-flap, 0.4s) cubic-bezier(0.45, 0, 0.55, 1) infinite;
-}
-
-/* --- Sayap Dekat (Near Wing) --- */
-/* Terlihat di depan badan, kepakan utama */
-.wb-flyer--bird .wb-wing--bird-near {
-  animation: wb-bird-flap-near var(--wb-bird-flap, 0.4s) cubic-bezier(0.45, 0, 0.55, 1) infinite;
-  /* Keterlambatan sangat tipis untuk kesan organik: sayap depan menyusul sayap belakang */
-  animation-delay: calc(var(--wb-bird-flap, 0.4s) * 0.06);
-}
-
-/* Keyframes Animasi Kepakan Sayap Dekat (Side View)
-   Downstroke (mendorong ke bawah, menghasilkan angkat) berlangsung lebih cepat,
-   lalu upstroke/recovery kembali ke atas berlangsung lebih lambat & halus —
-   mendekati pola kepakan burung nyata, bukan gerak simetris bolak-balik. */
-@keyframes wb-bird-flap-near {
+/* Kepakan Sayap Depan: kepakan 3D nyata dari posisi terangkat hingga menekan udara ke bawah */
+@keyframes wb-bird-wing-near {
   0% {
-    /* Posisi tertinggi: sayap terangkat & sedikit menekuk, awal downstroke */
-    transform: rotate(68deg) skewY(-20deg) scaleX(0.72);
-  }
-
-  35% {
-    /* Pertengahan downstroke: sayap mendatar, mendorong udara ke bawah */
-    transform: rotate(-6deg) skewY(-2deg) scaleX(1);
-  }
-
-  55% {
-    /* Titik terendah: akhir downstroke, sayap menekan penuh ke belakang-bawah */
-    transform: rotate(-42deg) skewY(6deg) scaleX(1.08);
+    /* Upstroke: Sayap terangkat anggun di atas punggung */
+    transform: rotate(5deg) rotateX(0deg) translateY(0);
   }
 
   100% {
-    /* Upstroke: kembali perlahan ke posisi terangkat (durasi lebih panjang dari downstroke) */
-    transform: rotate(68deg) skewY(-20deg) scaleX(0.72);
+    /* Downstroke: Sayap mengepak penuh ke bawah melewati bidang tubuh */
+    transform: rotate(-28deg) rotateX(135deg) translateY(42px);
   }
 }
 
-/* Keyframes Animasi Kepakan Sayap Jauh (Side View)
-   Mirip sayap dekat, namun amplitudo sedikit lebih kecil & fase sedikit berbeda
-   agar tidak tumpang tindih sempurna dan tercipta kesan kedalaman (depth). */
-@keyframes wb-bird-flap-far {
+/* Kepakan Sayap Belakang: sinkron dengan offset sudut kedalaman 3D */
+@keyframes wb-bird-wing-far {
   0% {
-    transform: rotate(56deg) skewY(-14deg) scaleX(0.8);
-  }
-
-  35% {
-    transform: rotate(-2deg) skewY(-1deg) scaleX(1);
-  }
-
-  55% {
-    transform: rotate(-32deg) skewY(5deg) scaleX(1.02);
+    /* Upstroke: Sayap belakang terangkat */
+    transform: rotate(5deg) rotateX(0deg) translateY(0);
   }
 
   100% {
-    transform: rotate(56deg) skewY(-14deg) scaleX(0.8);
+    /* Downstroke: Sayap belakang mengepak ke bawah */
+    transform: rotate(-24deg) rotateX(130deg) translateY(38px);
   }
 }
 
-/* Tubuh naik-turun mengikuti tenaga kepakan: badan sedikit terangkat saat
-   sayap berada di pertengahan downstroke (menghasilkan gaya angkat),
-   lalu turun kembali saat sayap ada di puncak (awal siklus berikutnya). */
+/* Gerakan naik-turun tubuh (bobbing) alami mengikuti dorongan gaya angkat sayap */
 @keyframes wb-bird-bob {
   0% {
-    transform: translateY(1.5px) rotate(-3deg);
-  }
-
-  35% {
-    transform: translateY(-1px) rotate(0deg);
-  }
-
-  55% {
-    transform: translateY(-2.5px) rotate(2deg);
+    /* Saat sayap di atas, badan sedikit turun & pitch condong ke bawah */
+    transform: translateY(5px) rotate(-1deg);
   }
 
   100% {
-    transform: translateY(1.5px) rotate(-3deg);
+    /* Saat sayap mengepak menekan ke bawah, daya angkat mengangkat badan burung naik */
+    transform: translateY(-9px) rotate(1.5deg);
   }
 }
 
-/* Ekor bergerak halus berlawanan arah kepakan, seperti kemudi menjaga keseimbangan */
-@keyframes wb-bird-tail-flick {
+/* Lintasan Terbang Kiri ke Kanan (LTR) berbasis Container Query Units (cqi) */
+@keyframes wb-fly-ltr {
   0% {
-    transform: rotate(5deg);
-  }
-
-  50% {
-    transform: rotate(-6deg);
-  }
-
-  100% {
-    transform: rotate(5deg);
-  }
-}
-
-/* Lintasan terbang melintasi layar (tetap sama, hanya penyesuaian rotasi sedikit) */
-@keyframes wb-fly {
-  0% {
-    transform: translate(0, 0) scale(var(--wb-scale)) rotate(-1deg);
+    transform: translate(-80px, 0) scale(var(--wb-scale)) rotate(-1deg);
     opacity: 0;
   }
 
-  8% {
-    opacity: 0.9;
+  6% {
+    opacity: 0.95;
   }
 
   30% {
-    transform: translate(35vw, -8vh) scale(var(--wb-scale)) rotate(2deg);
+    transform: translate(calc(30cqi - 20px), -10px) scale(var(--wb-scale))
+      rotate(1.5deg);
   }
 
   65% {
-    transform: translate(75vw, -4vh) scale(var(--wb-scale)) rotate(-1deg);
+    transform: translate(calc(65cqi - 10px), -4px) scale(var(--wb-scale))
+      rotate(-0.5deg);
   }
 
-  92% {
-    opacity: 0.9;
+  94% {
+    opacity: 0.95;
   }
 
   100% {
-    transform: translate(120vw, -10vh) scale(var(--wb-scale)) rotate(0deg);
+    transform: translate(calc(100cqi + 80px), -12px) scale(var(--wb-scale))
+      rotate(0deg);
     opacity: 0;
+  }
+}
+
+/* Lintasan Terbang Kanan ke Kiri (RTL) dengan flip horizontal alami */
+@keyframes wb-fly-rtl {
+  0% {
+    transform: translate(80px, 0) scaleX(-1) scale(var(--wb-scale))
+      rotate(-1deg);
+    opacity: 0;
+  }
+
+  6% {
+    opacity: 0.95;
+  }
+
+  30% {
+    transform: translate(calc(-30cqi + 20px), -10px) scaleX(-1)
+      scale(var(--wb-scale)) rotate(1.5deg);
+  }
+
+  65% {
+    transform: translate(calc(-65cqi + 10px), -4px) scaleX(-1)
+      scale(var(--wb-scale)) rotate(-0.5deg);
+  }
+
+  94% {
+    opacity: 0.95;
+  }
+
+  100% {
+    transform: translate(calc(-100cqi - 80px), -12px) scaleX(-1)
+      scale(var(--wb-scale)) rotate(0deg);
+    opacity: 0;
+  }
+}
+
+/* Fallback untuk browser lawas yang belum mendukung Container Queries */
+@supports not (container-type: inline-size) {
+  @keyframes wb-fly-ltr {
+    0% {
+      transform: translate(-80px, 0) scale(var(--wb-scale)) rotate(-1deg);
+      opacity: 0;
+    }
+
+    6% {
+      opacity: 0.95;
+    }
+
+    30% {
+      transform: translate(calc(30vw - 20px), -10px) scale(var(--wb-scale))
+        rotate(1.5deg);
+    }
+
+    65% {
+      transform: translate(calc(65vw - 10px), -4px) scale(var(--wb-scale))
+        rotate(-0.5deg);
+    }
+
+    94% {
+      opacity: 0.95;
+    }
+
+    100% {
+      transform: translate(calc(100vw + 80px), -12px) scale(var(--wb-scale))
+        rotate(0deg);
+      opacity: 0;
+    }
+  }
+
+  @keyframes wb-fly-rtl {
+    0% {
+      transform: translate(80px, 0) scaleX(-1) scale(var(--wb-scale))
+        rotate(-1deg);
+      opacity: 0;
+    }
+
+    6% {
+      opacity: 0.95;
+    }
+
+    30% {
+      transform: translate(calc(-30vw + 20px), -10px) scaleX(-1)
+        scale(var(--wb-scale)) rotate(1.5deg);
+    }
+
+    65% {
+      transform: translate(calc(-65vw + 10px), -4px) scaleX(-1)
+        scale(var(--wb-scale)) rotate(-0.5deg);
+    }
+
+    94% {
+      opacity: 0.95;
+    }
+
+    100% {
+      transform: translate(calc(-100vw - 80px), -12px) scaleX(-1)
+        scale(var(--wb-scale)) rotate(0deg);
+      opacity: 0;
+    }
   }
 }
 
@@ -284,7 +334,6 @@
 }
 
 @keyframes wb-fly-loop {
-
   0%,
   100% {
     transform: translate(0, 0) rotate(0deg);
@@ -299,7 +348,8 @@
   }
 
   75% {
-    transform: translate(var(--wb-dx1), var(--wb-dy1)) rotate(calc(var(--wb-rot) * -1));
+    transform: translate(var(--wb-dx1), var(--wb-dy1))
+      rotate(calc(var(--wb-rot) * -1));
   }
 }
 
@@ -323,7 +373,6 @@
 }
 
 @keyframes wb-orbit {
-
   0%,
   100% {
     transform: translate(0, 0) rotate(0deg);
@@ -350,7 +399,8 @@
 /* Kepakan sayap kupu-kupu */
 .wb-flyer--butterfly .wb-wing {
   transform-box: fill-box;
-  animation: wb-flap-natural var(--wb-flap, 0.35s) cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  animation: wb-flap-natural var(--wb-flap, 0.35s)
+    cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 
 .wb-flyer--butterfly .wb-wing--left {
@@ -363,7 +413,6 @@
 }
 
 @keyframes wb-flap-natural {
-
   0%,
   100% {
     transform: scaleX(1) rotateY(0deg) skewY(0deg);
@@ -380,10 +429,12 @@
 
 /* ===== Aksesibilitas & Responsive ===== */
 @media (prefers-reduced-motion: reduce) {
-
   .wb-dot,
   .wb-flyer,
   .wb-flyer-motion,
+  .wb-bird-motion,
+  .wb-bird-wing,
+  .wb-bird-tail,
   .wb-butterfly-pair,
   .wb-flyer--butterfly,
   .wb-wing {
@@ -392,16 +443,6 @@
 }
 
 @media (max-width: 782px) {
-
-  /* Di layar sempit, 120vw jauh lebih pendek jaraknya, jadi burung tampak
-     merangkak. Percepat durasi lintasan burung (bukan delay) supaya kecepatan
-     terasa wajar di mobile. Default opacity:0 mencegah burung "antri" di
-     tepi kiri selama menunggu delay-nya. */
-  .wb-flyer,
-  .wb-flyer--bird {
-    animation-duration: calc(var(--wb-dur) * 0.45);
-  }
-
   .wb-decor-hide-mobile .wb-decor-layer,
   .wb-decor-hide-mobile .wb-decor-butterflies {
     display: none !important;
