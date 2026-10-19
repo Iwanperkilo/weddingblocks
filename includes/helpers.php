@@ -209,49 +209,83 @@ if (! function_exists('weddingblocks_render_dot')) {
 
 if (! function_exists('weddingblocks_render_single_butterfly')) {
     /**
-     * Render satu kupu-kupu (sayap bergradasi + vena).
+     * Render satu kupu-kupu anggun tema pernikahan (Ivory & Pearl Shimmer).
      *
      * @param string $mate_class Kelas untuk posisi pasangan (wb-mate-a / wb-mate-b).
      * @param int    $variant    Variasi warna/ukuran (0 = utama, 1 = pasangan).
      */
     function weddingblocks_render_single_butterfly($mate_class, $variant = 0)
     {
-        $gid       = 'wbwing-' . wp_generate_password(6, false, false);
-        $flap_dur  = wp_rand(28, 42) / 100;
-        $body_tone = (0 === $variant) ? '#4a4436' : '#5c4a2e';
-        $scale     = 1 - ($variant * 0.08); // pasangan kedua sedikit lebih kecil
+        $gid_wing   = 'wbw-' . wp_generate_password(6, false, false);
+        $flap_dur   = wp_rand(17, 23) / 10; // Durasi siklus Flutter & Glide (1.7s - 2.3s)
+        $flap_delay = (0 === $variant) ? 0 : wp_rand(15, 35) / 100;
+        $scale      = (0 === $variant) ? 1.0 : 0.91;
+        $body_tone  = (0 === $variant) ? '#3d3429' : '#45382b';
+        $stop_edge  = (0 === $variant) ? '#c8a265' : '#bf926d'; // Emas sampanye hangat vs mawar sampanye
+        $vein_tone  = (0 === $variant) ? '#c49c5e' : '#b58863';
 
         $motion_style = sprintf(
-            '--wb-flap:%1$ss;transform:scale(%2$s);',
+            '--wb-flap-dur:%1$ss;--wb-flap-delay:%2$ss;transform:scale(%3$s);',
             esc_attr($flap_dur),
+            esc_attr($flap_delay),
             esc_attr($scale)
         );
 
         printf('<span class="wb-flyer--butterfly %1$s">', esc_attr($mate_class));
         printf('<span class="wb-flyer-motion" style="%s">', esc_attr($motion_style));
         printf(
-            '<svg viewBox="0 0 60 46" class="wb-flyer-svg" aria-hidden="true">
+            '<svg viewBox="0 0 64 52" class="wb-butterfly-svg" aria-hidden="true">
                 <defs>
-                    <linearGradient id="%1$s" x1="0%%" y1="0%%" x2="100%%" y2="100%%">
-                        <stop offset="0%%" stop-color="#e3d4a3"/>
-                        <stop offset="55%%" stop-color="#b5a46d"/>
-                        <stop offset="100%%" stop-color="#8c7a48"/>
+                    <linearGradient id="%1$s-g-wing" x1="0%%" y1="0%%" x2="100%%" y2="100%%">
+                        <stop offset="0%%" stop-color="#ffffff"/>
+                        <stop offset="35%%" stop-color="#fbf5ea"/>
+                        <stop offset="70%%" stop-color="#f1e2c7"/>
+                        <stop offset="100%%" stop-color="%2$s"/>
                     </linearGradient>
                 </defs>
-                <g class="wb-wing wb-wing--left">
-                    <path fill="url(#%1$s)" d="M30,23 C21,4 3,2 1,13 C-1,23 10,29 20,26 C11,31 2,37 6,45 C10,52 23,43 30,23 Z"/>
-                    <path fill="#fff" opacity="0.35" d="M28,23 C22,12 11,10 8,16 C6,21 13,25 19,23 Z"/>
-                    <path fill="none" stroke="%2$s" stroke-width="0.6" opacity="0.5" d="M29,23 C21,15 12,13 6,17 M29,23 C18,25 9,29 6,37"/>
+                <g class="wb-butterfly-wings">
+                    <!-- SAYAP KIRI -->
+                    <g class="wb-wing wb-wing--left">
+                        <!-- Sayap Atas Kiri (Forewing) -->
+                        <path fill="url(#%1$s-g-wing)" stroke="%3$s" stroke-width="0.5" d="M32,22 C26,10 14,3 3,6 C-1,8 -0.5,18 5,25 C11,31 22,29 32,25 Z"/>
+                        <!-- Sayap Bawah Kiri (Hindwing) -->
+                        <path fill="url(#%1$s-g-wing)" stroke="%3$s" stroke-width="0.5" d="M32,25 C22,28 9,31 7,39 C5,46 15,50 22,46 C27,43 31,37 32,33 Z"/>
+                        <!-- Highlight Kilau Transparan Mutiara -->
+                        <path fill="#ffffff" opacity="0.45" d="M30,23 C23,14 14,9 7,12 C4,14 6,20 12,25 C18,29 25,27 30,24 Z"/>
+                        <!-- Vena Sayap Halus -->
+                        <path fill="none" stroke="%3$s" stroke-width="0.5" opacity="0.65" d="M32,23 C22,18 13,14 6,11 M32,24 C19,23 11,26 6,24 M32,26 C23,32 14,37 10,41"/>
+                    </g>
+                    <!-- SAYAP KANAN -->
+                    <g class="wb-wing wb-wing--right">
+                        <!-- Sayap Atas Kanan (Forewing) -->
+                        <path fill="url(#%1$s-g-wing)" stroke="%3$s" stroke-width="0.5" d="M32,22 C38,10 50,3 61,6 C65,8 64.5,18 59,25 C53,31 42,29 32,25 Z"/>
+                        <!-- Sayap Bawah Kanan (Hindwing) -->
+                        <path fill="url(#%1$s-g-wing)" stroke="%3$s" stroke-width="0.5" d="M32,25 C42,28 55,31 57,39 C59,46 49,50 42,46 C37,43 33,37 32,33 Z"/>
+                        <!-- Highlight Kilau Transparan Mutiara -->
+                        <path fill="#ffffff" opacity="0.45" d="M34,23 C41,14 50,9 57,12 C60,14 58,20 52,25 C46,29 39,27 34,24 Z"/>
+                        <!-- Vena Sayap Halus -->
+                        <path fill="none" stroke="%3$s" stroke-width="0.5" opacity="0.65" d="M32,23 C42,18 51,14 58,11 M32,24 C45,23 53,26 58,24 M32,26 C41,32 50,37 54,41"/>
+                    </g>
                 </g>
-                <g class="wb-wing wb-wing--right">
-                    <path fill="url(#%1$s)" d="M30,23 C39,4 57,2 59,13 C61,23 50,29 40,26 C49,31 58,37 54,45 C50,52 37,43 30,23 Z"/>
-                    <path fill="#fff" opacity="0.35" d="M32,23 C38,12 49,10 52,16 C54,21 47,25 41,23 Z"/>
-                    <path fill="none" stroke="%2$s" stroke-width="0.6" opacity="0.5" d="M31,23 C39,15 48,13 54,17 M31,23 C42,25 51,29 54,37"/>
+                <!-- BADAN & ANTENA KUPU-KUPU -->
+                <g class="wb-butterfly-body">
+                    <!-- Antena Lentik -->
+                    <path fill="none" stroke="%4$s" stroke-width="0.75" stroke-linecap="round" d="M31,13 C29,6 23,4 20,6 M33,13 C35,6 41,4 44,6"/>
+                    <circle cx="19.5" cy="6.5" r="0.8" fill="%3$s"/>
+                    <circle cx="44.5" cy="6.5" r="0.8" fill="%3$s"/>
+                    <!-- Abdomen (Perut Bawah) -->
+                    <ellipse cx="32" cy="29.5" rx="1.6" ry="6.2" fill="%4$s"/>
+                    <!-- Thorax (Dada Tengah) -->
+                    <ellipse cx="32" cy="20.5" rx="2.2" ry="3.8" fill="%4$s"/>
+                    <!-- Kepala & Mata -->
+                    <circle cx="32" cy="14" r="2.2" fill="%4$s"/>
+                    <circle cx="30.7" cy="13.3" r="0.5" fill="#f7dfa3"/>
+                    <circle cx="33.3" cy="13.3" r="0.5" fill="#f7dfa3"/>
                 </g>
-                <ellipse class="wb-body" cx="30" cy="23" rx="1.8" ry="12" fill="%2$s"/>
-                <path stroke="%2$s" stroke-width="0.7" fill="none" opacity="0.8" d="M29,12 C27,8 24,7 22,5 M31,12 C33,8 36,7 38,5"/>
-              </svg>',
-            esc_attr($gid),
+            </svg>',
+            esc_attr($gid_wing),
+            esc_attr($stop_edge),
+            esc_attr($vein_tone),
             esc_attr($body_tone)
         );
         echo '</span></span>';
@@ -260,51 +294,65 @@ if (! function_exists('weddingblocks_render_single_butterfly')) {
 
 if (! function_exists('weddingblocks_render_butterfly_pair')) {
     /**
-     * Render SEPASANG kupu-kupu yang terbang berdekatan.
+     * Render SEPASANG kupu-kupu yang menari bersama (tarian romantis dua sejoli).
+     *
+     * @param int    $index    Indeks pasangan jika ada lebih dari 1 pasang (misal density: high).
+     * @param string $fly_zone Zona ketinggian terbang ('auto', 'top', 'middle', 'bottom').
      */
-    function weddingblocks_render_butterfly_pair()
+    function weddingblocks_render_butterfly_pair($index = 0, $fly_zone = 'auto')
     {
-        // Margin posisi (area sempit: top 20-55%, left 10-70%).
-        $top   = wp_rand(20, 55);
-        $left  = wp_rand(10, 70);
-        $scale = wp_rand(85, 130) / 100;
+        // Tentukan rentang ketinggian berdasarkan flyZone yang dipilih
+        switch ($fly_zone) {
+            case 'top':
+                // Area Atas (10% - 35%): Cocok untuk lengkungan bunga atas atau di atas judul/nama
+                $top = (0 === $index) ? wp_rand(12, 24) : wp_rand(22, 34);
+                break;
+            case 'middle':
+                // Area Tengah (35% - 60%): Mengitari foto mempelai atau ornamen tengah
+                $top = (0 === $index) ? wp_rand(36, 48) : wp_rand(46, 58);
+                break;
+            case 'bottom':
+                // Area Bawah (60% - 85%): Menari di dekat bunga sudut bawah / footer
+                $top = (0 === $index) ? wp_rand(62, 74) : wp_rand(72, 84);
+                break;
+            case 'auto':
+            default:
+                // Area Bebas / Alami (18% - 58%): Menyebar seimbang
+                $top = (0 === $index) ? wp_rand(18, 40) : wp_rand(36, 58);
+                break;
+        }
 
-        $dir = (1 === wp_rand(0, 1)) ? 1 : -1;
+        if (0 === $index) {
+            $left  = wp_rand(12, 45);
+            $delay = wp_rand(0, 4);
+            $dir   = (1 === wp_rand(0, 1)) ? 1 : -1;
+        } else {
+            $left  = wp_rand(52, 78);
+            $delay = wp_rand(6, 12);
+            $dir   = (1 === wp_rand(0, 1)) ? -1 : 1;
+        }
 
-        $dur   = wp_rand(22, 34);
-        $delay = wp_rand(0, 10);
-
-        $dx1       = $dir * wp_rand(12, 20);
-        $dy1       = -1 * wp_rand(10, 18);
-        $dx2       = $dir * wp_rand(20, 32);
-        $dy2       = -1 * wp_rand(16, 28);
-        $rot       = $dir * wp_rand(6, 12);
-        $orbit_dur = wp_rand(45, 70) / 10;
-
-        $anchor_style = sprintf(
-            '--wb-top:%1$d%%;--wb-left:%2$d%%;',
-            $top,
-            $left
-        );
+        $dur       = wp_rand(22, 30);
+        $scale     = wp_rand(90, 115) / 100;
+        $orbit_dur = wp_rand(48, 64) / 10;
 
         $pair_style = sprintf(
-            'transform:scale(%1$s);--wb-dur:%2$ds;--wb-delay:%3$ds;--wb-dx1:%4$d%%;--wb-dy1:%5$d%%;--wb-dx2:%6$d%%;--wb-dy2:%7$d%%;--wb-rot:%8$ddeg;--wb-orbit-dur:%9$ss;',
-            esc_attr($scale),
+            '--wb-top:%1$d%%;--wb-left:%2$d%%;--wb-dur:%3$ds;--wb-delay:%4$ds;--wb-dir:%5$d;--wb-scale:%6$s;--wb-orbit-dur:%7$ss;',
+            $top,
+            $left,
             $dur,
             $delay,
-            $dx1,
-            $dy1,
-            $dx2,
-            $dy2,
-            $rot,
+            $dir,
+            esc_attr($scale),
             esc_attr($orbit_dur)
         );
 
         printf('<span class="wb-butterfly-pair" style="%s">', esc_attr($pair_style));
-        printf('<span class="wb-butterfly-anchor" style="%s">', esc_attr($anchor_style));
+        echo '<span class="wb-butterfly-anchor">';
+        echo '<span class="wb-butterfly-flight">';
         weddingblocks_render_single_butterfly('wb-mate-a', 0);
         weddingblocks_render_single_butterfly('wb-mate-b', 1);
-        echo '</span></span>';
+        echo '</span></span></span>';
     }
 }
 

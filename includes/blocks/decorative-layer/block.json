@@ -11,7 +11,8 @@
     "weddingblocks/decorationType",
     "weddingblocks/density",
     "weddingblocks/layer",
-    "weddingblocks/enableOnMobile"
+    "weddingblocks/enableOnMobile",
+    "weddingblocks/flyZone"
   ],
   "supports": {
     "html": false,

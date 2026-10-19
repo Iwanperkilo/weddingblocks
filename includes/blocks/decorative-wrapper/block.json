@@ -33,13 +33,18 @@
     "enableOnMobile": {
       "type": "boolean",
       "default": true
+    },
+    "flyZone": {
+      "type": "string",
+      "default": "auto"
     }
   },
   "providesContext": {
     "weddingblocks/decorationType": "decorationType",
     "weddingblocks/density": "density",
     "weddingblocks/layer": "layer",
-    "weddingblocks/enableOnMobile": "enableOnMobile"
+    "weddingblocks/enableOnMobile": "enableOnMobile",
+    "weddingblocks/flyZone": "flyZone"
   },
   "textdomain": "weddingblocks",
   "editorScript": "file:./index.js",

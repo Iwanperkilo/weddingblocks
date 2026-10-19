@@ -117,7 +117,8 @@
   display: block;
   perspective: 500px;
   transform-box: fill-box;
-  animation: wb-bird-bob var(--wb-bird-flap, 0.44s) ease-in-out infinite alternate;
+  animation: wb-bird-bob var(--wb-bird-flap, 0.44s) ease-in-out infinite
+    alternate;
   will-change: transform;
 }
 
@@ -132,7 +133,8 @@
 .wb-flyer--bird .wb-bird-wing--far {
   transform-box: fill-box;
   transform-origin: 54% 98%;
-  animation: wb-bird-wing-far var(--wb-bird-flap, 0.44s) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  animation: wb-bird-wing-far var(--wb-bird-flap, 0.44s)
+    cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
   will-change: transform;
 }
 
@@ -140,7 +142,8 @@
 .wb-flyer--bird .wb-bird-wing--near {
   transform-box: fill-box;
   transform-origin: 98% 93%;
-  animation: wb-bird-wing-near var(--wb-bird-flap, 0.44s) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  animation: wb-bird-wing-near var(--wb-bird-flap, 0.44s)
+    cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
   will-change: transform;
 }
 
@@ -314,15 +317,13 @@
   }
 }
 
-/* ===== Sepasang kupu-kupu ===== */
+/* ===== Sepasang Kupu-kupu (Tarian Romantis Dua Sejoli) ===== */
 .wb-butterfly-pair {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  animation: wb-fly-loop var(--wb-dur) ease-in-out var(--wb-delay) infinite;
-  will-change: transform;
-  perspective: 300px;
+  pointer-events: none;
 }
 
 .wb-butterfly-anchor {
@@ -331,100 +332,324 @@
   left: var(--wb-left, 30%);
   width: 0;
   height: 0;
+  perspective: 600px;
 }
 
-@keyframes wb-fly-loop {
-  0%,
-  100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-
-  25% {
-    transform: translate(var(--wb-dx1), var(--wb-dy1)) rotate(var(--wb-rot));
-  }
-
-  50% {
-    transform: translate(var(--wb-dx2), var(--wb-dy2)) rotate(0deg);
-  }
-
-  75% {
-    transform: translate(var(--wb-dx1), var(--wb-dy1))
-      rotate(calc(var(--wb-rot) * -1));
-  }
-}
-
-.wb-flyer--butterfly {
-  position: absolute;
-  left: auto;
-  animation: wb-orbit var(--wb-orbit-dur, 5.5s) ease-in-out infinite;
+/* Lintasan Terbang Bebas Melayang & Menikung Alami (Natural Banking) */
+.wb-butterfly-flight {
+  display: block;
+  width: 0;
+  height: 0;
+  transform-origin: 0 0;
+  animation: wb-butterfly-drift var(--wb-dur, 26s)
+    cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--wb-delay, 0s) infinite;
   will-change: transform;
 }
 
+@keyframes wb-butterfly-drift {
+  0% {
+    transform: translate(0, 0) scale(var(--wb-scale, 1))
+      rotate(calc(var(--wb-dir, 1) * 14deg));
+  }
+
+  15% {
+    transform: translate(calc(var(--wb-dir, 1) * 16cqi), -7vh)
+      scale(calc(var(--wb-scale, 1) * 1.04))
+      rotate(calc(var(--wb-dir, 1) * 30deg));
+  }
+
+  30% {
+    transform: translate(calc(var(--wb-dir, 1) * 26cqi), -12vh)
+      scale(calc(var(--wb-scale, 1) * 1.08))
+      rotate(calc(var(--wb-dir, 1) * 10deg));
+  }
+
+  45% {
+    transform: translate(calc(var(--wb-dir, 1) * 20cqi), -3vh)
+      scale(calc(var(--wb-scale, 1) * 1.02))
+      rotate(calc(var(--wb-dir, 1) * -22deg));
+  }
+
+  58% {
+    transform: translate(calc(var(--wb-dir, 1) * 5cqi), 6vh)
+      scale(calc(var(--wb-scale, 1) * 0.96))
+      rotate(calc(var(--wb-dir, 1) * -34deg));
+  }
+
+  72% {
+    transform: translate(calc(var(--wb-dir, 1) * -12cqi), 10vh)
+      scale(calc(var(--wb-scale, 1) * 0.92))
+      rotate(calc(var(--wb-dir, 1) * -14deg));
+  }
+
+  86% {
+    transform: translate(calc(var(--wb-dir, 1) * -14cqi), 4vh)
+      scale(calc(var(--wb-scale, 1) * 0.96))
+      rotate(calc(var(--wb-dir, 1) * 16deg));
+  }
+
+  100% {
+    transform: translate(0, 0) scale(var(--wb-scale, 1))
+      rotate(calc(var(--wb-dir, 1) * 14deg));
+  }
+}
+
+@supports not (container-type: inline-size) {
+  @keyframes wb-butterfly-drift {
+    0% {
+      transform: translate(0, 0) scale(var(--wb-scale, 1))
+        rotate(calc(var(--wb-dir, 1) * 14deg));
+    }
+
+    15% {
+      transform: translate(calc(var(--wb-dir, 1) * 16vw), -7vh)
+        scale(calc(var(--wb-scale, 1) * 1.04))
+        rotate(calc(var(--wb-dir, 1) * 30deg));
+    }
+
+    30% {
+      transform: translate(calc(var(--wb-dir, 1) * 26vw), -12vh)
+        scale(calc(var(--wb-scale, 1) * 1.08))
+        rotate(calc(var(--wb-dir, 1) * 10deg));
+    }
+
+    45% {
+      transform: translate(calc(var(--wb-dir, 1) * 20vw), -3vh)
+        scale(calc(var(--wb-scale, 1) * 1.02))
+        rotate(calc(var(--wb-dir, 1) * -22deg));
+    }
+
+    58% {
+      transform: translate(calc(var(--wb-dir, 1) * 5vw), 6vh)
+        scale(calc(var(--wb-scale, 1) * 0.96))
+        rotate(calc(var(--wb-dir, 1) * -34deg));
+    }
+
+    72% {
+      transform: translate(calc(var(--wb-dir, 1) * -12vw), 10vh)
+        scale(calc(var(--wb-scale, 1) * 0.92))
+        rotate(calc(var(--wb-dir, 1) * -14deg));
+    }
+
+    86% {
+      transform: translate(calc(var(--wb-dir, 1) * -14vw), 4vh)
+        scale(calc(var(--wb-scale, 1) * 0.96))
+        rotate(calc(var(--wb-dir, 1) * 16deg));
+    }
+
+    100% {
+      transform: translate(0, 0) scale(var(--wb-scale, 1))
+        rotate(calc(var(--wb-dir, 1) * 14deg));
+    }
+  }
+}
+
+/* Penempatan Kupu-kupu Individual */
+.wb-flyer--butterfly {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  will-change: transform;
+}
+
+/* Kupu-kupu Pemimpin (Mate A) */
 .wb-mate-a {
-  top: 0px;
-  left: 0px;
-  animation-delay: 0s;
+  animation: wb-mate-a-weave 3.8s ease-in-out infinite;
 }
 
-.wb-mate-b {
-  top: 40px;
-  left: 38px;
-  animation-delay: calc(var(--wb-orbit-dur, 5.5s) * -0.5);
-}
-
-@keyframes wb-orbit {
+@keyframes wb-mate-a-weave {
   0%,
   100% {
     transform: translate(0, 0) rotate(0deg);
   }
 
+  35% {
+    transform: translate(5px, -6px) rotate(4deg);
+  }
+
+  70% {
+    transform: translate(-4px, 4px) rotate(-3deg);
+  }
+}
+
+/* Kupu-kupu Pasangan (Mate B): Mengitari Mate A dalam Tarian Romantis */
+.wb-mate-b {
+  animation: wb-courtship-orbit var(--wb-orbit-dur, 5.4s) ease-in-out infinite;
+}
+
+@keyframes wb-courtship-orbit {
+  0% {
+    transform: translate(28px, 20px) rotate(8deg);
+  }
+
   25% {
-    transform: translate(7px, -6px) rotate(6deg);
+    transform: translate(32px, -12px) rotate(16deg);
   }
 
   50% {
-    transform: translate(1px, -11px) rotate(0deg);
+    transform: translate(-18px, -22px) rotate(-6deg);
   }
 
   75% {
-    transform: translate(-7px, -5px) rotate(-6deg);
+    transform: translate(-24px, 14px) rotate(-14deg);
+  }
+
+  100% {
+    transform: translate(28px, 20px) rotate(8deg);
   }
 }
 
+/* Wrapper Gerak & Dinamika Bobbing Tubuh */
 .wb-flyer-motion {
   display: block;
-  width: 40px;
+  width: 44px;
+  perspective: 500px;
+  transform-style: preserve-3d;
+  will-change: transform;
+  animation: wb-butterfly-body-bob var(--wb-flap-dur, 1.9s) ease-in-out
+    var(--wb-flap-delay, 0s) infinite;
 }
 
-/* Kepakan sayap kupu-kupu */
+.wb-butterfly-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.12));
+}
+
+/* Kepakan Sayap 3D: Siklus Organik Flutter & Glide */
 .wb-flyer--butterfly .wb-wing {
   transform-box: fill-box;
-  animation: wb-flap-natural var(--wb-flap, 0.35s)
-    cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  will-change: transform;
 }
 
 .wb-flyer--butterfly .wb-wing--left {
-  transform-origin: 100% 50%;
+  transform-origin: 100% 48%;
+  animation: wb-butterfly-flap-left var(--wb-flap-dur, 1.9s)
+    cubic-bezier(0.4, 0, 0.6, 1) var(--wb-flap-delay, 0s) infinite;
 }
 
 .wb-flyer--butterfly .wb-wing--right {
-  transform-origin: 0% 50%;
-  animation-delay: 0.04s;
+  transform-origin: 0% 48%;
+  animation: wb-butterfly-flap-right var(--wb-flap-dur, 1.9s)
+    cubic-bezier(0.4, 0, 0.6, 1) var(--wb-flap-delay, 0s) infinite;
 }
 
-@keyframes wb-flap-natural {
-  0%,
+@keyframes wb-butterfly-flap-left {
+  0% {
+    transform: scaleX(1) rotateY(0deg) skewY(0deg) translateY(0);
+  }
+
+  7% {
+    transform: scaleX(0.12) rotateY(-72deg) skewY(-8deg) translateY(-2px);
+  }
+
+  15% {
+    transform: scaleX(0.96) rotateY(10deg) skewY(2deg) translateY(1px);
+  }
+
+  22% {
+    transform: scaleX(0.14) rotateY(-68deg) skewY(-7deg) translateY(-2px);
+  }
+
+  30% {
+    transform: scaleX(0.98) rotateY(8deg) skewY(2deg) translateY(1px);
+  }
+
+  37% {
+    transform: scaleX(0.22) rotateY(-58deg) skewY(-5deg) translateY(-1px);
+  }
+
+  45% {
+    transform: scaleX(1) rotateY(0deg) skewY(0deg) translateY(0);
+  }
+
+  65% {
+    transform: scaleX(0.92) rotateY(-14deg) skewY(-2deg) translateY(-0.5px);
+  }
+
+  82% {
+    transform: scaleX(0.96) rotateY(-6deg) skewY(-1deg) translateY(0);
+  }
+
   100% {
-    transform: scaleX(1) rotateY(0deg) skewY(0deg);
-  }
-
-  50% {
-    transform: scaleX(0.32) rotateY(35deg) skewY(-6deg);
+    transform: scaleX(1) rotateY(0deg) skewY(0deg) translateY(0);
   }
 }
 
-.wb-flyer--butterfly .wb-body {
-  filter: drop-shadow(0 0 2px rgba(255, 248, 225, 0.6));
+@keyframes wb-butterfly-flap-right {
+  0% {
+    transform: scaleX(1) rotateY(0deg) skewY(0deg) translateY(0);
+  }
+
+  7% {
+    transform: scaleX(0.12) rotateY(72deg) skewY(8deg) translateY(-2px);
+  }
+
+  15% {
+    transform: scaleX(0.96) rotateY(-10deg) skewY(-2deg) translateY(1px);
+  }
+
+  22% {
+    transform: scaleX(0.14) rotateY(68deg) skewY(7deg) translateY(-2px);
+  }
+
+  30% {
+    transform: scaleX(0.98) rotateY(-8deg) skewY(-2deg) translateY(1px);
+  }
+
+  37% {
+    transform: scaleX(0.22) rotateY(58deg) skewY(5deg) translateY(-1px);
+  }
+
+  45% {
+    transform: scaleX(1) rotateY(0deg) skewY(0deg) translateY(0);
+  }
+
+  65% {
+    transform: scaleX(0.92) rotateY(14deg) skewY(2deg) translateY(-0.5px);
+  }
+
+  82% {
+    transform: scaleX(0.96) rotateY(6deg) skewY(1deg) translateY(0);
+  }
+
+  100% {
+    transform: scaleX(1) rotateY(0deg) skewY(0deg) translateY(0);
+  }
+}
+
+@keyframes wb-butterfly-body-bob {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  7% {
+    transform: translateY(2.5px) rotate(-1deg);
+  }
+
+  15% {
+    transform: translateY(-3px) rotate(1.5deg);
+  }
+
+  22% {
+    transform: translateY(2px) rotate(-1deg);
+  }
+
+  30% {
+    transform: translateY(-2.5px) rotate(1deg);
+  }
+
+  37% {
+    transform: translateY(1px) rotate(-0.5deg);
+  }
+
+  45%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
 }
 
 /* ===== Aksesibilitas & Responsive ===== */
@@ -436,6 +661,7 @@
   .wb-bird-wing,
   .wb-bird-tail,
   .wb-butterfly-pair,
+  .wb-butterfly-flight,
   .wb-flyer--butterfly,
   .wb-wing {
     animation: none !important;

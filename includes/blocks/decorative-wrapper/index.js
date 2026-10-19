@@ -44,18 +44,55 @@
                 setAttributes({ decorationType: value });
               },
             }),
-            el(SelectControl, {
-              label: __("Kepadatan", "weddingblocks"),
-              value: attributes.density,
-              options: [
-                { label: __("Rendah", "weddingblocks"), value: "low" },
-                { label: __("Sedang", "weddingblocks"), value: "medium" },
-                { label: __("Tinggi", "weddingblocks"), value: "high" },
-              ],
-              onChange: function (value) {
-                setAttributes({ density: value });
-              },
-            }),
+            attributes.decorationType === "butterfly" &&
+              el(SelectControl, {
+                label: __("Area Terbang Kupu-kupu", "weddingblocks"),
+                value: attributes.flyZone || "auto",
+                options: [
+                  {
+                    label: __("Bebas / Alami (Default)", "weddingblocks"),
+                    value: "auto",
+                  },
+                  {
+                    label: __(
+                      "Area Atas (Header / Bunga Atas)",
+                      "weddingblocks",
+                    ),
+                    value: "top",
+                  },
+                  {
+                    label: __("Area Tengah (Tengah Konten)", "weddingblocks"),
+                    value: "middle",
+                  },
+                  {
+                    label: __(
+                      "Area Bawah (Footer / Bunga Bawah)",
+                      "weddingblocks",
+                    ),
+                    value: "bottom",
+                  },
+                ],
+                help: __(
+                  "Pilih zona ketinggian tempat kupu-kupu menari.",
+                  "weddingblocks",
+                ),
+                onChange: function (value) {
+                  setAttributes({ flyZone: value });
+                },
+              }),
+            attributes.decorationType !== "butterfly" &&
+              el(SelectControl, {
+                label: __("Kepadatan", "weddingblocks"),
+                value: attributes.density,
+                options: [
+                  { label: __("Rendah", "weddingblocks"), value: "low" },
+                  { label: __("Sedang", "weddingblocks"), value: "medium" },
+                  { label: __("Tinggi", "weddingblocks"), value: "high" },
+                ],
+                onChange: function (value) {
+                  setAttributes({ density: value });
+                },
+              }),
             el(SelectControl, {
               label: __("Posisi Lapisan", "weddingblocks"),
               value: attributes.layer,

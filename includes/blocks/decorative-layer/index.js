@@ -9,12 +9,30 @@
     bird: __("Burung", "weddingblocks"),
   };
 
+  var ZONE_LABELS = {
+    top: __("Atas", "weddingblocks"),
+    middle: __("Tengah", "weddingblocks"),
+    bottom: __("Bawah", "weddingblocks"),
+  };
+
   blocks.registerBlockType("weddingblocks/decorative-layer", {
     edit: function (props) {
       var context = props.context || {};
       var decorationType = context["weddingblocks/decorationType"] || "dots";
       var density = context["weddingblocks/density"] || "medium";
       var layer = context["weddingblocks/layer"] || "behind";
+      var flyZone = context["weddingblocks/flyZone"] || "auto";
+
+      var badgeText = "";
+      if (decorationType === "butterfly") {
+        badgeText = "✨ " + (LABELS[decorationType] || decorationType);
+        if (flyZone && flyZone !== "auto") {
+          badgeText += " · " + (ZONE_LABELS[flyZone] || flyZone);
+        }
+      } else {
+        badgeText =
+          "✨ " + (LABELS[decorationType] || decorationType) + " · " + density;
+      }
 
       var blockProps = useBlockProps({
         className: "wb-decor-layer-placeholder",
@@ -44,7 +62,7 @@
               borderRadius: "4px",
             },
           },
-          "✨ " + (LABELS[decorationType] || decorationType) + " · " + density,
+          badgeText,
         ),
       );
     },
