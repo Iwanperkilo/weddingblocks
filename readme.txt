@@ -4,7 +4,7 @@ Tags: wedding, invitation, gutenberg, fse, blocks
 Requires at least: 6.7
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.7.1
+Stable tag: 1.8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Plugin URI: https://wordpress.org/plugins/weddingblocks/
@@ -90,6 +90,14 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 6. Mobile preview
 
 == Changelog ==
+
+= 1.8.0 =
+* Added: Performance & Battery Optimization — added lightweight IntersectionObserver auto-pause for all decorative layers (.wb-decor-wrapper, .wb-decor-layer) and cover blocks, reducing GPU workload to zero when scrolled off-screen.
+* Added: Butterfly Fly Zone Control — new editor control in Decorative Wrapper to set butterfly flight heights (Auto, Top/Header, Middle, Bottom/Footer).
+* Added: 3D Wing Flap & Ivory Pearl Palette for Flying Birds — realistic 3D downward wing flap (rotateX arc) with shoulder-anchored joints, body bobbing, and an elegant Ivory & Pearl Wedding palette.
+* Added: Organic Flutter & Glide Animation for Butterflies — lifelike 3-flutter burst and glide phase with romantic two-mate courtship dance and natural trajectory banking.
+* Changed: Locked butterfly density to a single pair ("dua sejoli") and hid redundant density controls for butterflies to keep editor clean and prevent layout crowding.
+* Fixed: SVG rendering inside WB Cover block — removed wp_kses_post restriction in cover render.php that previously stripped SVG elements, allowing birds and butterflies to render properly on cover sections.
 
 = 1.7.1 =
 * Fixed: Placeholder rendering and photo alignment refined for couple-photo, couple-info, and avatar placeholders.
@@ -178,6 +186,9 @@ Absolutely! The plugin is fully translatable and uses the `weddingblocks` text d
 * Zero external dependencies
 
 == Upgrade Notice ==
+
+= 1.8.0 =
+Major visual and performance update for Decorative Layers: introduces 3D wing flapping animations, Ivory & Pearl color palettes, Butterfly Fly Zone controls, Cover SVG fix, and off-screen IntersectionObserver auto-pause to eliminate GPU and battery drain. Safe to upgrade, no breaking changes.
 
 = 1.7.1 =
 Improves placeholder rendering and couple photo alignment without changing existing block data. Safe to upgrade, no breaking changes.

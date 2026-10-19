@@ -7,6 +7,24 @@ dan plugin ini menganut [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.8.0] - 2026-10-19
+
+### Added (Ditambahkan)
+
+- **Optimasi Performa & Baterai HP (IntersectionObserver Auto-Pause)** — Menambahkan script `initDecorativeViewportPause()` di `blocks-frontend.js` yang memanfaatkan native `IntersectionObserver` untuk membekukan (`animation-play-state: paused !important`) seluruh elemen dekorasi (`.wb-decor-wrapper`, `.wb-decor-layer`) dan Cover saat keluar dari viewport layar. Beban GPU turun menjadi 0% saat di-scroll ke section lain, menjaga perangkat mobile tetap dingin dan hemat baterai.
+- **Pengaturan Area Terbang Kupu-kupu (Fly Zone)** — Kontrol baru di block editor (Gutenberg) untuk mengatur zona ketinggian tarian kupu-kupu (`auto` / Bebas, `top` / Area Atas, `middle` / Area Tengah, `bottom` / Area Bawah), memudahkan penyesuaian posisi kupu-kupu dengan tata letak ornamen bunga atau teks undangan.
+- **Kepakan Sayap 3D & Palet Ivory-Pearl untuk Burung** — Merombak animasi terbang burung dengan busur kepakan 3D (`rotateX`) yang realistis dan pangkal sendi bahu yang terkunci kokoh tanpa patah. Menggunakan palet warna pernikahan *Ivory & Pearl Wedding* (gradasi putih mutiara `#ffffff -> #f8f4ed -> #dfcfb9`, sayap belakang taupe-champagne `#ede4d6 -> #ba9d7e`, serta aksen paruh emas hangat `#f7dfa3 -> #cf9c4e`).
+- **Siklus Kepakan Alami "Flutter & Glide" & Tarian Dua Sejoli Kupu-kupu** — Animasi kepakan kupu-kupu ditingkatkan dengan ritme alami (3x hentakan kepak cepat lalu meluncur anggun). Dilengkapi tarian romantis sepasang kekasih di mana kupu-kupu pasangan menari mengitari pasangannya dengan sudut kemiringan haluan alami (*natural banking*).
+
+### Changed (Diubah)
+
+- **Kepadatan Kupu-kupu Terkunci "Dua Sejoli" (1 Pasang)** — Kontrol kepadatan (*density*) otomatis disembunyikan di editor saat memilih Kupu-kupu dan jumlahnya dikunci tepat 1 pasang (2 ekor) untuk menjaga keanggunan layout undangan dan mencegah kepadatan visual yang berlebih (*crowded*).
+- **Badge Label Kanvas Editor** — Placeholder layer dekorasi di editor diperbarui agar menampilkan zona aktif yang dipilih (contoh: `✨ Kupu-kupu · Bawah`).
+
+### Fixed & Improved (Diperbaiki & Ditingkatkan)
+
+- **SVG Stripping pada WB Cover Block** — Memperbaiki bug di `cover/render.php` di mana pemanggilan `wp_kses_post($content)` sebelumnya menghapus elemen `<svg>` inner blocks (menyebabkan burung dan kupu-kupu tidak muncul di Cover). Diperbarui menggunakan unstripped `$content` dengan PHPDoc type hint `@var string $content` dan fallback inisialisasi yang bersih.
+
 ## [1.7.1] - 2026-09-15
 
 ### Fixed & Improved (Diperbaiki & Ditingkatkan)
