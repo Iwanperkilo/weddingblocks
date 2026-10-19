@@ -484,4 +484,29 @@ document.addEventListener('DOMContentLoaded', function () {
     // Independent of the cover lock: these aren't scroll-triggered, so they
     // can be set up immediately for any block already in the DOM.
     initAttentionAnimations();
+
+    // --- 8. DECORATIVE LAYERS VIEWPORT AUTO-PAUSE ---
+    // Pauses CSS animations when a decorative wrapper/layer leaves the viewport,
+    // reducing GPU/battery drain to zero on long invitation pages.
+    function initDecorativeViewportPause() {
+        var decorNodes = document.querySelectorAll('.wb-decor-wrapper, .wb-decor-layer');
+        if (!decorNodes.length) {
+            return;
+        }
+
+        if ('IntersectionObserver' in window) {
+            var decorObserver = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    // Margin 60px gives a smooth lead-in just before entering the screen.
+                    entry.target.classList.toggle('wb-decor-paused', !entry.isIntersecting);
+                });
+            }, { rootMargin: '60px 0px 60px 0px', threshold: 0 });
+
+            decorNodes.forEach(function (el) {
+                decorObserver.observe(el);
+            });
+        }
+    }
+
+    initDecorativeViewportPause();
 });

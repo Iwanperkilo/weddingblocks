@@ -652,6 +652,21 @@
   }
 }
 
+/* ===== Optimasi Baterai & GPU: Auto-Pause saat Keluar Layar ===== */
+.wb-decor-paused .wb-dot,
+.wb-decor-paused .wb-flyer,
+.wb-decor-paused .wb-flyer-motion,
+.wb-decor-paused .wb-bird-motion,
+.wb-decor-paused .wb-bird-wing,
+.wb-decor-paused .wb-bird-tail,
+.wb-decor-paused .wb-butterfly-pair,
+.wb-decor-paused .wb-butterfly-flight,
+.wb-decor-paused .wb-flyer--butterfly,
+.wb-decor-paused .wb-wing,
+.wb-decor-layer.wb-decor-paused * {
+  animation-play-state: paused !important;
+}
+
 /* ===== Aksesibilitas & Responsive ===== */
 @media (prefers-reduced-motion: reduce) {
   .wb-dot,
