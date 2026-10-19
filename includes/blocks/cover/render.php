@@ -4,6 +4,10 @@
  * Server-side rendering for the Cover block.
  *
  * @package WeddingBlocks
+ *
+ * @var array    $attributes
+ * @var string   $content
+ * @var WP_Block $block
  */
 
 // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals
@@ -11,6 +15,8 @@
 if (! defined('ABSPATH')) {
     exit;
 }
+
+$content  = $content ?? '';
 
 $bg_image = ! empty($attributes['backgroundImage']) ? esc_url($attributes['backgroundImage']) : '';
 $button_text = ! empty($attributes['buttonText']) ? wp_kses_post($attributes['buttonText']) : __('Buka Undangan', 'weddingblocks');
@@ -63,7 +69,7 @@ $wrapper_attributes = get_block_wrapper_attributes(
         ?>>
     <div class="weddingblocks-cover-overlay" style="background-color: <?php echo esc_attr($overlay_color); ?>; opacity: <?php echo esc_attr($overlay_opacity / 100); ?>;"></div>
     <div class="weddingblocks-cover-content">
-        <?php echo wp_kses_post($content); ?>
+        <?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
         <button id="weddingblocks-open-btn" type="button" class="weddingblocks-btn-gold" style="<?php echo esc_attr($button_style); ?>">
             <svg class="icon-mail" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="margin-right: 8px; vertical-align: middle;">
